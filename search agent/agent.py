@@ -24,15 +24,31 @@ class AcademicSearchAgent:
 
     async def expand_query(self, user_query: str) -> List[str]:
         """
-        Executes multi-query expansion to overcome vocabulary mismatch.
+        Prompts the LLM to translate the user's research question into precise,
+        database-optimized keyword search strings without additional criteria.
         """
+        # لاحظ التعديل في المثال عشان يكون JSON سليم 100%
         prompt = f"""
-        You are a highly skilled academic research assistant. 
-        The user intends to research the following topic: "{user_query}"
+        You are an expert academic research librarian. 
+        Your task is to translate the user's research topic into highly optimized search queries for the OpenAlex database API.
 
-        Your task is to generate 3 to 5 distinct, high-quality search queries. 
-        Include academic synonyms, formal terminology, and related concepts to 
-        maximize the retrieval recall of relevant research papers.
+        Research Topic: "{user_query}"
+
+        Generate 3 to 5 distinct, high-quality KEYWORD search strings.
+        RULES:
+        1. DO NOT write full sentences.
+        2. Use academic keywords and synonyms.
+        3. Use Boolean logic if helpful (AND, OR).
+        4. CRITICAL: You MUST return a valid JSON object containing the actual queries. DO NOT return a JSON schema definition.
+        
+        Example Good Output:
+        {{
+            "queries": [
+                "\\"social media\\" AND (adolescents OR teenagers) AND psychology",
+                "\\"digital platforms\\" AND youth AND mental health",
+                "\\"social networking\\" AND lifeworlds AND teenagers"
+            ]
+        }}
         """
 
         response = await self.client.chat.completions.create(
@@ -60,15 +76,15 @@ class AcademicSearchAgent:
 
         return unique_papers
 
-    async def run_pipeline(self, user_query: str, min_year: int, criteria: str) -> str:
+    async def run_pipeline(self, user_query: str, min_year: int, max_results: int = 70) -> str:
         """
-        The simplified orchestrator method for the MVP.
-        Returns a strict JSON string ready for consumption by the Screening Agent.
+        The main search orchestrator.
+        Note: Specific criteria have been removed to broaden the search,
+        and the initial relevance score is set to 0 for downstream evaluation.
         """
         print(" Initiating Intelligent Query Expansion...")
         expanded_queries = await self.expand_query(user_query)
-        expanded_queries.append(user_query)
-        print(f" Executing searches for: {expanded_queries}")
+        print(f" Executing API keyword searches for: {expanded_queries}")
 
         print(" Fetching data concurrently from OpenAlex API...")
         fetch_tasks = [self.api.search_papers(q, min_year) for q in expanded_queries]
@@ -84,13 +100,14 @@ class AcademicSearchAgent:
         unique_papers = self.deduplicate_papers(all_parsed_papers)
         print(f" Deduplication complete. {len(unique_papers)} unique papers remain.")
 
-        print(" Bypassing LLM Evaluation for MVP. Selecting top 10 papers...")
+        print(" Preparing candidate batch for the Screening Agent...")
 
-        # Select top 10 papers and assign a mock relevance score to satisfy Pydantic schema requirements
-        top_10_papers = unique_papers[:10]
-        for paper in top_10_papers:
-            paper['relevance_score'] = 10
+        # Select the top N papers and assign a relevance score of 0
+        # This acts as a flag for the downstream Screening Agent to evaluate them later
+        top_papers = unique_papers[:max_results]
+        for paper in top_papers:
+            paper['relevance_score'] = 0
 
             # Serialize the validated Pydantic model back to a JSON string
-        output_schema = ScreenedPapers(papers=top_10_papers)
+        output_schema = ScreenedPapers(papers=top_papers)
         return output_schema.model_dump_json(indent=2)
