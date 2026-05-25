@@ -34,7 +34,7 @@ async def main():
     output_path = Path("screening_results.json")
 
     agent = AcademicScreeningAgent(
-        model_name="qwen3:latest",
+        model_name="qwen2.5-coder:7b",
         max_concurrent_tasks=3,
     )
     print("first step")

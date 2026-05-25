@@ -14,23 +14,19 @@ st.markdown(
     "Automate your literature review. This agent expands your query, fetches papers, and structures the data instantly.")
 
 # --- AGENT DETAILS SECTION ---
-# This expander gives the user insight into the system's architecture
 with st.expander("🤖 How does this Agent work? (System Architecture)", expanded=False):
     st.markdown("""
     **The Two-Stage Retrieval Pipeline:**
     1. **Intelligent Query Expansion:** The local LLM (`qwen2.5-coder:7b`) analyzes your question and generates 3-5 academic synonyms to maximize search recall.
     2. **Parallel API Retrieval:** The agent fetches data concurrently from the *OpenAlex API* to ensure high speed.
     3. **Deduplication:** A deterministic filter removes duplicate papers using exact DOI matching.
-    4. **Strict JSON Formatting:** The output is forced into a strict JSON structure using *Pydantic* and *Instructor* for seamless downstream processing.
+    4. **Strict JSON Formatting:** The output is forced into a strict JSON structure using *Pydantic* for seamless downstream processing.
     """)
 
 # Sidebar Configuration
 st.sidebar.header("⚙️ Search Configuration")
 research_query = st.sidebar.text_area("Research Question:",
                                       placeholder="e.g., How does social media shape adolescents' lifeworlds?")
-
-inclusion_criteria = st.sidebar.text_area("Inclusion Criteria:",
-                                          placeholder="e.g., Focus on teenagers, exclude clinical trials.")
 
 min_year = st.sidebar.number_input("Minimum Publication Year:", min_value=2000, max_value=2025, value=2020)
 
@@ -48,15 +44,14 @@ if st.sidebar.button("🚀 Execute Research Pipeline", use_container_width=True)
 
         with st.status("🔄 Orchestrating Agent Tasks...", expanded=True) as status:
             try:
-                st.write("🧠 1. Analyzing query and generating academic synonyms...")
+                st.write("🧠 1. Analyzing query and generating academic keywords...")
                 st.write("🌐 2. Fetching research papers concurrently from OpenAlex...")
                 st.write("🧹 3. Deduplicating and structuring data...")
 
-                # Run the async pipeline
+                # Run the async pipeline (removed criteria)
                 json_result = asyncio.run(agent.run_pipeline(
                     user_query=research_query,
-                    min_year=min_year,
-                    criteria=inclusion_criteria
+                    min_year=min_year
                 ))
 
                 status.update(label="✅ Pipeline Execution Completed Successfully!", state="complete", expanded=False)
@@ -70,7 +65,8 @@ if st.sidebar.button("🚀 Execute Research Pipeline", use_container_width=True)
                 papers = data.get("papers", [])
 
                 if not papers:
-                    st.warning("No papers found matching the specified criteria.")
+                    # Updated warning message
+                    st.warning("No papers found matching your research question.")
                 else:
                     # --- METRICS DASHBOARD ---
                     st.write("### 📈 Search Analytics")
@@ -95,7 +91,7 @@ if st.sidebar.button("🚀 Execute Research Pipeline", use_container_width=True)
                         for i, paper in enumerate(papers):
                             with st.expander(f"📌 {paper['title']} ({paper['year']})"):
                                 st.markdown(f"**👥 Authors:** {', '.join(paper['authors'])}")
-                                st.markdown(f"**⭐ Relevance Score:** {paper['relevance_score']}/10")
+                                st.markdown(f"**⭐ Relevance Score:** {paper['relevance_score']} (Unscreened)")
                                 st.markdown(f"**📖 Abstract:** {paper['abstract']}")
                                 if paper['url']:
                                     st.link_button("🔗 Read Full Paper", paper['url'])
