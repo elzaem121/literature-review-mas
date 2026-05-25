@@ -24,29 +24,56 @@ class AcademicSearchAgent:
 
     async def expand_query(self, user_query: str) -> List[str]:
         """
-        Prompts the LLM to translate the user's research question into precise,
-        database-optimized keyword search strings without additional criteria.
+        Prompts the LLM to analyze the research topic, infer the core academic discipline,
+        and generate highly precise keyword strings while automatically excluding
+        irrelevant fields to maximize search precision.
         """
-        # لاحظ التعديل في المثال عشان يكون JSON سليم 100%
         prompt = f"""
-        You are an expert academic research librarian. 
-        Your task is to translate the user's research topic into highly optimized search queries for the OpenAlex database API.
+        You are an elite Information Retrieval System Architect 
+        specializing in Systematic Literature Reviews.
 
         Research Topic: "{user_query}"
 
-        Generate 3 to 5 distinct, high-quality KEYWORD search strings.
+        Step 1: Identify the academic discipline.
+
+        Step 2: Choose the appropriate framework:
+        - Medical/Clinical → PICO (Population, Intervention, Comparison, Outcome)
+        - CS/Engineering   → PECO (Problem, Environment, Comparison, Outcome)
+        - Social Science   → PCC  (Population, Concept, Context)
+        - Humanities/Philosophy/History → FREE KEYWORDS (no framework)
+
+        Step 3: For each element generate 2-3 synonyms/acronyms.
+
+        Step 4: Generate exactly 8 Boolean queries:
+        - Queries 1-6: HIGH PRECISION (strict AND between all elements, quoted phrases)
+        - Queries 7-8: BROADER RECALL (use OR more liberally, fewer constraints)
+          These last 2 queries act as a safety net to capture important papers 
+          that might use different terminology.
+
         RULES:
-        1. DO NOT write full sentences.
-        2. Use academic keywords and synonyms.
-        3. Use Boolean logic if helpful (AND, OR).
-        4. CRITICAL: You MUST return a valid JSON object containing the actual queries. DO NOT return a JSON schema definition.
-        
-        Example Good Output:
+        - Enclose multi-word phrases in double quotes
+        - Use NOT to exclude irrelevant disciplines
+        - No wildcards (OpenAlex constraint)
+        - Output valid JSON only
+
+        OUTPUT FORMAT:
         {{
+            "framework_used": "PICO/PECO/PCC/FREE",
+            "analysis": {{
+                "population": ["term1", "term2"],
+                "intervention": ["term3"],
+                "comparison": [],
+                "outcome": ["term4", "term5"]
+            }},
             "queries": [
-                "\\"social media\\" AND (adolescents OR teenagers) AND psychology",
-                "\\"digital platforms\\" AND youth AND mental health",
-                "\\"social networking\\" AND lifeworlds AND teenagers"
+                "strict query 1",
+                "strict query 2",
+                "strict query 3",
+                "strict query 4",
+                "strict query 5",
+                "strict query 6",
+                "broader query 7",
+                "broader query 8"
             ]
         }}
         """
@@ -54,6 +81,7 @@ class AcademicSearchAgent:
         response = await self.client.chat.completions.create(
             model=self.model_name,
             response_model=SearchQuery,
+            max_retries=3,
             messages=[{"role": "system", "content": prompt}]
         )
         return response.queries
@@ -76,7 +104,7 @@ class AcademicSearchAgent:
 
         return unique_papers
 
-    async def run_pipeline(self, user_query: str, min_year: int, max_results: int = 70) -> str:
+    async def run_pipeline(self, user_query: str, min_year: int, max_results: int = 10) -> str:
         """
         The main search orchestrator.
         Note: Specific criteria have been removed to broaden the search,
