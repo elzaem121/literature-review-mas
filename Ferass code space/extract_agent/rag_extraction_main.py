@@ -1,3 +1,4 @@
+import os
 import asyncio
 import json
 import sys
@@ -15,14 +16,19 @@ INPUT_FILE = Path("retrieved_chunks.json")
 OUTPUT_FILE = Path("rag_extraction_results.json")
 
 
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen3:latest")
+
+print(f"Using Ollama API at: {OLLAMA_BASE_URL}")
+print(f"Using Ollama model: {OLLAMA_MODEL}")
+
 client = instructor.patch(
     AsyncOpenAI(
-        base_url="http://localhost:11434/v1",
+        base_url=OLLAMA_BASE_URL,
         api_key="local-ollama-key"
     ),
     mode=instructor.Mode.JSON,
 )
-
 
 async def extract_from_retrieved_chunks(paper, research_question: str):
     retrieved_chunks = paper.get("retrieved_chunks", [])
@@ -90,7 +96,7 @@ Important:
 """
 
     result = await client.chat.completions.create(
-        model="qwen3:latest",
+        model=OLLAMA_MODEL,
         response_model=ExtractedPaperInfo,
         messages=[
             {"role": "system", "content": system_prompt},
