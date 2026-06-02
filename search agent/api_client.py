@@ -15,19 +15,32 @@ class OpenAlexClient:
     async def search_papers(self, query: str, min_year: int = None) -> List:
         """
         Executes an asynchronous HTTP GET request to fetch papers based on the search query.
-        Implements exponential backoff to handle potential rate limits gracefully.
+        Implements a targeted search strategy using metadata filtering to maximize Precision@10.
         """
+
+        # Base parameters for pagination, sorting, and field selection
         params = {
-            "search": query,
-            "per-page": 20,  # Limit payload to top 20 results per expanded query
+            "per-page": 50,  # Limit payload to top 20 results per expanded query
             "sort": "relevance_score:desc",  # Native API sorting as a baseline
             # Only request necessary fields to conserve memory and bandwidth
             "select": "id,doi,title,abstract_inverted_index,authorships,publication_year,primary_location"
         }
 
-        # Apply deterministic inclusion criteria directly at the API level
+        # Build deterministic inclusion criteria directly at the API level.
+        # Using 'title_and_abstract.search' prevents the API from searching in full-text
+        # or references, significantly reducing noise (False Positives).
+        # 'type:article' ensures we only retrieve academic research papers, excluding books/datasets.
+        filters = [
+            f"title_and_abstract.search:{query}",
+            "type:article"
+        ]
+
+        # Append publication year filter if specified
         if min_year:
-            params["filter"] = f"publication_year:>{min_year}"
+            filters.append(f"publication_year:>{min_year}")
+
+        # Combine filters using comma (OpenAlex API syntax for logical AND conditions)
+        params["filter"] = ",".join(filters)
 
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.get(self.base_url, headers=self.headers, params=params)

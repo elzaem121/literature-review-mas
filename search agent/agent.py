@@ -51,36 +51,39 @@ class AcademicSearchAgent:
           that might use different terminology.
 
         RULES:
-        - Enclose multi-word phrases in double quotes
-        - Use NOT to exclude irrelevant disciplines
-        - No wildcards (OpenAlex constraint)
-        - Output valid JSON only
+- CRITICAL SYNTAX: You must use ESCAPED double quotes for multi-word phrases inside the JSON (e.g., \"social media\"). 
+- NEVER use single quotes ('').
+- NEVER enclose the entire query string in quotes. Only quote the specific multi-word phrases.
+- CRITICAL LOGIC RULE: Always use parentheses () to group OR conditions. Example: (\"term1\" OR \"term2\") AND \"term3\".
+- Use NOT sparingly — only for clearly unrelated disciplines.
+- Output valid JSON only, no markdown formatting.
 
-        OUTPUT FORMAT:
-        {{
-            "framework_used": "PICO/PECO/PCC/FREE",
-            "analysis": {{
-                "population": ["term1", "term2"],
-                "intervention": ["term3"],
-                "comparison": [],
-                "outcome": ["term4", "term5"]
-            }},
-            "queries": [
-                "strict query 1",
-                "strict query 2",
-                "strict query 3",
-                "strict query 4",
-                "strict query 5",
-                "strict query 6",
-                "broader query 7",
-                "broader query 8"
-            ]
-        }}
+OUTPUT FORMAT:
+{{
+    "framework_used": "PICO/PECO/PCC/FREE",
+    "analysis": {{
+        "population": ["term1", "term2"],
+        "intervention": ["term3"],
+        "comparison": [],
+        "outcome": ["term4", "term5"]
+    }},
+    "queries": [
+        "\"term1\" AND \"term3\" AND \"term4\"",
+        "\"term2\" AND \"term3\" AND \"term5\"",
+        "strict query 3",
+        "strict query 4",
+        "strict query 5",
+        "strict query 6",
+        "(\"term1\" OR \"term2\") AND \"term3\" AND (\"term4\" OR \"term5\")",
+        "broader query 8"
+    ]
+}}
         """
 
         response = await self.client.chat.completions.create(
             model=self.model_name,
             response_model=SearchQuery,
+            temperature=0.0,
             max_retries=3,
             messages=[{"role": "system", "content": prompt}]
         )
@@ -104,7 +107,7 @@ class AcademicSearchAgent:
 
         return unique_papers
 
-    async def run_pipeline(self, user_query: str, min_year: int, max_results: int = 10) -> str:
+    async def run_pipeline(self, user_query: str, min_year: int, max_results: int = 20) -> str:
         """
         The main search orchestrator.
         Note: Specific criteria have been removed to broaden the search,
