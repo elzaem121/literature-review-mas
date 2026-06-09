@@ -17,7 +17,7 @@ OUTPUT_FILE = Path("rag_extraction_results.json")
 
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen3:latest")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:7b")
 
 print(f"Using Ollama API at: {OLLAMA_BASE_URL}")
 print(f"Using Ollama model: {OLLAMA_MODEL}")

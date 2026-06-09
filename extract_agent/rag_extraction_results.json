@@ -22,12 +22,12 @@
         "url": "https://doi.org/10.1111/1467-9566.13311"
       },
       "rag_extraction": {
-        "method": "qualitative analysis of Indigenous ways of knowing and social-ecological frameworks",
-        "dataset": "references to studies on Aboriginal young people in Queensland, Alaska Native experiences, and other Indigenous populations",
-        "task": "analyzing strengths-based approaches to resilience through social-ecological and culturally specific contexts",
-        "main_findings": "strengths are rooted in social relations, collective practices, and shared identities; social-ecological approaches require culturally safe environments and attention to material needs",
-        "limitations": "social-ecological approaches have been limited by their interpretation in public health sciences, which rely on positivist Western biomedical views",
-        "relevance_to_research_question": "the paper's focus on social-ecological factors and community-based resilience provides insights into how contextual and relational supports influence mental health outcomes",
+        "method": "Qualitative research",
+        "dataset": "Not specified",
+        "task": "Exploring strengths-based approaches in Indigenous health research",
+        "main_findings": "Strengths-based approaches focus on the relationships, identities, and practices that are possessed by groups and communities, rather than individual qualities or environments. This approach more fully engages with Indigenous ways of knowing about resilience.",
+        "limitations": "The study's limitations include its focus on a specific context (Indigenous health research) and the potential for biases in the interpretation of strengths-based approaches within Western biomedical frameworks.",
+        "relevance_to_research_question": "High",
         "confidence": "medium"
       }
     },
@@ -42,12 +42,12 @@
         "url": "https://doi.org/10.1177/17499755211019974"
       },
       "rag_extraction": {
-        "method": "Qualitative interviews combined with theoretical analysis and quantitative data analysis of user behavior",
-        "dataset": "Interview material from 2010-2013, Spotify user data from 5000 users, academic literature on music streaming",
-        "task": "Examining how digital technologies and socio-cultural forces shape music consumption, its emancipatory potential, and the risks to meaningful musical experiences",
-        "main_findings": "Streaming personalization may limit exposure to new music genres, create expectations for tailored experiences, and risk eroding meaningful musical engagement. Quantitative evidence shows increased consumption of unfamiliar music by new users, but concerns persist about the homogenization of musical experiences.",
-        "limitations": "Exploratory studies with potential biases, reliance on self-reported data, challenges in analyzing opaque technological systems, and the paper's focus on music streaming rather than direct social media impacts",
-        "relevance_to_research_question": "The paper addresses how digital technologies (streaming platforms) shape cultural experiences and everyday interactions with music, indirectly relating to social media's role in shaping lifeworlds through algorithmic curation and personalized consumption patterns",
+        "method": "Qualitative research (interviews)",
+        "dataset": "Interview data from Spotify users",
+        "task": "Exploring the effects of music streaming on music culture and consumption habits",
+        "main_findings": "Music streaming is a complex phenomenon that combines socio-cultural forces with digital technologies, potentially eroding emancipatory possibilities offered by music. Users are both explorers and concerned about their own restlessness.",
+        "limitations": "The study focuses primarily on Spotify users and may not generalize to other music streaming platforms or different demographic groups. The research is based on interviews conducted between 2010 and 2013, which might limit its relevance to current trends in music streaming.",
+        "relevance_to_research_question": "The paper provides insights into how digital technologies are shaping music consumption habits, which is directly relevant to understanding the impact of social media (music streaming) on adolescents' lifeworlds and everyday experiences. However, it does not explicitly address the specific effects on adolescents.",
         "confidence": "medium"
       }
     },
@@ -101,12 +101,12 @@
         "url": "https://doi.org/10.1007/s42438-021-00222-y"
       },
       "rag_extraction": {
-        "method": "qualitative case studies and thematic analysis",
-        "dataset": "educational projects involving schools and preschools",
-        "task": "redefining networked learning (NL) and its implications for education",
-        "main_findings": "NL emphasizes collaboration, connectivity, and equity in education; highlights the role of technology in bridging gaps between diverse communities",
-        "limitations": "challenges in addressing peripheral outliers; difficulty in integrating diverse perspectives into a cohesive framework",
-        "relevance_to_research_question": "demonstrates how NL addresses social connectivity and equity in educational contexts, aligning with research on technology's societal impact",
+        "method": "not specified",
+        "dataset": "not specified",
+        "task": "exploring the concept of Networked Learning (NL) and its impact on education",
+        "main_findings": "Networked Learning (NL) is a pedagogical approach that emphasizes collaboration, collective inquiry, and the use of digital tools to enhance learning. It allows for the articulation of connections between people and things, fostering individual and collective growth through shared experiences.",
+        "limitations": "The paper does not provide specific limitations related to the study or research methodology.",
+        "relevance_to_research_question": "The findings are relevant to understanding how social media (and by extension, digital tools) shape adolescents' lifeworlds and everyday experiences, as NL can be seen as a form of networked learning that involves collaborative and collective inquiry.",
         "confidence": "medium"
       }
     },
@@ -123,12 +123,12 @@
         "url": "https://doi.org/10.3389/fcomm.2022.830613"
       },
       "rag_extraction": {
-        "method": "qualitative case study",
+        "method": "not specified",
         "dataset": "not specified",
-        "task": "Developing a pedagogical metalanguage to categorize knowledge processes and their application in educational settings",
-        "main_findings": "The framework identifies knowledge processes (applying, analyzing, conceptualizing, experiencing) and their pedagogical implications, emphasizing curriculum design and addressing social inequalities through education.",
-        "limitations": "Focus on privileged students, need for proactive intervention, and challenges in equitable access to digital tools during the pandemic.",
-        "relevance_to_research_question": "Analyzes how digital tools and social media impact learning experiences, particularly in online education during the pandemic.",
+        "task": "not specified",
+        "main_findings": "The paper discusses the use of a pedagogic metalanguage for learning and its application in various contexts, including social media. It highlights the importance of balancing cognitive and socio-material processes in education.",
+        "limitations": "The limitations are not explicitly stated in the provided text.",
+        "relevance_to_research_question": "The paper is relevant to the research question as it explores how social media can be used in educational settings, which indirectly shapes adolescents' lifeworlds and everyday experiences.",
         "confidence": "medium"
       }
     },
@@ -144,13 +144,13 @@
         "url": "https://doi.org/10.18848/2327-0136/cgp/v30i02/17-89"
       },
       "rag_extraction": {
-        "method": "Mixed-methods approach combining qualitative analysis of digital practices, media studies, and learning analytics with AI-driven assessment tools",
-        "dataset": "Digital storytelling projects, Minecraft-based learning activities, video production outputs, and educational datasets from cited studies (e.g., Humphrey et al., 2021)",
-        "task": "Assessing multiliteracies in digital contexts through analysis of technology-mediated learning practices and their impact on literacy development",
-        "main_findings": "Digital technologies significantly shape personal and educational literacies; Web 2.0 platforms enable participatory media practices; multiliteracies frameworks align with digital age competencies; learning analytics and AI offer new assessment paradigms for formative feedback",
-        "limitations": "Focus on specific digital tools may limit generalizability; challenges in quantifying qualitative literacy developments; potential underrepresentation of non-English multiliteracies",
-        "relevance_to_research_question": "Directly addresses how digital technologies transform personal and educational literacies, providing empirical evidence on multiliteracies in digital learning environments",
-        "confidence": "high"
+        "method": "not specified",
+        "dataset": "not specified",
+        "task": "not specified",
+        "main_findings": "The paper discusses the concept of multiliteracies and its application in various educational contexts. It highlights the importance of reflexive pedagogy, e-learning ecologies, and digital technologies in shaping adolescents' lifeworlds and everyday experiences.",
+        "limitations": "The paper does not provide specific findings related to social media's impact on adolescents' lifeworlds and everyday experiences. The focus is more broadly on multiliteracies and its applications rather than a direct examination of social media.",
+        "relevance_to_research_question": "The paper indirectly relates to the research question by discussing how digital technologies, which include social media, can be integrated into educational practices through multiliteracies. However, it does not directly address the specific impact of social media on adolescents' lifeworlds and everyday experiences.",
+        "confidence": "medium"
       }
     },
     {
@@ -166,12 +166,12 @@
         "url": "https://doi.org/10.1111/1468-4446.12964"
       },
       "rag_extraction": {
-        "method": "mixed methods including focus groups and survey data collection",
-        "dataset": "survey responses from 517 participants (mostly female UK university students and recent graduates)",
-        "task": "examine how individualization affects drinking habits and broader life choices among Gen Z",
-        "main_findings": "decline in drinking due to health concerns and desire for control over lives, increased focus on wellbeing and conscious choices about activities like environmental issues",
-        "limitations": "sample skewed toward female participants from specific geographic regions, reliance on self-reported data",
-        "relevance_to_research_question": "directly addresses how social changes (individualization) influence adolescent behavior patterns",
+        "method": "survey and focus groups",
+        "dataset": "participants from social media and email distribution lists",
+        "task": "exploring generational drinking decline and individualization among young adults",
+        "main_findings": "young people are more likely to abstain or moderate their alcohol consumption due to individualization, health concerns, and a broader sense of wellbeing. They are also more conscious of social issues like climate change and political pressure.",
+        "limitations": "sample is skewed toward UK university students and recent graduates, which may not be representative of all young adults globally. Ethical practice was followed with pseudonyms used.",
+        "relevance_to_research_question": "The study provides insights into how individualization and health concerns are shaping the drinking habits of young people, which is relevant to understanding how social media and broader societal changes impact adolescents' lifeworlds and everyday experiences.",
         "confidence": "medium"
       }
     },
@@ -186,12 +186,12 @@
         "url": "https://doi.org/10.1111/bjet.13171"
       },
       "rag_extraction": {
-        "method": "Video recordings of students' design processes combined with multimodal transcription and analysis, purposeful sampling, and abductive thematic analysis",
-        "dataset": "23 video recordings of students designing texts",
-        "task": "Analyzing how students design multimodal texts and the resources/affordances they use",
-        "main_findings": "Students' prior digital text-making experiences significantly influence their ability to use available modes. They combine different modes to create meaningful texts, with those having more experience demonstrating advantages. Digital inequality based on socioeconomic factors affects access to resources.",
-        "limitations": "Focus on a specific class limits generalizability; purposeful sampling may introduce bias; video data analysis may not fully capture cognitive processes",
-        "relevance_to_research_question": "Directly addresses how social media (digital tools) shapes adolescents' text-making practices within their lifeworlds and experiences",
+        "method": "Qualitative research using multimodal analysis",
+        "dataset": "23 video recordings of students' design processes",
+        "task": "Analyzing students' multimodal text making and their experiences with digital tools",
+        "main_findings": "Students demonstrated a range of skills in using digital resources for text-making, including searching for images, taking photos, recording videos, and arranging different text parts. Their experiences and backgrounds influenced their choices and the affordances they utilized.",
+        "limitations": "The study focused on a specific group of students and may not be generalizable to all adolescents. The reliance on video recordings might limit insights into non-verbal communication and subtle interactions.",
+        "relevance_to_research_question": "This research provides valuable insights into how social media and digital tools shape adolescents' text-making processes, which is directly relevant to understanding the impact of technology on their lifeworlds and everyday experiences.",
         "confidence": "medium"
       }
     },
@@ -207,12 +207,12 @@
         "url": "https://doi.org/10.3389/fpsyt.2023.1031390"
       },
       "rag_extraction": {
-        "method": "ecosocial approach integrated with systems theory",
-        "dataset": "systematic review of existing studies and longitudinal trajectories of depression symptoms",
-        "task": "analyze interactions between social and biological factors in mental health outcomes",
-        "main_findings": "social withdrawal exacerbates emotional distress; community support mitigates mental health risks; bidirectional relationships between social factors and mental health; looping effects of human kinds; psychiatric institutions impact social integration",
-        "limitations": "BPS framework criticized for lacking concrete content; complexity of multilevel interactions; reliance on existing studies without dedicated dataset",
-        "relevance_to_research_question": "directly addresses how social factors influence mental health trajectories in adolescents through ecosocial analysis",
+        "method": "systems approach",
+        "dataset": "not specified",
+        "task": "exploring the multilevel interactions that give rise to mental health disorders",
+        "main_findings": "The ecosocial systems view provides a framework for understanding mental health disorders by considering multiple levels of organization, including lifespan developmental history, social structure and positioning, cultural meaning, norms, values and affordances, and individual biography and self-understanding. This approach highlights the importance of context-dependent factors in shaping illness experience and coping.",
+        "limitations": "The study faces multiple obstacles, including lack of collection of data representative of population variability and high levels of context dependence as well as ethical and pragmatic issues related to the use of such data. There is a need for an extensive research program of modelling built on large datasets that include potentially important individual and contextual variables.",
+        "relevance_to_research_question": "The paper's focus on ecosocial systems provides insights into how social context and lived experience shape mental health disorders, which is directly relevant to understanding how social media impacts adolescents' lifeworlds and everyday experiences.",
         "confidence": "medium"
       }
     },
@@ -230,12 +230,12 @@
         "url": "https://doi.org/10.25133/jpssv292021.034"
       },
       "rag_extraction": {
-        "method": "phenomenology-based ethnography",
-        "dataset": "qualitative data from 231 teenage girls who married young and were active on social media in Bawean Island, Indonesia",
-        "task": "examine how social media influences early marriage and its effects on teenagers",
-        "main_findings": "social media leads to access to pornography and influences prohibited sexual behaviors, relationships formed online lead to deviant behavior and early marriages, early marriage is linked to psychological issues and higher divorce rates in some regions",
-        "limitations": "focus on a specific regional population, reliance on self-reported data, potential socioeconomic factors not fully accounted for",
-        "relevance_to_research_question": "directly addresses how social media influences teenagers' behavior leading to early marriage and related consequences",
+        "method": "Phenomenology",
+        "dataset": "Research conducted in two districts of Bawean Island, Indonesia",
+        "task": "Investigation of early marriage among adolescents on Bawean Island",
+        "main_findings": "Social media influences teenagers to connect with people beyond regional borders and can lead to prohibited sexual behavior such as masturbation. Adolescents use social media for accessing pornography and engaging in casual relationships that violate religious standards.",
+        "limitations": "The study was conducted in a specific region, which may not be representative of other areas. The sample size is small, consisting of only 24 research subjects.",
+        "relevance_to_research_question": "The findings are relevant to the research question as they provide insights into how social media shapes adolescents' lifeworlds and everyday experiences by influencing their sexual behavior and relationships.",
         "confidence": "medium"
       }
     }
