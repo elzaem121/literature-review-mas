@@ -4,7 +4,8 @@ from agent import AcademicSearchAgent
 
 async def main():
     # Define the primary research question
-    research_question = "How does social media shape adolescents' lifeworlds and everyday experiences?"
+    #research_question = "How does social media shape adolescents' lifeworlds and everyday experiences?"
+    research_question2 = "How to evaluate Multiagentsystems in an efficient way?"
 
     # Set the minimum publication year (e.g., to get recent studies on social media)
     min_publish_year = 2020
@@ -15,7 +16,8 @@ async def main():
     try:
         # Trigger the pipeline (removed the criteria argument)
         final_json_output = await agent.run_pipeline(
-            user_query=research_question,
+            #user_query=research_question,
+            user_query=research_question2,
             min_year=min_publish_year
         )
 
@@ -24,7 +26,7 @@ async def main():
         print(final_json_output)
 
         # Save the generated JSON to a local file for the Screening Agent to process later
-        with open("search_results.json", "w", encoding="utf-8") as f:
+        with open("../Screening_Agent/search_results.json", "w", encoding="utf-8") as f:
             f.write(final_json_output)
 
         print("\n[SUCCESS] Results successfully saved to: search_results.json")
