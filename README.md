@@ -4,9 +4,76 @@
 
 ## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Welcome to the Literature-Review-Multiagentsystem - Projekt.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### install requirements
+
+First you need to install the requirements via pip install -r requirements.txt
+
+### LLM Model Connection
+next you need to connect to an LLM Modell. 
+
+You can either use a local model or connect to a model that is hostet in Kubernetes.
+
+#### connect a local model
+
+##### linux
+1. install Ollama 
+curl -fsSL https://ollama.com/install.sh | sh
+ollama --version
+2. start Ollama
+ollama serve
+Standardmäßig läuft der Server dann auf: http://localhost:11434
+3. download model
+ollama pull qwen2.5-coder:7b
+ollama list
+4. test model
+ollama run qwen2.5-coder:7b
+
+In main.py of the agents the chosen model version must be filled in: model_name= xxx
+
+##### windows /mac os
+1. install Ollama
+You can just download it directly from the site https://ollama.com/download/windows and start the .expected
+2. The steps 2 - 4 are the same as linux. See above.
+
+#### connect to a model on Kubernetes
+The model needs to be already running on Kubernetes. This is just a step-by-step to connect to an existing model.
+##### Linux Fedora
+1. install kubectl
+sudo dnf install -y kubectl 
+kubectl version --client
+which kubectl
+2. get kubeconfig
+Log in to Rancher https://rancher.hs-anhalt.de/dashboard/home and go to the namespace where your model is located in.
+Click on the Symbol that shows a document "Download kubeconfig"
+The file will be downloaded on to your system in the folder "/Downloads" under the name "main.yaml"
+3. import kubeconfig
+mkdir -p ~/.kube
+cp ~/Downloads/main.yaml ~/.kube/config
+chmod 600 ~/.kube/config
+
+kubectl config get-contexts #test cluster connection
+kubectl config current-context
+kubectl cluster-info
+kubectl get ns
+--> should point to **main** 
+
+kubectl config use-context main # in case it pointed to main
+kubectl config set-context --current --namespace=<your-namespace-name>
+
+kubectl get svc #search for the service. it shows the target port and service name
+
+kubectl get all -n <your-namespace-name> #test connection
+kubectl get svc -n <your-namespace-name>
+
+4. Port Forwarding
+kubectl port-forward -n <namespace> svc/<service-name> 11434:<cluster-port>
+--> Connection is starting, do not close the terminal. This is your connection tunnel - it has to stay open so that the application can access it.
+
+**Important for configuration within the code:**
+MODEL_BASE_URL = "http://localhost:11434/v1"
+MODEL_NAME = "<your-modell-name>"
 
 ## Add your files
 
