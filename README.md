@@ -49,6 +49,8 @@ Log in to Rancher https://rancher.hs-anhalt.de/dashboard/home and go to the name
 Click on the Symbol that shows a document "Download kubeconfig"
 The file will be downloaded on to your system in the folder "/Downloads" under the name "main.yaml"
 3. import kubeconfig
+
+```bash
 mkdir -p ~/.kube
 cp ~/Downloads/main.yaml ~/.kube/config
 chmod 600 ~/.kube/config
@@ -66,6 +68,7 @@ kubectl get svc #search for the service. it shows the target port and service na
 
 kubectl get all -n <your-namespace-name> #test connection
 kubectl get svc -n <your-namespace-name>
+```
 
 4. Port Forwarding
 kubectl port-forward -n <namespace> svc/<service-name> 11434:<cluster-port>
