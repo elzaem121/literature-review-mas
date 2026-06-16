@@ -149,39 +149,38 @@ class UniversalAcademicSearchAgent:
         # Step 3: BYPASS GATEKEEPER
         print("[INFO] Gatekeeper is DISABLED. Formatting raw results directly...")
 
-        # 1. Initialize the new base nested structure
+        # 1. Initialize the new base structure with "papers" key
         formatted_output = {
-            "included_papers": []
+            "papers": []
         }
 
         for paper in candidate_pool:
-            # Extract title and abstract as in the previous code
             title = paper.get("title", "") or ""
             inverted_abstract = paper.get("abstract_inverted_index", {})
             reconstructed_abstract = self.openalex_client.reconstruct_inverted_abstract(inverted_abstract)
 
-            # 2. Extract author names from the OpenAlex nested structure
+            # 2. Extract author names
             authors_list = []
             for auth in paper.get("authorships", []):
                 author_name = auth.get("author", {}).get("display_name")
                 if author_name:
                     authors_list.append(author_name)
 
-            # 3. Build the single paper object in the new requested format
+            # 3. Build the paper object
             paper_obj = {
                 "title": title,
                 "abstract": reconstructed_abstract,
-                "year": paper.get("publication_year"),  # Renamed key to 'year'
-                "authors": authors_list,  # Added authors list
+                "year": paper.get("publication_year"),
+                "authors": authors_list,
                 "doi": paper.get("doi"),
-                "url": paper.get("id") or paper.get("doi"),  # Fallback to DOI if ID is missing
-                "relevance_score": 0  # Initial relevance score for downstream processing
+                "url": paper.get("id") or paper.get("doi"),
+                "relevance_score": 0
             }
 
-            # 4. Append the paper object inside the "paper" wrapper key
-            formatted_output["included_papers"].append({"paper": paper_obj})
+            # 4. Append DIRECTLY to the 'papers' list (No nested 'paper' key anymore)
+            formatted_output["papers"].append(paper_obj)
 
         # 5. Prune the results to match the exact target output count
-        formatted_output["included_papers"] = formatted_output["included_papers"][:target_output_count]
+        formatted_output["papers"] = formatted_output["papers"][:target_output_count]
 
         return formatted_output
