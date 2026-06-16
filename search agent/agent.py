@@ -146,30 +146,42 @@ class UniversalAcademicSearchAgent:
             start_year=start_year
         )
         print(f"[INFO] Retrieved {len(candidate_pool)} raw semantic candidate papers.")
-
         # Step 3: BYPASS GATEKEEPER
         print("[INFO] Gatekeeper is DISABLED. Formatting raw results directly...")
 
-        # Format the raw output slightly to match expected structure
-        final_results = []
+        # 1. Initialize the new base nested structure
+        formatted_output = {
+            "included_papers": []
+        }
+
         for paper in candidate_pool:
+            # Extract title and abstract as in the previous code
             title = paper.get("title", "") or ""
             inverted_abstract = paper.get("abstract_inverted_index", {})
             reconstructed_abstract = self.openalex_client.reconstruct_inverted_abstract(inverted_abstract)
 
-            primary_loc = paper.get("primary_location") or {}
-            source = primary_loc.get("source") or {}
-            journal_name = source.get("display_name") or "Unknown Venue"
+            # 2. Extract author names from the OpenAlex nested structure
+            authors_list = []
+            for auth in paper.get("authorships", []):
+                author_name = auth.get("author", {}).get("display_name")
+                if author_name:
+                    authors_list.append(author_name)
 
-            final_results.append({
-                "openalex_id": paper.get("id"),
-                "doi": paper.get("doi"),
+            # 3. Build the single paper object in the new requested format
+            paper_obj = {
                 "title": title,
                 "abstract": reconstructed_abstract,
-                "publication_year": paper.get("publication_year"),
-                "cited_by_count": paper.get("cited_by_count"),
-                "matched_gatekeeping_entities": ["GATEKEEPER_DISABLED"],
-                "journal": journal_name
-            })
+                "year": paper.get("publication_year"),  # Renamed key to 'year'
+                "authors": authors_list,  # Added authors list
+                "doi": paper.get("doi"),
+                "url": paper.get("id") or paper.get("doi"),  # Fallback to DOI if ID is missing
+                "relevance_score": 0  # Initial relevance score for downstream processing
+            }
 
-        return final_results[:target_output_count]
+            # 4. Append the paper object inside the "paper" wrapper key
+            formatted_output["included_papers"].append({"paper": paper_obj})
+
+        # 5. Prune the results to match the exact target output count
+        formatted_output["included_papers"] = formatted_output["included_papers"][:target_output_count]
+
+        return formatted_output
