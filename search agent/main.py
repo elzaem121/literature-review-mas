@@ -1,38 +1,40 @@
-import asyncio
-from agent import AcademicSearchAgent
+import json
+from agent import UniversalAcademicSearchAgent
 
 
-async def main():
-    # Define the primary research question
-    research_question = "How does social media shape adolescents' lifeworlds and everyday experiences?"
+def main():
+    # Insert your OpenAlex Polite Pool email here
+    OPENALEX_EMAIL = "elzaem408@gmail.com"
+    OPENALEX_API_KEY = None  # Optional
 
-    # Set the minimum publication year (e.g., to get recent studies on social media)
-    min_publish_year = 2020
+    # Initialize the search agent with local Ollama defaults
+    search_agent = UniversalAcademicSearchAgent(
+        openalex_email=OPENALEX_EMAIL,
+        openalex_api_key=OPENALEX_API_KEY,
+        model_name="qwen2.5-coder:7b"
+    )
 
-    # Initialize the agent orchestrator
-    agent = AcademicSearchAgent(model_name="qwen2.5-coder:7b")
+    # Restored the original research query about evaluating Multi-Agent Systems
+    #sample_query = "How does social media shape adolescents' lifeworlds and everyday experiences?"
+    sample_query = "How to evaluate Multiagentsystems in an efficient way?"
 
-    try:
-        # Trigger the pipeline (removed the criteria argument)
-        final_json_output = await agent.run_pipeline(
-            user_query=research_question,
-            min_year=min_publish_year
-        )
+    print(" Initiating local retrieval sequence...\n" + "=" * 50)
 
-        # Output is meticulously formatted and guaranteed to be valid JSON
-        print("\n=== FINAL OUTPUT FOR DOWNSTREAM SCREENING AGENT ===")
-        print(final_json_output)
+    # Run the retrieval pipeline
+    results = search_agent.run_precise_retrieval_cycle(
+        user_query=sample_query,
+        target_output_count=25,
+        min_citations=0,
+        start_year=2018
+    )
 
-        # Save the generated JSON to a local file for the Screening Agent to process later
-        with open("search_results.json", "w", encoding="utf-8") as f:
-            f.write(final_json_output)
+    print("\n" + "=" * 50)
+    print(f" Success! Handing off {len(results)} high-precision papers to Screening Agent.")
 
-        print("\n[SUCCESS] Results successfully saved to: search_results.json")
-
-    except Exception as e:
-        print(f"CRITICAL ERROR: Pipeline execution halted: {e}")
+    # Optional: Save results to pass to the next agent
+    with open("search_results.json", "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=4, ensure_ascii=False)
 
 
 if __name__ == "__main__":
-    # Execute the async main loop
-    asyncio.run(main())
+    main()
