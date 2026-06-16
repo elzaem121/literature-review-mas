@@ -4,9 +4,13 @@ from openai import OpenAI
 import instructor  # Added to support structured outputs on local Ollama
 
 # Internal local imports
-from schemas import AcademicQueryExpansionSchema
-from api_client import OpenAlexClient
+from .schemas import AcademicQueryExpansionSchema
+from .api_client import OpenAlexClient
 
+def _emit(self, message: str, progress_callback=None) -> None:
+    print(message)
+    if progress_callback:
+        progress_callback(message)
 
 class UniversalAcademicSearchAgent:
     """
@@ -123,10 +127,11 @@ class UniversalAcademicSearchAgent:
     def run_precise_retrieval_cycle(
             self,
             user_query: str,
-            target_output_count: int = 20,  # Default changed to 20
+            target_output_count: int = 20,
             min_citations: int = 10,
-            start_year: Optional[int] = None
-    ) -> List[Dict[str, Any]]:
+            start_year: Optional[int] = None,
+            progress_callback=None,
+    ) -> Dict[str, Any]:
         """
         Executes the high-precision retrieval cycle.
         GATEKEEPER IS CURRENTLY BYPASSED for raw semantic search testing.

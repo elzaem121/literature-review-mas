@@ -7,7 +7,7 @@ def main():
     OPENALEX_EMAIL = "elzaem408@gmail.com"
     OPENALEX_API_KEY = None  # Optional
 
-    # Initialize the search agent with local Ollama defaults
+    # Initialize the search_agent with local Ollama defaults
     search_agent = UniversalAcademicSearchAgent(
         openalex_email=OPENALEX_EMAIL,
         openalex_api_key=OPENALEX_API_KEY,
@@ -32,7 +32,7 @@ def main():
     print(f" Success! Handing off {len(results)} high-precision papers to Screening Agent.")
 
     # Optional: Save results to pass to the next agent
-    with open("search_results.json", "w", encoding="utf-8") as f:
+    with open("../Screening_Agent/search_results.json", "w", encoding="utf-8") as f:
         json.dump(results, f, indent=4, ensure_ascii=False)
 
 

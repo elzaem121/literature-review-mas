@@ -1,6 +1,7 @@
 from enum import Enum
 from typing import List, Optional
 
+from huggingface_hub.cli import papers
 from pydantic import BaseModel, Field
 
 

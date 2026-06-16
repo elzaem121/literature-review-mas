@@ -18,7 +18,7 @@ async def main():
     """
     protocol = AcademicScreeningAgent.load_review_protocol("review_config_Evaluation.json")
 
-    input_path = Path("testdaten/search_results.json")
+    input_path = Path("search_results.json")
     output_path = Path("screening_results.json")
 
     agent = AcademicScreeningAgent(
