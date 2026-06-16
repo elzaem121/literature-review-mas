@@ -71,7 +71,10 @@ kubectl get svc -n <your-namespace-name>
 ```
 
 4. Port Forwarding
+
+```bash
 kubectl port-forward -n <namespace> svc/<service-name> 11434:<cluster-port>
+```
 --> Connection is starting, do not close the terminal. This is your connection tunnel - it has to stay open so that the application can access it.
 
 **Important for configuration within the code:**
