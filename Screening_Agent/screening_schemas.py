@@ -4,6 +4,12 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 
 
+def format_criteria_list(criteria: List[str]) -> str:
+    if not criteria:
+        return "None specified."
+    return "\n".join(f"- {item}" for item in criteria)
+
+
 class ScreeningDecision(str, Enum):
     """
     Final screening decision for one paper.
@@ -11,6 +17,29 @@ class ScreeningDecision(str, Enum):
     INCLUDE = "include"
     EXCLUDE = "exclude"
     UNCERTAIN = "uncertain"
+
+
+class PublicationYearFilter(BaseModel):
+    min_year: Optional[int] = None
+    max_year: Optional[int] = None
+
+
+class ReviewProtocol(BaseModel):
+    research_question: str
+
+    inclusion_criteria: List[str] = Field(default_factory=list)
+
+    exclusion_criteria: List[str] = Field(default_factory=list)
+
+    publication_year: PublicationYearFilter = PublicationYearFilter()
+
+    additional_instructions: Optional[str] = None
+
+    def format_inclusion_criteria(self) -> str:
+        return format_criteria_list(self.inclusion_criteria)
+
+    def format_exclusion_criteria(self) -> str:
+        return format_criteria_list(self.exclusion_criteria)
 
 
 class ResearchPaper(BaseModel):
@@ -39,7 +68,6 @@ class PaperScreeningResult(BaseModel):
     """
     Structured LLM decision for a single paper.
     """
-    print("Result entered")
     decision: ScreeningDecision = Field(..., description="include, exclude, or uncertain.")
     confidence_score: int = Field(..., ge=1, le=10, description="Confidence in the decision from 1 to 10.")
     relevance_score: int = Field(..., ge=1, le=10, description="Topic relevance from 1 to 10.")
@@ -65,11 +93,16 @@ class ScreenedPaper(BaseModel):
     screening: PaperScreeningResult
 
 
+class ScreeningError(BaseModel):
+    paper: ResearchPaper
+    error: str
+
+
 class ScreeningOutput(BaseModel):
     """
     Final output of the Screening Agent.
     """
-    print("Output entered")
     included_papers: List[ScreenedPaper] = Field(default_factory=list)
     excluded_papers: List[ScreenedPaper] = Field(default_factory=list)
     uncertain_papers: List[ScreenedPaper] = Field(default_factory=list)
+    failed_papers: List[ScreeningError] = Field(default_factory=list)

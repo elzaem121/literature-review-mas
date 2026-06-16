@@ -1,0 +1,23 @@
+{
+  "research_question": "How to evaluate Multiagentsystems in a efficient way?",
+
+  "inclusion_criteria": [
+    "Focus on multi-agent systems, agentic workflows, or collaborative AI environments",
+    "Investigates safety evaluation, benchmarking frameworks, or vulnerability assessments",
+    "Addresses alignment, adversarial robustness, hallucination containment, or secure tool use"
+  ],
+
+  "exclusion_criteria": [
+    "Focuses only on single-agent frameworks or standalone Large Language Models",
+    "Purely performance-based metrics or cost optimization without safety benchmarks",
+    "Traditional robotics hardware collision studies without cognitive or digital reasoning software",
+    "Non-peer-reviewed secondary literature, informal technical blog posts, or short abstracts"
+  ],
+
+
+  "publication_year": {
+    "min_year": 2020
+  },
+
+  "additional_instructions": "Be conservative when excluding papers."
+}

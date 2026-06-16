@@ -1,0 +1,32 @@
+# Core LLM & Structured Output
+openai>=1.0.0
+instructor>=1.7.0
+ollama
+
+# Data Validation
+pydantic>=2.0.0
+
+# HTTP & Reliability
+httpx
+requests
+tenacity
+
+# UI
+streamlit
+
+# Data Processing
+numpy
+pandas
+
+# PDF Processing
+pymupdf
+
+# Embeddings & Vector Search
+sentence-transformers
+faiss-cpu
+
+# Environment Variables
+python-dotenv
+
+# Testing
+pytest>=8.0.0

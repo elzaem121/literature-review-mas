@@ -1,0 +1,243 @@
+{
+  "rag_extracted_papers": [
+    {
+      "paper": {
+        "title": "Beyond deficit: ‘strengths‐based approaches’ in Indigenous health research",
+        "year": 2021,
+        "authors": [
+          "Joanne Bryant",
+          "Reuben Bolt",
+          "Jessica R. Botfield",
+          "Kacey Martin",
+          "Michael Doyle",
+          "Dean Murphy",
+          "Simon Graham",
+          "Christy E. Newman",
+          "Stephen Bell",
+          "Carla Treloar",
+          "Annette J. Browne",
+          "Peter Aggleton"
+        ],
+        "doi": "https://doi.org/10.1111/1467-9566.13311",
+        "url": "https://doi.org/10.1111/1467-9566.13311"
+      },
+      "rag_extraction": {
+        "method": "Qualitative research",
+        "dataset": "Not specified",
+        "task": "Exploring strengths-based approaches in Indigenous health research",
+        "main_findings": "Strengths-based approaches focus on the relationships, identities, and practices that are possessed by groups and communities, rather than individual qualities or environments. This approach more fully engages with Indigenous ways of knowing about resilience.",
+        "limitations": "The study's limitations include its focus on a specific context (Indigenous health research) and the potential for biases in the interpretation of strengths-based approaches within Western biomedical frameworks.",
+        "relevance_to_research_question": "High",
+        "confidence": "medium"
+      }
+    },
+    {
+      "paper": {
+        "title": "Streaming’s Effects on Music Culture: Old Anxieties and New Simplifications",
+        "year": 2021,
+        "authors": [
+          "David Hesmondhalgh"
+        ],
+        "doi": "https://doi.org/10.1177/17499755211019974",
+        "url": "https://doi.org/10.1177/17499755211019974"
+      },
+      "rag_extraction": {
+        "method": "Qualitative research (interviews)",
+        "dataset": "Interview data from Spotify users",
+        "task": "Exploring the effects of music streaming on music culture and consumption habits",
+        "main_findings": "Music streaming is a complex phenomenon that combines socio-cultural forces with digital technologies, potentially eroding emancipatory possibilities offered by music. Users are both explorers and concerned about their own restlessness.",
+        "limitations": "The study focuses primarily on Spotify users and may not generalize to other music streaming platforms or different demographic groups. The research is based on interviews conducted between 2010 and 2013, which might limit its relevance to current trends in music streaming.",
+        "relevance_to_research_question": "The paper provides insights into how digital technologies are shaping music consumption habits, which is directly relevant to understanding the impact of social media (music streaming) on adolescents' lifeworlds and everyday experiences. However, it does not explicitly address the specific effects on adolescents.",
+        "confidence": "medium"
+      }
+    },
+    {
+      "paper": {
+        "title": "Networked Learning in 2021: A Community Definition",
+        "year": 2021,
+        "authors": [
+          "Networked Learning Editorial Collective (NLEC)",
+          "Lesley Gourlay",
+          "José Luis Rodríguez Illera",
+          "Elena Barberà",
+          "Maha Bali",
+          "Daniela Gachago",
+          "Nicola Pallitt",
+          "Chris Jones",
+          "Siân Bayne",
+          "Stig Børsen Hansen",
+          "Stefan Hrastinski",
+          "Jimmy Jaldemark",
+          "Chryssa Themelis",
+          "Magda Pischetola",
+          "Lone Dirckinck‐Holmfeld",
+          "Adam Matthews",
+          "Kalervo Ν. Gulson",
+          "Kyungmee Lee",
+          "Brett Bligh",
+          "Patricia Thibaut",
+          "Marjan Vermeulen",
+          "Femke Nijland",
+          "Emmy Vrieling",
+          "Howard Scott",
+          "Klaus Thestrup",
+          "Tom Gislev",
+          "Marguerite Koole",
+          "Maria Cutajar",
+          "Sue Tickner",
+          "Ninette Rothmüller",
+          "Aras Bozkurt",
+          "Tim Fawns",
+          "Jen Ross",
+          "Karoline Schnaider",
+          "Lucila Carvalho",
+          "Jennifer K. Green",
+          "Mariana Hadžijusufović",
+          "Sarah Hayes",
+          "Laura Czerniewicz",
+          "Jeremy Knox"
+        ],
+        "doi": "https://doi.org/10.1007/s42438-021-00222-y",
+        "url": "https://doi.org/10.1007/s42438-021-00222-y"
+      },
+      "rag_extraction": {
+        "method": "not specified",
+        "dataset": "not specified",
+        "task": "exploring the concept of Networked Learning (NL) and its impact on education",
+        "main_findings": "Networked Learning (NL) is a pedagogical approach that emphasizes collaboration, collective inquiry, and the use of digital tools to enhance learning. It allows for the articulation of connections between people and things, fostering individual and collective growth through shared experiences.",
+        "limitations": "The paper does not provide specific limitations related to the study or research methodology.",
+        "relevance_to_research_question": "The findings are relevant to understanding how social media (and by extension, digital tools) shape adolescents' lifeworlds and everyday experiences, as NL can be seen as a form of networked learning that involves collaborative and collective inquiry.",
+        "confidence": "medium"
+      }
+    },
+    {
+      "paper": {
+        "title": "A Metalanguage for Learning: Rebalancing the Cognitive with the Socio-Material",
+        "year": 2022,
+        "authors": [
+          "Fei Victor Lim",
+          "Bill Cope",
+          "Mary Kalantzis"
+        ],
+        "doi": "https://doi.org/10.3389/fcomm.2022.830613",
+        "url": "https://doi.org/10.3389/fcomm.2022.830613"
+      },
+      "rag_extraction": {
+        "method": "not specified",
+        "dataset": "not specified",
+        "task": "not specified",
+        "main_findings": "The paper discusses the use of a pedagogic metalanguage for learning and its application in various contexts, including social media. It highlights the importance of balancing cognitive and socio-material processes in education.",
+        "limitations": "The limitations are not explicitly stated in the provided text.",
+        "relevance_to_research_question": "The paper is relevant to the research question as it explores how social media can be used in educational settings, which indirectly shapes adolescents' lifeworlds and everyday experiences.",
+        "confidence": "medium"
+      }
+    },
+    {
+      "paper": {
+        "title": "Multiliteracies: Life of an Idea",
+        "year": 2023,
+        "authors": [
+          "Mary Kalantzis",
+          "Bill Cope"
+        ],
+        "doi": "https://doi.org/10.18848/2327-0136/cgp/v30i02/17-89",
+        "url": "https://doi.org/10.18848/2327-0136/cgp/v30i02/17-89"
+      },
+      "rag_extraction": {
+        "method": "not specified",
+        "dataset": "not specified",
+        "task": "not specified",
+        "main_findings": "The paper discusses the concept of multiliteracies and its application in various educational contexts. It highlights the importance of reflexive pedagogy, e-learning ecologies, and digital technologies in shaping adolescents' lifeworlds and everyday experiences.",
+        "limitations": "The paper does not provide specific findings related to social media's impact on adolescents' lifeworlds and everyday experiences. The focus is more broadly on multiliteracies and its applications rather than a direct examination of social media.",
+        "relevance_to_research_question": "The paper indirectly relates to the research question by discussing how digital technologies, which include social media, can be integrated into educational practices through multiliteracies. However, it does not directly address the specific impact of social media on adolescents' lifeworlds and everyday experiences.",
+        "confidence": "medium"
+      }
+    },
+    {
+      "paper": {
+        "title": "‘More options…less time’ in the ‘hustle culture’ of ‘generation sensible’: Individualization and drinking decline among twenty‐first century young adults",
+        "year": 2022,
+        "authors": [
+          "Adam Burgess",
+          "Henry Yeomans",
+          "Laura Fenton"
+        ],
+        "doi": "https://doi.org/10.1111/1468-4446.12964",
+        "url": "https://doi.org/10.1111/1468-4446.12964"
+      },
+      "rag_extraction": {
+        "method": "survey and focus groups",
+        "dataset": "participants from social media and email distribution lists",
+        "task": "exploring generational drinking decline and individualization among young adults",
+        "main_findings": "young people are more likely to abstain or moderate their alcohol consumption due to individualization, health concerns, and a broader sense of wellbeing. They are also more conscious of social issues like climate change and political pressure.",
+        "limitations": "sample is skewed toward UK university students and recent graduates, which may not be representative of all young adults globally. Ethical practice was followed with pseudonyms used.",
+        "relevance_to_research_question": "The study provides insights into how individualization and health concerns are shaping the drinking habits of young people, which is relevant to understanding how social media and broader societal changes impact adolescents' lifeworlds and everyday experiences.",
+        "confidence": "medium"
+      }
+    },
+    {
+      "paper": {
+        "title": "Students as digital multimodal text designers: A study of resources, affordances, and experiences",
+        "year": 2021,
+        "authors": [
+          "Helene Dahlström"
+        ],
+        "doi": "https://doi.org/10.1111/bjet.13171",
+        "url": "https://doi.org/10.1111/bjet.13171"
+      },
+      "rag_extraction": {
+        "method": "Qualitative research using multimodal analysis",
+        "dataset": "23 video recordings of students' design processes",
+        "task": "Analyzing students' multimodal text making and their experiences with digital tools",
+        "main_findings": "Students demonstrated a range of skills in using digital resources for text-making, including searching for images, taking photos, recording videos, and arranging different text parts. Their experiences and backgrounds influenced their choices and the affordances they utilized.",
+        "limitations": "The study focused on a specific group of students and may not be generalizable to all adolescents. The reliance on video recordings might limit insights into non-verbal communication and subtle interactions.",
+        "relevance_to_research_question": "This research provides valuable insights into how social media and digital tools shape adolescents' text-making processes, which is directly relevant to understanding the impact of technology on their lifeworlds and everyday experiences.",
+        "confidence": "medium"
+      }
+    },
+    {
+      "paper": {
+        "title": "A cultural-ecosocial systems view for psychiatry",
+        "year": 2023,
+        "authors": [
+          "Ana Gómez-Carrillo",
+          "Laurence J. Kirmayer"
+        ],
+        "doi": "https://doi.org/10.3389/fpsyt.2023.1031390",
+        "url": "https://doi.org/10.3389/fpsyt.2023.1031390"
+      },
+      "rag_extraction": {
+        "method": "systems approach",
+        "dataset": "not specified",
+        "task": "exploring the multilevel interactions that give rise to mental health disorders",
+        "main_findings": "The ecosocial systems view provides a framework for understanding mental health disorders by considering multiple levels of organization, including lifespan developmental history, social structure and positioning, cultural meaning, norms, values and affordances, and individual biography and self-understanding. This approach highlights the importance of context-dependent factors in shaping illness experience and coping.",
+        "limitations": "The study faces multiple obstacles, including lack of collection of data representative of population variability and high levels of context dependence as well as ethical and pragmatic issues related to the use of such data. There is a need for an extensive research program of modelling built on large datasets that include potentially important individual and contextual variables.",
+        "relevance_to_research_question": "The paper's focus on ecosocial systems provides insights into how social context and lived experience shape mental health disorders, which is directly relevant to understanding how social media impacts adolescents' lifeworlds and everyday experiences.",
+        "confidence": "medium"
+      }
+    },
+    {
+      "paper": {
+        "title": "Investigation of Early Marriage: A Phenomenology Study in the Society of Bawean Island, Indonesia",
+        "year": 2021,
+        "authors": [
+          "Singgih Susilo",
+          "Novia Fitri Istiawati",
+          "Muhammad Aliman",
+          "Muhammad Zulfi Al’Ghani"
+        ],
+        "doi": "https://doi.org/10.25133/jpssv292021.034",
+        "url": "https://doi.org/10.25133/jpssv292021.034"
+      },
+      "rag_extraction": {
+        "method": "Phenomenology",
+        "dataset": "Research conducted in two districts of Bawean Island, Indonesia",
+        "task": "Investigation of early marriage among adolescents on Bawean Island",
+        "main_findings": "Social media influences teenagers to connect with people beyond regional borders and can lead to prohibited sexual behavior such as masturbation. Adolescents use social media for accessing pornography and engaging in casual relationships that violate religious standards.",
+        "limitations": "The study was conducted in a specific region, which may not be representative of other areas. The sample size is small, consisting of only 24 research subjects.",
+        "relevance_to_research_question": "The findings are relevant to the research question as they provide insights into how social media shapes adolescents' lifeworlds and everyday experiences by influencing their sexual behavior and relationships.",
+        "confidence": "medium"
+      }
+    }
+  ]
+}

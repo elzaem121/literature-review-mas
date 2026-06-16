@@ -1,0 +1,22 @@
+{
+  "research_question": "How does social media shape adolescents' lifeworlds and everyday experiences?",
+
+  "inclusion_criteria": [
+    "Focus on adolescents, teenagers, youth or young people",
+    "Investigates social media use",
+    "Addresses everyday life, identity, wellbeing, peer relations or social interaction"
+  ],
+
+  "exclusion_criteria": [
+    "Focuses only on adults",
+    "Purely technical recommender systems",
+    "Marketing performance studies",
+    "Severe psychiatric treatment studies"
+  ],
+
+  "publication_year": {
+    "min_year": 2020
+  },
+
+  "additional_instructions": "Be conservative when excluding papers."
+}

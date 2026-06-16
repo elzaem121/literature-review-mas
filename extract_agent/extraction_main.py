@@ -50,7 +50,7 @@ async def main():
     print(f"Added full_text to {min(len(data['papers']), len(pdf_texts))} papers.")
 
     agent = AcademicExtractionAgent(
-        model_name="qwen3:latest",
+        model_name="qwen2.5-coder:7b",
         max_concurrent_tasks=2,
     )
 
