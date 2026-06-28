@@ -4,7 +4,7 @@ from pathlib import Path
 import fitz
 
 
-INPUT_FILE = Path("papers_with_manual_pdfs.json")
+INPUT_FILE = Path("papers_with_auto_pdfs.json")
 OUTPUT_FILE = Path("papers_with_full_text.json")
 
 

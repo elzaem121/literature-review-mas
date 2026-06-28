@@ -11,14 +11,23 @@ OUTPUT_FILE = Path("retrieved_chunks.json")
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
-QUERIES = [
-    "research method study design data collection sample participants",
-    "dataset data source interviews survey observations participants",
-    "main findings results key outcomes social media adolescents",
-    "limitations weaknesses study limitations future research",
-]
-
-
+FIELD_QUERIES = {
+    "method_chunks": [
+        "research method methodology study design approach qualitative quantitative mixed methods theoretical conceptual literature review"
+    ],
+    "dataset_chunks": [
+        "data dataset data source participants sample corpus interviews survey observation experiment field data documents research population"
+    ],
+    "task_chunks": [
+        "research objective aim purpose research question analytical focus task contribution"
+    ],
+    "findings_chunks": [
+        "main findings results conclusions key outcomes implications contribution"
+    ],
+    "limitations_chunks": [
+        "limitations weaknesses constraints future work study limitations"
+    ],
+}
 def embed_texts(model, texts):
     embeddings = model.encode(texts, convert_to_numpy=True)
     embeddings = embeddings.astype("float32")
@@ -50,22 +59,32 @@ for paper in data["papers"]:
     index = faiss.IndexFlatIP(dimension)
     index.add(chunk_embeddings)
 
-    selected_chunks = []
+    field_chunks = {}
 
-    query_embeddings = embed_texts(model, QUERIES)
+    for field_name, queries in FIELD_QUERIES.items():
+        selected_chunks = []
 
-    distances, indices = index.search(query_embeddings, k=3)
+        query_embeddings = embed_texts(model, queries)
+        distances, indices = index.search(query_embeddings, k=5)
 
-    for query_idx, query in enumerate(QUERIES):
-        for chunk_idx in indices[query_idx]:
-            chunk_text = chunks[int(chunk_idx)]
+        for query_idx, query in enumerate(queries):
+            for chunk_idx in indices[query_idx]:
+                chunk_text = chunks[int(chunk_idx)]
 
-            if chunk_text not in selected_chunks:
-                selected_chunks.append(chunk_text)
+                if chunk_text not in selected_chunks:
+                    selected_chunks.append(chunk_text)
 
-    paper["retrieved_chunks"] = selected_chunks
+        field_chunks[field_name] = selected_chunks
 
-    print(f"Retrieved chunks: {len(selected_chunks)}")
+    paper["retrieved_chunks_by_field"] = field_chunks
+
+    all_chunks = []
+    for chunks_list in field_chunks.values():
+        for chunk in chunks_list:
+            if chunk not in all_chunks:
+                all_chunks.append(chunk)
+
+    paper["retrieved_chunks"] = all_chunks
 
 
 with OUTPUT_FILE.open("w", encoding="utf-8") as file:
