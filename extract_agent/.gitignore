@@ -1,14 +1,29 @@
+# Virtual environment
 .venv/
+
+# Python
 __pycache__/
+**/__pycache__/
 *.pyc
 *.pyo
 *.pyd
 
+# Cache
 .cache/
 .ipynb_checkpoints/
 
-downloaded_papers/
+# Logs
 *.log
 
+# Downloaded papers
+downloaded_papers/
+
+# IDE
+.idea/
+
+# OS
 .DS_Store
 Thumbs.db
+
+# Personal workspace (nicht Teil des Projekts)
+Ferass code space/

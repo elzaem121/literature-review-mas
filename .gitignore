@@ -1,2 +1,12 @@
-/.venv/
-/Screening_Agent/testdaten/search_results.json
+# IDE
+.idea/
+
+# Python
+**/__pycache__/
+*.pyc
+
+# Persönlicher Arbeitsbereich
+Ferass code space/
+
+# Falls dieser Ordner nicht Teil des Projekts ist
+search agent/
