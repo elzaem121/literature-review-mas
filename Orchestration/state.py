@@ -9,7 +9,7 @@ class PipelineState(TypedDict):
     # ---------------------------------------------------------
     # 1. INPUTS (From Streamlit via FastAPI)
     # ---------------------------------------------------------
-    research_question: str               
+    research_question: str
     min_year: Optional[int]
     inclusion_criteria: Optional[List[str]]
     exclusion_criteria: Optional[List[str]]
@@ -26,10 +26,10 @@ class PipelineState(TypedDict):
     screening_results: Dict[str, Any]
 
     # Filled by Extraction Agent
-    final_analysis: Any
+    extracted_papers: List[Dict[str, Any]]
 
     # ---------------------------------------------------------
     # 3. UI TRACKING (For Streamlit Progress Bar / Status)
     # ---------------------------------------------------------
-    current_step: str  # e.g., "search", "screening", "extraction", "completed"
+    current_step: str  # e.g., "search", "screening", "document_processing", "extraction", "completed"
     status_message: str  # e.g., "Searching OpenAlex for semantic matches..."

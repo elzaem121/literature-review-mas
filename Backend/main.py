@@ -48,6 +48,8 @@ async def run_graph_in_background(job_id: str, initial_state: dict):
                 JOBS[job_id]["raw_papers_count"] = len(latest_state["raw_papers"])
             if "screening_results" in latest_state:
                 JOBS[job_id]["screening_results"] = latest_state["screening_results"]
+            if "extracted_papers" in latest_state:
+                JOBS[job_id]["extracted_papers"] = latest_state["extracted_papers"]
             if "final_analysis" in latest_state:
                 JOBS[job_id]["final_analysis"] = latest_state["final_analysis"]
 
@@ -73,6 +75,7 @@ async def start_pipeline(request: ResearchRequest, background_tasks: BackgroundT
         "status_message": "Pipeline initialized, adding to background tasks...",
         "raw_papers_count": 0,
         "screening_results": None,
+        "extracted_papers": None,
         "final_analysis": None
     }
 
@@ -122,6 +125,7 @@ async def get_status(job_id: str):
         status_message=job_data["status_message"],
         raw_papers_count=job_data.get("raw_papers_count", 0),
         screening_results=screening_obj,
+        extracted_papers=job_data.get("extracted_papers"),
         final_analysis=job_data.get("final_analysis")
     )
 

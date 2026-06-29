@@ -20,4 +20,5 @@ class ResearchResponse(BaseModel):
     status_message: str = Field(..., description="Human-readable status for the UI spinner")
     raw_papers_count: int = Field(default=0, description="Number of papers found by Search Agent")
     screening_results: Optional[ScreeningResults] = Field(default=None, description="Categorized papers from Screening Agent")
+    extracted_papers: Optional[List[Dict[str, Any]]] = Field(default=None)
     final_analysis: Optional[Any] = Field(default=None, description="Reserved for the Extraction Agent's final synthesis report")

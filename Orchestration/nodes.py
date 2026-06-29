@@ -6,6 +6,9 @@ from search_agent.new_main import main as run_search
 from Screening_Agent.screening_agent import AcademicScreeningAgent
 from Screening_Agent.screening_schemas import ResearchPaper
 
+# 1. IMPORT FIX: Import the actual extraction node we created earlier
+# (Note: Ensure the file name matches your actual file structure, e.g., rag_extraction_main)
+from extract_agent.rag_extraction_main import extraction_node
 
 # ==========================================
 # 🟢 LIVE STATUS NODES (Fast Nodes)
@@ -19,6 +22,12 @@ def pre_search_node(state: PipelineState) -> PipelineState:
 def pre_screening_node(state: PipelineState) -> PipelineState:
     state["current_step"] = "screening"
     state["status_message"] = "⚖️ [LIVE] Screening Agent is running: Analyzing papers against criteria..."
+    return state
+
+
+def pre_document_processing_node(state: PipelineState) -> PipelineState:
+    state["current_step"] = "document_processing"
+    state["status_message"] = "📄 [LIVE] Document Processing is running: Downloading PDFs and preparing RAG chunks..."
     return state
 
 
@@ -71,12 +80,5 @@ async def screening_node(state: PipelineState) -> PipelineState:
     }
     return state
 
-
-def extraction_node(state: PipelineState) -> PipelineState:
-    # Placeholder for the actual extraction logic
-    state["final_analysis"] = "Extraction agent is under development."
-
-    # Finalize pipeline status here at the very end
-    state["current_step"] = "completed"
-    state["status_message"] = "✅ Pipeline completed successfully!"
-    return state
+# 2. REMOVAL FIX: The placeholder extraction_node has been deleted from here,
+# since we are now importing the real one from its own file above.

@@ -156,6 +156,10 @@ if submitted:
                             status_box.update(label="❌ Pipeline Failed!", state="error")
                             st.error(msg)
                             break
+                        elif current_step == "document_processing":
+                            status_box.update(label="📄 PDFs werden heruntergeladen und verarbeitet...", state="running")
+                        elif current_step == "extraction":
+                            status_box.update(label="📝 RAG-Extraktion läuft...", state="running")
                     time.sleep(1)
         else:
             st.error("Failed to start pipeline.")
@@ -164,7 +168,7 @@ if submitted:
         st.error("❌ Connection Error: Ensure your FastAPI backend is running.")
 
 # ---------------------------------------------------------
-# 5. DISPLAY RESULTS (Your Old Dashboard Style)
+# 5. DISPLAY RESULTS
 # ---------------------------------------------------------
 if "results" in st.session_state and st.session_state.results:
     res = st.session_state.results
@@ -195,3 +199,58 @@ if "results" in st.session_state and st.session_state.results:
             st.json(failed)
         else:
             st.info("No failed papers.")
+
+    # ---------------------------------------------------------
+    # NEW: DISPLAY EXTRACTION RESULTS
+    # ---------------------------------------------------------
+    if res.get("current_step") == "completed" and res.get("extracted_papers"):
+        st.divider()
+        st.subheader("📝 Extrahierte Daten (RAG Extraction)")
+
+        extracted_data = res["extracted_papers"]
+
+
+        table_data = []
+        for item in extracted_data:
+            paper_info = item.get("paper", {})
+            rag_info = item.get("rag_extraction", {})
+
+            table_data.append({
+                "Titel": paper_info.get("title", "N/A"),
+                "Paper Type": rag_info.get("paper_type", "N/A"),
+                "Method": rag_info.get("method", "N/A"),
+                "Dataset": rag_info.get("dataset", "N/A"),
+                "Task": rag_info.get("task", "N/A"),
+                "Main Findings": rag_info.get("main_findings", "N/A"),
+                "Limitations": rag_info.get("limitations", "N/A"),
+                "Confidence": rag_info.get("confidence", "N/A")
+            })
+
+        df_extracted = pd.DataFrame(table_data)
+
+
+        st.dataframe(
+            df_extracted,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Titel": st.column_config.TextColumn("Titel", width="medium"),
+                "Paper Type": st.column_config.TextColumn("Type"),
+                "Method": st.column_config.TextColumn("Method"),
+                "Dataset": st.column_config.TextColumn("Dataset"),
+                "Task": st.column_config.TextColumn("Task", width="medium"),
+                "Main Findings": st.column_config.TextColumn("Findings", width="large"),
+                "Limitations": st.column_config.TextColumn("Limitations", width="medium"),
+                "Confidence": st.column_config.TextColumn("Conf."),
+            }
+        )
+
+
+        csv = df_extracted.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="📥 Daten als CSV herunterladen",
+            data=csv,
+            file_name='extrahierte_daten.csv',
+            mime='text/csv',
+            type="primary"
+        )

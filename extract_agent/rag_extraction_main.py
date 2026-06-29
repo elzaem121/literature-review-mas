@@ -9,15 +9,15 @@ from openai import AsyncOpenAI
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from extraction_schemas import ExtractedPaperInfo
+from extract_agent.extraction_schemas import ExtractedPaperInfo
 
 
-INPUT_FILE = Path("retrieved_chunks.json")
-OUTPUT_FILE = Path("rag_extraction_results.json")
+#INPUT_FILE = Path("retrieved_chunks.json")
+#OUTPUT_FILE = Path("rag_extraction_results.json")
 
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen3:latest")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:7b")
 
 print(f"Using Ollama API at: {OLLAMA_BASE_URL}")
 print(f"Using Ollama model: {OLLAMA_MODEL}")
@@ -33,7 +33,12 @@ client = instructor.patch(
 
 
 async def extract_from_retrieved_chunks(paper, research_question: str):
-    retrieved_chunks_by_field = paper.get("retrieved_chunks_by_field", {})
+    paper_info = paper.get("paper", paper)
+    retrieved_chunks_by_field = (
+        paper.get("retrieved_chunks_by_field")
+        or paper_info.get("retrieved_chunks_by_field")
+        or {}
+    )
 
     method_context = "\n\n--- METHOD CHUNK ---\n\n".join(
         retrieved_chunks_by_field.get("method_chunks", [])
@@ -136,7 +141,7 @@ Research question:
 {research_question}
 
 Paper title:
-{paper.get("title")}
+{paper_info.get("title")}
 
 Field-specific retrieved chunks:
 
@@ -204,30 +209,44 @@ Rules:
 
     return {
         "paper": {
-            "title": paper.get("title"),
-            "year": paper.get("year"),
-            "authors": paper.get("authors"),
-            "doi": paper.get("doi"),
-            "url": paper.get("url"),
+            "title": paper_info.get("title"),
+            "year": paper_info.get("year"),
+            "authors": paper_info.get("authors"),
+            "doi": paper_info.get("doi"),
+            "url": paper_info.get("url"),
         },
         "rag_extraction": result.model_dump(),
     }
 
 
-async def main():
-    research_question = "How does social media shape adolescents' lifeworlds and everyday experiences?"
+async def extraction_node(state: dict) -> dict:
+    """
+    LangGraph Node: Extracts structured information from the screened papers.
+    """
+    print("--- RUNNING EXTRACTION AGENT ---")
 
-    with INPUT_FILE.open("r", encoding="utf-8") as file:
-        data = json.load(file)
+    research_question = state.get("research_question", "")
+
+    # 1. Retrieve only the papers accepted from the Screening phase
+    screening_results = state.get("screening_results", {})
+
+    included_papers = screening_results.get("included_papers", [])
 
     results = []
 
-    for paper in data["papers"]:
-        if not paper.get("retrieved_chunks_by_field"):
-            print(f"[SKIPPED] No retrieved chunks: {paper.get('title')}")
+    # 2. Iterate through the accepted papers and extract data
+    for paper in included_papers:
+        paper_info = paper.get("paper", paper)
+        retrieved_chunks_by_field = (
+            paper.get("retrieved_chunks_by_field")
+            or paper_info.get("retrieved_chunks_by_field")
+        )
+
+        if not retrieved_chunks_by_field:
+            print(f"[SKIPPED] No retrieved chunks: {paper_info.get('title')}")
             continue
 
-        print(f"[RAG EXTRACTION] {paper.get('title')}")
+        print(f"[RAG EXTRACTION] {paper_info.get('title')}")
 
         extraction = await extract_from_retrieved_chunks(
             paper=paper,
@@ -236,16 +255,9 @@ async def main():
 
         results.append(extraction)
 
-    with OUTPUT_FILE.open("w", encoding="utf-8") as file:
-        json.dump(
-            {"rag_extracted_papers": results},
-            file,
-            indent=2,
-            ensure_ascii=False,
-        )
-
-    print(f"\nSaved RAG extraction results to: {OUTPUT_FILE}")
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    # 3. Return the results to update the PipelineState and UI tracking
+    return {
+        "extracted_papers": results,
+        "current_step": "completed",
+        "status_message": "Extraktion abgeschlossen! (Daten sind bereit)"
+    }
