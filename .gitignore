@@ -10,3 +10,6 @@ Ferass code space/
 
 # Falls dieser Ordner nicht Teil des Projekts ist
 search agent/
+# PDFs
+extract_agent/pdfs/
+extract_agent/pdfs_auto/
