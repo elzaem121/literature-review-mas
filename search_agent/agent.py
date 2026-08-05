@@ -1,3 +1,4 @@
+import os
 import re
 from typing import List, Dict, Any, Optional
 from openai import OpenAI
@@ -32,7 +33,7 @@ class UniversalAcademicSearchAgent:
         # Patching the standard OpenAI client with Instructor to enforce JSON schema on local models
         self.llm_client = instructor.from_openai(
             OpenAI(
-                base_url="http://localhost:11434/v1",
+                base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1"),
                 api_key="local-ollama-key"
             ),
             mode=instructor.Mode.JSON
@@ -47,14 +48,17 @@ class UniversalAcademicSearchAgent:
         """
         system_instruction = (
             "You are an expert AI Systems Architect interacting with a dense Vector Embeddings Database (like SPECTER/OpenAlex). "
-            "Your objective is to translate the user's natural language question into a 'synthetic_abstract' (150-200 words) "
+            "Your objective is to translate the user's natural language question into a 'synthetic_abstract' (120-150 words) "
             "that represents the ideal paper answering this query.\n\n"
             "CRITICAL RULES FOR VECTOR SEARCH OPTIMIZATION:\n"
-            "1. IMPLICIT IMRaD STRUCTURE: The paragraph must seamlessly flow from context/background, to methodology, to precise findings.\n"
-            "2. MAXIMIZE NOUN DENSITY: Pack the text with exact scientific jargon, methodologies, and technical noun-chunks. Minimize generic verbs.\n"
-            "3. POSITIVE FRAMING ONLY: Vector databases struggle with negation. Never use 'without', 'not', or 'avoids'. "
+            "1. STRICT SCOPE ADHERENCE: Use only concepts, methods, and domains explicitly present in the user's question. "
+            "Never introduce specific techniques, frameworks, algorithms, or subfields the user did not mention. "
+            "If the question is broad, keep the abstract broad; do not narrow it to one subfield.\n"
+            "2. IMPLICIT IMRaD STRUCTURE: The paragraph must seamlessly flow from context/background, to methodology, to precise findings.\n"
+            "3. MAXIMIZE NOUN DENSITY: Pack the text with exact scientific jargon, methodologies, and technical noun-chunks. Minimize generic verbs.\n"
+            "4. POSITIVE FRAMING ONLY: Vector databases struggle with negation. Never use 'without', 'not', or 'avoids'. "
             "Frame concepts positively (e.g., use 'high safety profile' instead of 'without side effects').\n"
-            "4. NO FILLER PHRASES: Omit conversational text like 'This paper demonstrates...'. Jump directly into the scientific context."
+            "5. NO FILLER PHRASES: Omit conversational text like 'This paper demonstrates...'. Jump directly into the scientific context."
         )
 
         try:

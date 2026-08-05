@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 import pandas as pd
@@ -8,6 +9,7 @@ import time
 # ---------------------------------------------------------
 st.set_page_config(page_title="Literature Review MAS", layout="wide", page_icon="📚")
 APP_TITLE = "Literature Review MAS · Async Orchestrator"
+BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 
 DEFAULT_INCLUSION_OPTIONS = [
     "Focus on multi-agent systems, agentic workflows, or collaborative AI environments",
@@ -131,7 +133,7 @@ if submitted:
     }
 
     try:
-        start_response = requests.post("http://127.0.0.1:8000/start_pipeline", json=payload)
+        start_response = requests.post(f"{BACKEND_URL}/start_pipeline", json=payload)
 
         if start_response.status_code == 200:
             job_id = start_response.json().get("job_id")
@@ -140,7 +142,7 @@ if submitted:
                 live_text = st.empty()
 
                 while True:
-                    res = requests.get(f"http://127.0.0.1:8000/status/{job_id}")
+                    res = requests.get(f"{BACKEND_URL}/status/{job_id}")
                     if res.status_code == 200:
                         data = res.json()
                         current_step = data.get("current_step")

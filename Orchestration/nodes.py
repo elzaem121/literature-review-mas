@@ -11,7 +11,7 @@ from Screening_Agent.screening_schemas import ResearchPaper
 from extract_agent.rag_extraction_main import extraction_node
 
 # ==========================================
-# 🟢 LIVE STATUS NODES (Fast Nodes)
+# LIVE STATUS NODES (Fast Nodes)
 # ==========================================
 def pre_search_node(state: PipelineState) -> PipelineState:
     state["current_step"] = "search"
@@ -38,7 +38,7 @@ def pre_extraction_node(state: PipelineState) -> PipelineState:
 
 
 # ==========================================
-# 🔴 HEAVY WORKER NODES (Slow Nodes)
+#  HEAVY WORKER NODES (Slow Nodes)
 # ==========================================
 def search_node(state: PipelineState) -> PipelineState:
     # This takes ~5-10 seconds

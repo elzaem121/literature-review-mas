@@ -166,61 +166,69 @@ def perform_faiss_retrieval(chunks: list[str]) -> dict:
 async def document_processing_node(state: Dict[str, Any]) -> Dict[str, Any]:
     """
     Downloads PDFs, extracts text, chunks it, and retrieves relevant chunks via FAISS.
+    Keeps all papers in the state to ensure accurate tracking, but flags missing PDFs.
     """
     print("--- RUNNING DOCUMENT PROCESSING & RAG RETRIEVAL ---")
 
-    screening_results = state.get("screening_results") or {}
-    included_papers = screening_results.get("included_papers", [])
+    # 1. Create a shallow copy of the screening results to preserve all data (included, excluded, etc.)
+    current_screening = state.get("screening_results", {}).copy()
+    included_papers = current_screening.get("included_papers", [])
 
-    processed_papers = []
+    processed_count = 0
 
+    # 2. Iterate over the included papers without removing any from the list
     for paper in included_papers:
-      
+        # Handle potential nesting depending on how Screening Agent dumped the data
         paper_info = paper.get("paper", paper)
         title = paper_info.get("title", "unknown")
         doi = paper_info.get("doi")
 
         print(f"[PROCESSING] {title}")
 
-        # 1. Fetch PDF URL
+        # Step A: Fetch PDF URL
         pdf_url = get_openalex_pdf_url(doi)
         if not pdf_url:
             print("[SKIPPED] No PDF found.")
+            paper["pdf_status"] = "Not Available"  # Flag for the extraction node to skip
             continue
 
-        # 2. Download PDF
+        # Step B: Download PDF
         filename = safe_filename(title)
         output_path = PDF_DIR / filename
         success = await asyncio.to_thread(download_pdf, pdf_url, output_path)
 
         if success:
-            # 3. Extract Text
+            # Step C: Extract Text
             full_text = await asyncio.to_thread(extract_text_from_pdf, str(output_path))
             if full_text:
-                # 4. Chunk Text
+                # Step D: Chunk Text and Retrieve FAISS chunks
                 chunks = chunk_text(full_text, CHUNK_SIZE)
-
-                # 5. Semantic FAISS Retrieval (Runs in background thread so it doesn't block)
                 retrieved_fields = await asyncio.to_thread(perform_faiss_retrieval, chunks)
 
-                # Attach the exact expected structure to the paper object
+                # Step E: Store results safely in the paper dictionary
+                # Adding to both levels guarantees compatibility with your extraction_node logic
                 paper_info["retrieved_chunks_by_field"] = retrieved_fields
                 paper_info["pdf_path"] = str(output_path)
+                paper_info["pdf_status"] = "Downloaded"
+
                 paper["retrieved_chunks_by_field"] = retrieved_fields
                 paper["pdf_path"] = str(output_path)
 
-                processed_papers.append(paper)
-                print(f"[SUCCESS] FAISS Retrieval complete ({len(chunks)} chunks embedded).")
+                processed_count += 1
+                print(f"[SUCCESS] FAISS Retrieval complete ({len(chunks)} chunks).")
             else:
                 print("[FAILED] Could not extract text from PDF.")
+                paper["pdf_status"] = "Extraction Failed"
         else:
             print("[FAILED] PDF download failed.")
+            paper["pdf_status"] = "Download Failed"
 
-    # Overwrite included_papers with ONLY the ones that successfully downloaded and chunked
-    screening_results["included_papers"] = processed_papers
+    # 3. Update the copied dictionary with the modified list (which still contains all initial papers)
+    current_screening["included_papers"] = included_papers
 
+    # 4. Return the updated screening dictionary back to the LangGraph state
     return {
-        "screening_results": screening_results,
+        "screening_results": current_screening,
         "current_step": "document_processing",
-        "status_message": f"Dokumentenverarbeitung abgeschlossen: {len(processed_papers)} PDFs bereit für Extraktion."
+        "status_message": f"Document processing complete: {processed_count} out of {len(included_papers)} PDFs ready for extraction."
     }

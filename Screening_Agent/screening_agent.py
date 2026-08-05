@@ -1,13 +1,14 @@
 import asyncio
 import json
 import logging
+import os
 from pathlib import Path
 from typing import List, Optional
 
 import instructor
 from openai import AsyncOpenAI
 
-from screening_schemas import (
+from Screening_Agent.screening_schemas import (
     PaperScreeningResult,
     ResearchPaper,
     ReviewProtocol,
@@ -38,7 +39,7 @@ class AcademicScreeningAgent:
     def __init__(
         self,
         model_name: str = "llama3.1:8b",
-        base_url: str = "http://localhost:11434/v1",
+        base_url: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1"),
         api_key: str = "local-ollama-key",
         max_concurrent_tasks: int = 3,
         max_retries: int = 2,

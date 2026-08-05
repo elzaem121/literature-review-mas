@@ -1,39 +1,39 @@
 # Core LLM & Structured Output
-openai>=1.0.0
-instructor>=1.7.0
-ollama
+openai==2.41.1
+instructor==1.15.3
+ollama==0.6.2
 
 # Data Validation
-pydantic>=2.0.0
+pydantic==2.13.4
 
 # HTTP & Reliability
-httpx
-requests
-tenacity
+httpx==0.28.1
+requests==2.34.2
+tenacity==9.1.4
 
 # UI
-streamlit
+streamlit==1.58.0
 
 #backend
-fastapi
-uvicorn
+fastapi==0.138.0
+uvicorn==0.49.0
 
 # Orchestration & State Management
-langgraph
+langgraph==1.2.6
 
 # Data Processing
-numpy
-pandas
+numpy==2.4.6
+pandas==3.0.3
 
 # PDF Processing
-pymupdf
+pymupdf==1.27.2.3
 
 # Embeddings & Vector Search
-sentence-transformers
-faiss-cpu
+sentence-transformers==5.5.1
+faiss-cpu==1.14.3
 
 # Environment Variables
-python-dotenv
+python-dotenv==1.2.2
 
 # Testing
-pytest>=8.0.0
+pytest==9.1.0

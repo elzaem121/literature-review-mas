@@ -237,9 +237,15 @@ async def extraction_node(state: dict) -> dict:
     # 2. Iterate through the accepted papers and extract data
     for paper in included_papers:
         paper_info = paper.get("paper", paper)
+
+
+        if "pdf_path" not in paper and "pdf_path" not in paper_info:
+            print(f"[SKIPPED] No PDF available for extraction: {paper_info.get('title')}")
+            continue
+
         retrieved_chunks_by_field = (
-            paper.get("retrieved_chunks_by_field")
-            or paper_info.get("retrieved_chunks_by_field")
+                paper.get("retrieved_chunks_by_field")
+                or paper_info.get("retrieved_chunks_by_field")
         )
 
         if not retrieved_chunks_by_field:

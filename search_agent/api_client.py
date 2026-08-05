@@ -60,7 +60,9 @@ class OpenAlexClient:
             headers["Authorization"] = f"Bearer {self.api_key}"
 
         # [FIX]: Only use strictly supported filters by the Semantic API endpoint
-        api_filters = "has_abstract:true,type:journal-article|preprint"
+        #api_filters = "has_abstract:true,type:journal-article|preprint"
+            # [FIX]: Only use strictly supported filters by the Semantic API endpoint
+        api_filters = "has_abstract:true,type:journal-article|preprint,is_oa:true"
 
         params = {
             "search.semantic": synthetic_abstract,
@@ -100,6 +102,14 @@ class OpenAlexClient:
                     # [FIX]: Local Programmatic Filtering for Citations and Year
                     pub_year = doc.get("publication_year") or 0
                     citations = doc.get("cited_by_count") or 0
+
+                    primary_loc = doc.get("primary_location") or {}
+                    best_oa = doc.get("best_oa_location") or {}
+
+                    pdf_url = primary_loc.get("pdf_url") or best_oa.get("pdf_url")
+
+                    if not pdf_url:
+                        continue
 
                     if start_year and pub_year < start_year:
                         continue

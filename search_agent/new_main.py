@@ -2,10 +2,15 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from pathlib import Path
 from typing import Optional
 
-from .agent import UniversalAcademicSearchAgent
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from search_agent.agent import UniversalAcademicSearchAgent
+else:
+    from .agent import UniversalAcademicSearchAgent
 
 
 OPENALEX_EMAIL = os.getenv("OPENALEX_EMAIL", "elzaem408@gmail.com")
@@ -83,9 +88,9 @@ def main(
 
 if __name__ == "__main__":
     result = main(
-        research_question="How to evaluate multi-agent systems efficiently?",
+        research_question="What are the risks when AI systems that plan and act on their own are deployed in healthcare, and how are these risks currently managed?",
         min_year=2018,
-        target_output_count=25,
+        target_output_count=20,
         min_citations=0,
         save_to_file=True,
     )
