@@ -7,6 +7,7 @@ from Backend.schemas import ResearchRequest, ResearchResponse, ScreeningResults
 
 # Import the compiled LangGraph workflow
 from Orchestration.graph import app as workflow_app
+from tracing import root_trace
 
 # Initialize the FastAPI application
 app = FastAPI(
@@ -33,25 +34,26 @@ async def run_graph_in_background(job_id: str, initial_state: dict):
     """
     try:
         # workflow_app.astream() yields the state step-by-step!
-        async for step_result in workflow_app.astream(initial_state):
+        async with root_trace(job_id):
+            async for step_result in workflow_app.astream(initial_state):
 
-            # Extract the node name (e.g., 'search_agent', 'screening_agent')
-            node_name = list(step_result.keys())[0]
-            latest_state = step_result[node_name]
+                # Extract the node name (e.g., 'search_agent', 'screening_agent')
+                node_name = list(step_result.keys())[0]
+                latest_state = step_result[node_name]
 
-            # Update our global job tracker with the latest progression
-            JOBS[job_id]["current_step"] = latest_state.get("current_step", JOBS[job_id]["current_step"])
-            JOBS[job_id]["status_message"] = latest_state.get("status_message", JOBS[job_id]["status_message"])
+                # Update our global job tracker with the latest progression
+                JOBS[job_id]["current_step"] = latest_state.get("current_step", JOBS[job_id]["current_step"])
+                JOBS[job_id]["status_message"] = latest_state.get("status_message", JOBS[job_id]["status_message"])
 
-            # If new data is generated, save it to the job tracker
-            if "raw_papers" in latest_state:
-                JOBS[job_id]["raw_papers_count"] = len(latest_state["raw_papers"])
-            if "screening_results" in latest_state:
-                JOBS[job_id]["screening_results"] = latest_state["screening_results"]
-            if "extracted_papers" in latest_state:
-                JOBS[job_id]["extracted_papers"] = latest_state["extracted_papers"]
-            if "final_analysis" in latest_state:
-                JOBS[job_id]["final_analysis"] = latest_state["final_analysis"]
+                # If new data is generated, save it to the job tracker
+                if "raw_papers" in latest_state:
+                    JOBS[job_id]["raw_papers_count"] = len(latest_state["raw_papers"])
+                if "screening_results" in latest_state:
+                    JOBS[job_id]["screening_results"] = latest_state["screening_results"]
+                if "extracted_papers" in latest_state:
+                    JOBS[job_id]["extracted_papers"] = latest_state["extracted_papers"]
+                if "final_analysis" in latest_state:
+                    JOBS[job_id]["final_analysis"] = latest_state["final_analysis"]
 
     except Exception as e:
         JOBS[job_id]["current_step"] = "error"

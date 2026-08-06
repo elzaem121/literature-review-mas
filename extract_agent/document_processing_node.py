@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Dict, Any
 from sentence_transformers import SentenceTransformer
 
+from tracing import traceable_stage
+
 # ==========================================
 # CONSTANTS & CONFIGURATION
 # ==========================================
@@ -163,6 +165,7 @@ def perform_faiss_retrieval(chunks: list[str]) -> dict:
 # ==========================================
 # LANGGRAPH NODE
 # ==========================================
+@traceable_stage("document_processing")
 async def document_processing_node(state: Dict[str, Any]) -> Dict[str, Any]:
     """
     Downloads PDFs, extracts text, chunks it, and retrieves relevant chunks via FAISS.

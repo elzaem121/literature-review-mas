@@ -1,166 +1,224 @@
-# Literature Review MAS
+# Multi-Agent Literature Screening System
 
+An automated pipeline for the early stages of a systematic literature review. Given a
+research question and inclusion/exclusion criteria, it retrieves candidate papers,
+screens them for relevance, downloads the full texts, and extracts structured
+information from each included paper.
 
+Built as a Master's team project (Data Science, Hochschule Anhalt) by three students.
+All language-model inference runs on self-hosted open-weight models — no external
+LLM API is used.
+
+📹 **[Watch the demo (4 min)](https://cloud.hs-anhalt.de/s/49s7N6jTeLAE5BX)** — full
+walkthrough of a pipeline run.
+
+---
+
+## The problem
+
+Screening the literature for a systematic review is slow and repetitive. A reviewer
+searches an academic database, reads hundreds of titles and abstracts to decide what is
+relevant, retrieves the full texts of what survives, and then reads each one to pull out
+the same handful of facts — sample size, method, outcome, limitations.
+
+The first three of those steps are mechanical enough to automate, and the fourth is a
+structured extraction task that language models handle reasonably well. This system
+automates all four as a four-stage agent pipeline.
+
+---
+
+## Architecture
+
+![System architecture](docs/architecture.png)
+
+A Streamlit frontend submits a job to the FastAPI backend, which runs the LangGraph
+pipeline as a background task and returns a job ID immediately. The frontend polls for
+status while the four agents run in sequence, each reading from and writing to a shared
+pipeline state.
+
+**Search agent** — expands the research question into a dense synthetic abstract, then
+queries OpenAlex semantic search. Filters for open access, publication year, and
+citation count.
+
+**Screening agent** — classifies each paper as included, excluded, or uncertain against
+the reviewer's criteria. Runs three papers concurrently.
+
+**Document processing** — resolves and downloads each included paper's PDF, extracts and
+chunks the text, embeds it with `all-MiniLM-L6-v2`, and retrieves the most relevant
+chunks per extraction field via FAISS. Papers whose PDFs cannot be retrieved are flagged
+rather than dropped.
+
+**Extraction agent** — produces one structured record per paper from the retrieved
+chunks, using RAG over the chunks rather than the full text.
+
+### Why LangGraph
+
+The pipeline currently runs as a linear sequence, which a plain script could also do.
+LangGraph was chosen deliberately for where the system is going: conditional routing
+(broaden and retry when a search returns nothing, halt and explain when screening
+excludes everything), human-in-the-loop review of uncertain papers, and additional agents
+slotted into the graph without rewriting the control flow. The orchestration layer is
+built for that; the branching logic is the next step.
+
+---
+
+## Infrastructure
+
+Local Ollama inference was too slow to run the pipeline at a usable pace, so inference
+was moved to the university's GPU Kubernetes cluster. This let the agents run full
+open-weight models without external API costs or rate limits — and made the cluster's
+GPU, rather than a laptop, the constraint on throughput.
+
+| | |
+|---|---|
+| Deployment | `ollama-deployment` (`ollama/ollama:latest`), 1 replica |
+| GPU | `nvidia.com/gpu: 1` (requests = limits) |
+| Model | `qwen2.5-coder:7b` |
+| Service | ClusterIP on port 11434 |
+
+Ollama is tuned for this workload: `OLLAMA_NUM_PARALLEL=4` matches the screening agent's
+concurrency, and `OLLAMA_KEEP_ALIVE=24h` keeps the model resident in VRAM so it is not
+reloaded on every run.
+
+The application itself is containerised — one image for the FastAPI backend, one for the
+Streamlit frontend, wired together with Docker Compose. See
+[`deploy/NOTES.md`](deploy/NOTES.md) for full deployment notes.
+
+---
+
+## Performance
+
+The pipeline is instrumented with LangSmith tracing. Every run produces a single trace,
+tagged with the job ID from the API, with a span per stage and per LLM call — so a run in
+the UI maps directly to a trace with timings and token counts. Tracing is optional: with
+the environment variables unset, the pipeline runs unchanged.
+
+<p align="center">
+  <img src="docs/trace-1.png" alt="Trace: search and screening stages" width="420">
+  <img src="docs/trace-2.png" alt="Trace: document processing and extraction stages" width="420">
+</p>
+
+Measured on a 5-paper run against `qwen2.5-coder:7b` on the GPU cluster:
+
+| Stage | Time | Tokens |
+|---|---|---|
+| Search | 34s | 675 |
+| Screening | 87s | 5.4K |
+| Document processing | 29s | — |
+| Extraction | 158s | 6.7K |
+| **Total** | **~5 min** | **12.8K** |
+
+**Extraction dominates at 51% of runtime.** Screening makes more LLM calls but finishes
+in half the time, because it processes three papers concurrently while extraction runs
+strictly sequentially at roughly 50 seconds per paper. Applying the same concurrency to
+extraction is the single largest available speedup, and would cut total runtime by around
+a third.
+
+This is the kind of finding the tracing was added for — the bottleneck is not where call
+volume suggests it should be.
+
+---
+
+## Evaluation
+
+All three stages were evaluated manually, each by the team member who built it, across
+3 different research topics.
+
+| Stage | Metric | Result |
+|---|---|---|
+| Search | Mean precision@10 | > 0.85 |
+| Screening | Classification accuracy, consistent across repeated runs | 95% |
+| Extraction | Manual review of extracted fields | 90% |
+
+Judgements were made by a single annotator per stage on a small sample, so these are
+indications of quality rather than benchmark results. A stronger evaluation would use a
+labelled dataset, more topics, and a second annotator with an inter-annotator agreement
+statistic.
+
+---
 
 ## Getting started
 
-Welcome to the Literature-Review-Multiagentsystem - Projekt.
+**Prerequisites:** Docker, and access to an Ollama instance running `qwen2.5-coder:7b`.
 
-### install requirements
-
-First you need to install the requirements via pip install -r requirements.txt
-
-### LLM Model Connection
-next you need to connect to an LLM Modell. 
-
-You can either use a local model or connect to a model that is hostet in Kubernetes.
-
-#### connect a local model
-
-##### linux
-1. install Ollama 
-curl -fsSL https://ollama.com/install.sh | sh
-ollama --version
-2. start Ollama
-ollama serve
-Standardmäßig läuft der Server dann auf: http://localhost:11434
-3. download model
-ollama pull qwen2.5-coder:7b
-ollama list
-4. test model
-ollama run qwen2.5-coder:7b
-
-In main.py of the agents the chosen model version must be filled in: model_name= xxx
-
-##### windows /mac os
-1. install Ollama
-You can just download it directly from the site https://ollama.com/download/windows and start the .expected
-2. The steps 2 - 4 are the same as linux. See above.
-
-#### connect to a model on Kubernetes
-The model needs to be already running on Kubernetes. This is just a step-by-step to connect to an existing model.
-##### Linux Fedora
-1. install kubectl
-sudo dnf install -y kubectl 
-kubectl version --client
-which kubectl
-2. get kubeconfig
-Log in to Rancher https://rancher.hs-anhalt.de/dashboard/home and go to the namespace where your model is located in.
-Click on the Symbol that shows a document "Download kubeconfig"
-The file will be downloaded on to your system in the folder "/Downloads" under the name "main.yaml"
-3. import kubeconfig
+If Ollama runs on a Kubernetes cluster, open a tunnel to it first:
 
 ```bash
-mkdir -p ~/.kube
-cp ~/Downloads/main.yaml ~/.kube/config
-chmod 600 ~/.kube/config
-
-kubectl config get-contexts #test cluster connection
-kubectl config current-context
-kubectl cluster-info
-kubectl get ns
---> should point to **main** 
-
-kubectl config use-context main # in case it pointed to main
-kubectl config set-context --current --namespace=<your-namespace-name>
-
-kubectl get svc #search for the service. it shows the target port and service name
-
-kubectl get all -n <your-namespace-name> #test connection
-kubectl get svc -n <your-namespace-name>
+kubectl port-forward svc/ollama-service 11434:11434 -n mas-project
 ```
 
-4. Port Forwarding
+Then start both services:
 
 ```bash
-kubectl port-forward -n <namespace> svc/<service-name> 11434:<cluster-port>
-```
---> Connection is starting, do not close the terminal. This is your connection tunnel - it has to stay open so that the application can access it.
-
-**Important for configuration within the code:**
-MODEL_BASE_URL = "http://localhost:11434/v1"
-MODEL_NAME = "<your-modell-name>"
-
-## Add your files
-
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.hs-anhalt.de/stjagrae/literature-review-mas.git
-git branch -M main
-git push -uf origin main
+docker compose up
 ```
 
-## Integrate with your tools
+The UI is at `http://localhost:8501`.
 
-* [Set up project integrations](https://gitlab.hs-anhalt.de/stjagrae/literature-review-mas/-/settings/integrations)
+Running a model locally instead, or connecting to the cluster from scratch, is covered in
+[`deploy/NOTES.md`](deploy/NOTES.md).
 
-## Collaborate with your team
+### Configuration
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+| Variable | Default | Used by |
+|---|---|---|
+| `OLLAMA_BASE_URL` | `http://localhost:11434/v1` | backend |
+| `BACKEND_URL` | `http://127.0.0.1:8000` | frontend |
+| `OPENALEX_EMAIL` | — | backend |
+| `LANGSMITH_TRACING` | unset (tracing off) | backend |
+| `LANGSMITH_API_KEY` | unset | backend |
+| `LANGSMITH_ENDPOINT` | EU instance | backend |
+| `LANGSMITH_PROJECT` | — | backend |
 
-## Test and Deploy
+Copy `.env.example` to `.env` and fill in the values you need. Inside Compose, the
+backend reaches Ollama via `host.docker.internal` (the host end of the port-forward) and
+the frontend reaches the backend by service name.
 
-Use the built-in continuous integration in GitLab.
+### Running without Docker
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+```bash
+pip install -r requirements.txt
+uvicorn Backend.main:app --port 8000
+streamlit run ui_app.py
+```
 
-***
+---
 
-# Editing this README
+## Team and contributions
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Three-person Master's project.
 
-## Suggestions for a good README
+**Mohamed Elsayed** — LangGraph orchestration layer, FastAPI backend, Streamlit frontend,
+search agent, Kubernetes deployment of the LLM inference service, containerisation, and
+tracing.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+**Jamila Gränzer** — screening agent: per-paper relevance classification against inclusion
+and exclusion criteria, with retry handling and structured error reporting.
 
-## Name
-Choose a self-explaining name for your project.
+**Ferass Alrwashdh** — extraction agent: RAG-based structured extraction of predefined
+fields from the retrieved document chunks.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+---
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## Current state and roadmap
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+The system is a working prototype: the full pipeline runs end to end, on real data, with
+self-hosted inference. These are the planned next steps.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+**Parallel extraction.** The performance measurement above makes this the clearest
+priority — running extraction with the same concurrency as screening would cut roughly a
+third off total runtime.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+**Conditional routing.** Branching on empty search results and all-excluded screening
+passes, plus a broaden-and-retry loop, is what the LangGraph orchestration layer was built
+to support.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+**Human-in-the-loop review.** Pausing the graph on uncertain screening decisions for
+reviewer input, then resuming — a natural fit for a systematic review workflow.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+---
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## Stack
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Python · LangGraph · FastAPI · Streamlit · Ollama · Kubernetes · Docker · LangSmith ·
+OpenAlex API · FAISS · sentence-transformers · PyMuPDF

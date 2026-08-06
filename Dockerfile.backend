@@ -1,0 +1,24 @@
+FROM python:3.13-slim
+
+# faiss-cpu and torch (pulled in by sentence-transformers) are linked against
+# libgomp at runtime; python:3.13-slim doesn't ship it.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# /app is the repo root: Backend/, Orchestration/, search_agent/, Screening_Agent/,
+# and extract_agent/ stay as flat siblings here so `Backend.main:app` and the
+# package-relative imports inside search_agent resolve the same way they do locally.
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "Backend.main:app", "--host", "0.0.0.0", "--port", "8000"]

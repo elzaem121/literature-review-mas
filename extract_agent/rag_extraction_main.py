@@ -10,6 +10,7 @@ from openai import AsyncOpenAI
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from extract_agent.extraction_schemas import ExtractedPaperInfo
+from tracing import maybe_wrap_openai, traceable_stage
 
 
 #INPUT_FILE = Path("retrieved_chunks.json")
@@ -24,10 +25,10 @@ print(f"Using Ollama model: {OLLAMA_MODEL}")
 
 
 client = instructor.patch(
-    AsyncOpenAI(
+    maybe_wrap_openai(AsyncOpenAI(
         base_url=OLLAMA_BASE_URL,
         api_key="local-ollama-key",
-    ),
+    )),
     mode=instructor.Mode.JSON,
 )
 
@@ -219,6 +220,7 @@ Rules:
     }
 
 
+@traceable_stage("extraction")
 async def extraction_node(state: dict) -> dict:
     """
     LangGraph Node: Extracts structured information from the screened papers.

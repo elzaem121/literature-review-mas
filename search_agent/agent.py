@@ -7,6 +7,7 @@ import instructor  # Added to support structured outputs on local Ollama
 # Internal local imports
 from .schemas import AcademicQueryExpansionSchema
 from .api_client import OpenAlexClient
+from tracing import maybe_wrap_openai
 
 def _emit(self, message: str, progress_callback=None) -> None:
     print(message)
@@ -32,10 +33,10 @@ class UniversalAcademicSearchAgent:
 
         # Patching the standard OpenAI client with Instructor to enforce JSON schema on local models
         self.llm_client = instructor.from_openai(
-            OpenAI(
+            maybe_wrap_openai(OpenAI(
                 base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1"),
                 api_key="local-ollama-key"
-            ),
+            )),
             mode=instructor.Mode.JSON
         )
 

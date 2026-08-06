@@ -13,3 +13,31 @@ search agent/
 # PDFs
 extract_agent/pdfs/
 extract_agent/pdfs_auto/
+
+# Secrets
+.env
+
+# Claude Code
+.claude/
+CLAUDE.md
+
+# Virtual environment
+.venv/
+
+# Secrets / cluster access
+.kube/
+*.kubeconfig
+
+# Generated output (pipeline runs)
+pdfs_auto/
+.mas_runs/
+Screening_Agent/search_results.json
+Screening_Agent/screening_results.json
+extract_agent/search_results.json
+
+# LangSmith / LangGraph checkpoint DB (none exists yet — preventive)
+*.sqlite
+*.sqlite3
+
+# macOS
+.DS_Store

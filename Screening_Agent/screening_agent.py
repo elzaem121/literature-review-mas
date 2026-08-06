@@ -18,6 +18,7 @@ from Screening_Agent.screening_schemas import (
     ScreeningOutput,
     SearchAgentOutput,
 )
+from tracing import maybe_wrap_openai
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +49,7 @@ class AcademicScreeningAgent:
         self.max_concurrent_tasks = max_concurrent_tasks
         self.max_retries = max_retries
         self.client = instructor.patch(
-            AsyncOpenAI(base_url=base_url, api_key=api_key),
+            maybe_wrap_openai(AsyncOpenAI(base_url=base_url, api_key=api_key)),
             mode=instructor.Mode.JSON,
         )
 

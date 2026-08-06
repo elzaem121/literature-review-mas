@@ -9,6 +9,7 @@ from Screening_Agent.screening_schemas import ResearchPaper
 # 1. IMPORT FIX: Import the actual extraction node we created earlier
 # (Note: Ensure the file name matches your actual file structure, e.g., rag_extraction_main)
 from extract_agent.rag_extraction_main import extraction_node
+from tracing import traceable_stage
 
 # ==========================================
 # LIVE STATUS NODES (Fast Nodes)
@@ -40,6 +41,7 @@ def pre_extraction_node(state: PipelineState) -> PipelineState:
 # ==========================================
 #  HEAVY WORKER NODES (Slow Nodes)
 # ==========================================
+@traceable_stage("search")
 def search_node(state: PipelineState) -> PipelineState:
     # This takes ~5-10 seconds
     search_results = run_search(
@@ -54,6 +56,7 @@ def search_node(state: PipelineState) -> PipelineState:
     return state
 
 
+@traceable_stage("screening")
 async def screening_node(state: PipelineState) -> PipelineState:
     # This takes ~40 seconds
     agent = AcademicScreeningAgent(model_name="qwen2.5-coder:7b", max_concurrent_tasks=3)
