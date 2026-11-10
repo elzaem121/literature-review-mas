@@ -184,6 +184,85 @@ streamlit run ui_app.py
 
 ---
 
+## Local Interface & Invariants
+
+Source files that live directly in the repository root:
+
+- `ui_app.py` — the Streamlit frontend for the full pipeline (the one `Dockerfile.frontend` runs).
+  Submits a `ResearchRequest`-shaped payload to `POST {BACKEND_URL}/start_pipeline`, then polls
+  `GET {BACKEND_URL}/status/{job_id}` once per second until `current_step` is `completed` or `error`,
+  and renders the screening buckets and extraction table (CSV download). `BACKEND_URL` defaults to
+  `http://127.0.0.1:8000`.
+- `tracing.py` — optional LangSmith helpers: `tracing_enabled()`, `maybe_wrap_openai(client)`,
+  `traceable_stage(name)`, `root_trace(job_id)`.
+- `export_graph.py` — script (runs on import) that prints the Mermaid graph and writes `docs/graph.png`.
+
+Invariants:
+
+- The polling loop in `ui_app.py` has no timeout and no retry limit on `requests` calls; it ends only on
+  `completed` / `error` or a connection error.
+- Tracing is a strict no-op unless `langsmith` imports **and** `LANGSMITH_API_KEY` is set;
+  `maybe_wrap_openai` must wrap the raw OpenAI client *before* `instructor` patches it.
+- Python modules are imported from the repo root as flat sibling packages (`Backend`, `Orchestration`,
+  `search_agent`, `Screening_Agent`, `extract_agent`, plus root-level `tracing`); run commands from the
+  repo root (or with it on `PYTHONPATH`), as `Dockerfile.backend` does with `WORKDIR /app`.
+
+Side effects: `export_graph.py` writes `docs/graph.png`; `ui_app.py` makes HTTP calls to the backend.
+
+## Subdirectories & System Boundaries
+
+- Backend: [./Backend/README.md](./Backend/README.md) - FastAPI service: `POST /start_pipeline`,
+  `GET /status/{job_id}`, in-memory `JOBS`, runs the graph as a background task.
+- Orchestration: [./Orchestration/README.md](./Orchestration/README.md) - LangGraph `PipelineState`,
+  `pre_*` status nodes and worker nodes, compiled linear `app`.
+- search_agent: [./search_agent/README.md](./search_agent/README.md) - query expansion + OpenAlex semantic
+  search; `new_main.main` is the live entry. Contains [archiv](./search_agent/archiv/README.md) (archived,
+  non-runnable Streamlit app).
+- Screening_Agent: [./Screening_Agent/README.md](./Screening_Agent/README.md) - per-paper
+  include/exclude/uncertain classification, schemas, and the only pytest suite.
+- extract_agent: [./extract_agent/README.md](./extract_agent/README.md) - PDF download, chunking, FAISS
+  retrieval (`document_processing_node`) and LLM extraction (`extraction_node`); also holds legacy CLI
+  scripts not used by the graph.
+- App_Main: [./App_Main/README.md](./App_Main/README.md) - standalone Streamlit HITL app for search +
+  screening only (no backend).
+- Non-code directories (no contract): `deploy/` (Kubernetes/Ollama notes in `NOTES.md`), `docs/` (images),
+  `pdfs_auto/` (runtime PDF cache), `Screening_Agent/testdaten/` (test fixture).
+
+## Global Invariants
+
+- Papers flow as dicts through `PipelineState`: `raw_papers` (`{"papers": [...]}` entries matching
+  `ResearchPaper`) → `screening_results` (four buckets: `included_papers`, `excluded_papers`,
+  `uncertain_papers`, `failed_papers`, each item `{"paper", "screening"}`) → `extracted_papers`
+  (`{"paper", "rag_extraction"}`). Changing a field name in one stage requires updating the consumers in
+  the next stage, `Backend/schemas.py`, and `ui_app.py`.
+- All LLM calls go through `instructor` on an OpenAI-SDK client pointed at `OLLAMA_BASE_URL`
+  (default `http://localhost:11434/v1`) with a Pydantic `response_model`; there is no cloud LLM provider.
+- The default model is `qwen2.5-coder:7b` everywhere it is set explicitly (`SEARCH_MODEL`, `OLLAMA_MODEL`,
+  `SCREENING_MODEL` override per stage).
+- The pipeline is linear and job state is in-memory only; a backend restart loses all jobs.
+
+## Global Side Effects
+
+- Network: OpenAlex (`api.openalex.org`, search and per-DOI PDF lookup), arbitrary publisher PDF URLs, the
+  Ollama endpoint, and optionally LangSmith (`LANGSMITH_*`).
+- Disk: `pdfs_auto/` (relative to the working directory; a named Docker volume in `docker-compose.yml`),
+  `.mas_runs/` (written by `App_Main` and by `search_agent.new_main` when `save_to_file=True`),
+  `Screening_Agent/*.json` run artifacts, `docs/graph.png`.
+- Containers: `docker-compose.yml` runs `backend` (port 8000, `OLLAMA_BASE_URL=http://host.docker.internal:11434/v1`)
+  and `frontend` (port 8501, `BACKEND_URL=http://backend:8000`).
+- Environment: `.env.example` lists `OLLAMA_BASE_URL`, `BACKEND_URL`, and the `LANGSMITH_*` variables;
+  `OPENALEX_EMAIL` / `OPENALEX_API_KEY` are read by `search_agent/new_main.py`.
+
+## System Verification
+
+- Run: `cd Screening_Agent && PYTHONPATH=.. pytest test_screening.py -q`
+- Last observed result (2026-11-10): 8 passed, 3 failed (missing `Screening_Agent/review_config.json`
+  fixture and a dual-import class mismatch; details in [Screening_Agent](./Screening_Agent/README.md)).
+  No other package has automated tests.
+- Graph wiring check (no LLM call): `python -c "from Orchestration.graph import app; print(app.get_graph().draw_mermaid())"`.
+
+---
+
 ## Team and contributions
 
 Three-person Master's project.
