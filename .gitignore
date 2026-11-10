@@ -20,6 +20,9 @@ extract_agent/pdfs_auto/
 # Claude Code
 .claude/
 
+# Personal notes
+PROJECT_FACTS.md
+
 # Virtual environment
 .venv/
 
