@@ -19,7 +19,6 @@ extract_agent/pdfs_auto/
 
 # Claude Code
 .claude/
-CLAUDE.md
 
 # Virtual environment
 .venv/
