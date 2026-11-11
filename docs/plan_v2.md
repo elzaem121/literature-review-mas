@@ -1,7 +1,7 @@
 # Research Assistant v2 — Project Plan
 
 > North-star document for v2. Phase-level designs live in `docs/designs/` and must stay consistent with this plan.
-> Status: approved direction · Last updated: 2026-11-10
+> Status: approved direction · Last updated: 2026-11-11
 
 ## 1. Goal
 
@@ -140,9 +140,10 @@ Models are configured per role:
 
 ```yaml
 llm:
-  router:     { provider: ollama, model: <tbd> }
-  screening:  { provider: ollama, model: <tbd> }
-  extraction: { provider: ollama, model: <tbd> }
+  router:     { provider: ollama, model: qwen3:8b }          # provisional
+  screening:  { provider: ollama, model: qwen3:8b }          # provisional
+  extraction: { provider: ollama, model: qwen3:8b }          # provisional
+  embedding:  { provider: ollama, model: nomic-embed-text }  # provisional
   summary:    { provider: groq,   model: llama-3.3-70b, fallback: ollama }
   judge:      { provider: groq,   model: llama-3.3-70b }
 ```
@@ -152,7 +153,7 @@ llm:
 - Profiles: `local`, `cloud`, `test` (`test` uses a deterministic fake LLM for unit tests).
 - Fallback on errors or rate limits (HTTP 429), e.g. LangChain `with_fallbacks`.
 - Model name is recorded in every trace.
-- Default local model: general instruct model (not a code model); final choice after Phase 0 benchmark.
+- Default local models: general instruct model (not a code model). Phase 1 uses provisional defaults `qwen3:8b` (router, screening, extraction) and `nomic-embed-text` (embeddings). The final choice per role comes from the benchmark at the start of Phase 2; changing the embedding model then means re-embedding stored chunks and migrating the vector column.
 
 ### 7.1 Prompt structure and caching (CAG + RAG)
 
@@ -199,20 +200,18 @@ llm:
 
 ## 10. Phases
 
-Each phase ends with a working, measured system and a git tag. Only one phase is active at a time.
+Each phase ends with a working system and a git tag. From Phase 2 on, each phase is also measured with the eval harness. Only one phase is active at a time.
 
-### Phase 0 — Baseline · `v0.1`
-- [ ] Fork repository, create branch `v2`
-- [ ] Bootstrap documentation of the v1 codebase
-- [ ] Benchmark candidate local models on target hardware (speed, memory, quality on extraction and tool calling)
-- [ ] Gold dataset v0: 3 questions with expected papers and expected fields
-- [ ] Eval script measuring v1 baseline
+### Phase 0 — Baseline · `v0.1` · done
+- [x] Fork repository, create branch `v2`
+- [x] Bootstrap documentation of the v1 codebase
+- Moved to the start of Phase 2: model benchmark, gold dataset v0, eval script (see `docs/eval_notes.md`)
 
-**Exit:** v1 quality is measured automatically.
+**Exit (revised 2026-11-11):** v1 codebase documented on branch `v2`. Evaluation is deferred to Phase 2; v1 quality is not yet measured.
 
 ### Phase 1 — Foundation · `v0.2`
 - [ ] New repository layout
-- [ ] Settings, `get_llm(role)`, profiles, secrets
+- [ ] Settings, `get_llm(role)`, profiles, secrets; provisional models `qwen3:8b` and `nomic-embed-text` (section 7)
 - [ ] Postgres + pgvector in docker-compose; SQLAlchemy models; Alembic migrations (incl. `user_id`)
 - [ ] Ingestion: paper upsert, chunking, embeddings in pgvector
 - [ ] `PostgresSaver` checkpointer with `thread_id`
@@ -221,6 +220,13 @@ Each phase ends with a working, measured system and a git tag. Only one phase is
 **Exit:** running the same topic twice creates no duplicates; a restart loses nothing; CI is green.
 
 ### Phase 2 — Pipeline · `v0.3`
+Evaluation first (moved from Phase 0; input: `docs/eval_notes.md`, draft):
+- [ ] Gold dataset v0 for three test topics
+- [ ] Eval script measuring the baseline before any Phase 2 pipeline change
+- [ ] Benchmark candidate local models on target hardware per role: screening, extraction, embedding (speed, memory, quality). No tool calling; the router is benchmarked in Phase 3.
+- [ ] Decision record for the model per role; replace the provisional defaults
+
+Then:
 - [ ] Pipeline as subgraph
 - [ ] Screening stores decision + reason per (review, paper)
 - [ ] Loop 1 with counter and `seen_ids`
@@ -260,7 +266,7 @@ Each phase ends with a working, measured system and a git tag. Only one phase is
 
 ## 11. Constraints
 
-- **Hardware:** MacBook Air M4 (fanless; throttles on long runs). RAM: _open_.
+- **Hardware:** MacBook Air M4 (fanless; throttles on long runs), 16 GB RAM.
 - **Budget:** free only — local Ollama plus free API tiers. Free-tier limits change; verify before use.
 
 ## 12. Risks
@@ -285,4 +291,4 @@ Each phase ends with a working, measured system and a git tag. Only one phase is
 
 ## 14. Open questions
 
-- RAM of the development machine (determines local model size).
+- None at plan level. Evaluation design questions are tracked in `docs/eval_notes.md`.
