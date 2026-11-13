@@ -1,294 +1,323 @@
 # Research Assistant v2 — Project Plan
 
-> North-star document for v2. Phase-level designs live in `docs/designs/` and must stay consistent with this plan.
-> Status: approved direction · Last updated: 2026-11-11
+> Reference plan for v2. Phase-level designs live in `docs/designs/` and must stay consistent with this plan.
+> Status: active · frozen until the end of Phase 1; new ideas go to `docs/backlog.md` · Last updated: 2026-11-13
+> Versions: "v1" is the legacy system this repository started from. This plan is v2; its release tags run from `v0.1` to `v1.0`, and `v1.0` is the first v2 release.
 
 ## 1. Goal
+
+**Problem:** v1 answers one research question per run. Every run starts from zero, the result is a one-off table, and the user cannot ask follow-up questions or build on earlier runs. A student tracking a topic over months repeats the same searches and loses earlier results.
 
 A chat-based research assistant that builds a growing library of scientific papers, answers questions with citations, produces evidence tables and state-of-research summaries, is evaluated automatically, and deploys as a full stack on Kubernetes.
 
 **Target users:** Master's and PhD students who need to understand and track the state of research on a topic. Domain-agnostic.
 
-**Paper source:** OpenAlex (open access) only.
+**Paper source:** open-access papers from OpenAlex only.
 
 ## 2. Current state (v1)
 
-- User submits a research question and criteria; after ~5 min receives a table of extracted data per paper.
+- User submits a research question and criteria; receives a table of extracted data per paper. A 5-paper run took about 5 min with inference on a GPU cluster; v1 has not been timed on the laptop.
 - Linear LangGraph pipeline: search → screening → PDF processing (RAG) → extraction.
 - FastAPI with background jobs, Streamlit with polling, in-memory FAISS, Ollama with a 7B code model, LangSmith tracing, Docker; Kubernetes for Ollama only.
-- LLM calls go through raw OpenAI clients + Instructor in several files.
+- LLM clients are built separately in search, screening and extraction (OpenAI client + Instructor). This motivates `get_llm` (section 7).
 
-**Known gaps:** every run starts from zero; no persistence (job state lost on restart); no checkpointer; linear graph with no conditional routing; basic RAG (no overlap, no reranking); no automated evaluation; almost no tests; no CI.
+**Known gaps:** papers are not reused across runs; no persistence (job state lost on restart); no checkpointer; linear graph (no conditional edges); basic RAG (no overlap, no reranking); no automated evaluation; one test suite (11 screening tests, 3 failing); no CI.
 
 ## 3. Features
 
-| Feature | Description | Priority |
-| --- | --- | --- |
-| Chat with memory | Follow-up questions work; conversations survive restarts | Must |
-| Router | Each message routes to `context`, `library`, `new_topic`, or `clarify` | Must |
-| Persistent library | Each run adds to the library; no duplicates | Must |
-| Pipeline with 2 loops | Re-search when too few papers; re-extract empty fields | Must |
-| Cited answers | Every claim references a paper | Must |
-| Evidence table | Every cell links to its source passage and page | Must |
-| Export | CSV/Excel and BibTeX | Must |
-| Screening log | Inclusion/exclusion reason per paper (PRISMA-style) | Should |
-| Research summary | Trends, gaps, contradictions — generated from the evidence table, with citations | Should |
-| Human-in-the-loop | e.g. confirm query, approve re-search (`interrupt()`) | Should |
-| Multi-user + auth | Private reviews and chats per user | Later (Phase 4) |
+| Feature | Description | Priority | Phase | Designed in |
+| --- | --- | --- | --- | --- |
+| Chat with memory | Follow-ups are resolved against earlier turns in the same conversation (`rewritten_query`); conversations survive an API restart | Must | 3 | 5.2, Phase 3 design |
+| Router | Each message routes to `context`, `library`, `new_topic`, or `clarify` | Must | 3 | 5.2 |
+| Persistent library | Each run adds papers to a shared library; a paper is stored once | Must | 1 | 6, Phase 1 design |
+| Loop 1: re-search | Search again when too few usable papers are included | Must | 2b | 5.3 |
+| Loop 2: re-extract | Retry fields the system did not find | Conditional on measured results | 2b | 5.3 |
+| Cited answers | Every sentence that states a finding from the literature cites at least one library paper | Must | 3 | Phase 3 design |
+| Evidence table | Every cell with status `found` links to its source passage and page | Must | 2b (data), 3 (view) | 6, Phase 2b design |
+| Export | CSV and BibTeX | Must | 3 | Phase 3 design |
+| Screening log | Inclusion/exclusion reason per paper, in the style of PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses); a reason per paper only | Should | 2b (data), 3 (view) | Phase 2b design |
+| Domain disambiguation | When a topic's search results span several OpenAlex subfields, the user picks one (shown with example titles) before criteria are drafted; the search is filtered by it | Should | 2b (filter), 3 (chat) | 5.2 |
+| Criteria confirmation | The user confirms the drafted criteria before a run starts (`interrupt()`) | Should | 3 | 5.2 |
+| Research summary | Trends, gaps, contradictions — generated by the local model from the evidence table, with citations | Should | 3 (last item) | Phase 3 design |
 
 ## 4. Non-goals (until v1.0)
 
-Fine-tuning · PDF uploads · paper sources other than OpenAlex · custom extraction fields per review · React frontend · scaling for many concurrent users.
+- Fine-tuning — no budget, and the hardware is a laptop.
+- PDF uploads and paper sources other than OpenAlex.
+- Custom extraction fields per review — would need `review_id` on `extractions`.
+- React frontend — Streamlit is enough for one user.
+- Multi-user and authentication — single user until v1.0; tracked in `docs/backlog.md`. The schema keeps `user_id`.
+- Scaling for many concurrent users; a job queue or worker.
+- Scheduled re-searches or alerts for new papers.
+- Automatic resume of interrupted runs — they are marked interrupted and the user re-runs them.
+- Reusing library papers before searching OpenAlex — tracked in `docs/backlog.md`.
+- A PRISMA flow diagram or per-stage counts — only a reason per paper is stored.
+- More than one embedding model in production.
+- Excel export — CSV opens in Excel.
 
 ## 5. Architecture
 
-```
+```text
 Streamlit chat UI
       │
 FastAPI (SSE streaming)
       │
 LangGraph main graph
-  Router ──► Context      (answer from conversation)
-         ├─► Library QA   (answer from library, with citations)
-         └─► Pipeline     (subgraph: search → screening → retrieval → extraction → store)
+  Router ── context ───► Context answer      (from the conversation)
+         ── library ───► Library QA          (retrieval over the user's included papers, with citations)
+         ── new_topic ─► Draft review + criteria ──► Pipeline subgraph
+         ── clarify ───► Follow-up question
       │
-LLM layer (get_llm(role))   Postgres + pgvector (library + checkpoints)   OpenAlex API
+LLM layer (get_llm, get_embedder)   Postgres + pgvector   OpenAlex API
 ```
+
+Pipeline subgraph stages (one list, used everywhere): **search → screening → ingestion → retrieval → extraction → store**. Ingestion downloads the PDF, parses it, chunks it, embeds the chunks and stores the paper. Store writes screenings and extractions.
 
 ### 5.1 Layers
 
-- **UI:** Streamlit, `st.chat_message`, streamed progress.
-- **API:** FastAPI.
-  - `POST /chat` — SSE stream of answer tokens and pipeline progress
-  - `POST /chat/resume` — user reply after `interrupt()`
-  - `GET /reviews/{id}/table`, `GET /reviews/{id}/export?format=csv|bibtex`
-  - `GET /health`
+- **UI:** Streamlit chat with streamed progress.
+- **API:** FastAPI with SSE streaming for chat, read endpoints for reviews, evidence tables and exports, and `/health`. Single-user and bound to localhost; there is no authentication before v1.0. Endpoint shapes: Phase 3 design.
+- **Runs:** a pipeline run is decoupled from the HTTP request. Its status is stored in Postgres. On restart, unfinished runs are marked interrupted and the user can re-run them.
 - **Agents:** LangGraph main graph; the pipeline is a separate, independently testable subgraph.
-- **LLM layer:** single factory `get_llm(role)`; no agent instantiates a provider client directly.
-- **Data:** one Postgres instance with pgvector for library data and LangGraph checkpoints.
-- **Cross-cutting:** LangSmith tracing and eval experiments, structured JSON logs, configuration via environment variables.
+- **LLM layer:** `get_llm(role)` and `get_embedder()` (section 7); no agent instantiates a provider client directly.
+- **Data:** one Postgres instance with pgvector for library data, run status, and (from Phase 3) LangGraph checkpoints.
+- **Cross-cutting:** LangSmith tracing, structured JSON logs, configuration via environment variables.
+- **Data flow:** user data leaves the machine only through LangSmith tracing, which can be switched off. Groq is used only by the eval judge, on eval datasets.
 
 ### 5.2 Router
 
-Hybrid: LLM decision + deterministic rules.
+Hybrid: LLM decision + one deterministic rule.
 
-1. LLM returns structured output (Pydantic):
-   - `route`: `context | library | new_topic | clarify`
-   - `rewritten_query`: follow-up rewritten as a standalone question
-   - `reason`
-2. Rule: for `library`, run retrieval first. If top score is below threshold or too few papers are found, `interrupt()` and ask: "I have little on this. Search for new papers?"
+1. LLM returns structured output (Pydantic): `route` (`context | library | new_topic | clarify`), `rewritten_query` (a follow-up rewritten as a standalone question), and `reason`.
+2. Routes:
+
+   | Route | Target |
+   | --- | --- |
+   | `context` | Answer from the conversation so far |
+   | `library` | Library QA: retrieval over papers included in the user's reviews, answer with citations |
+   | `new_topic` | Draft a review (question and criteria), then run the pipeline subgraph. In a conversation that already has a review, start a new conversation first |
+   | `clarify` | Ask the user a follow-up question |
+
+3. Rule: for `library`, run retrieval first. If the top score is below `library_min_score` or fewer than `library_min_papers` papers are found, reply "I have little on this. Search for new papers?" as an ordinary answer. The user's next message is routed as usual; a "yes" goes to `new_topic` through `rewritten_query`. Threshold values depend on the embedding model and are set in the Phase 3 design.
+4. Domain disambiguation (Should): on `new_topic`, before criteria are drafted, a quick OpenAlex search counts `primary_topic.subfield` across the results. If the results are mixed, the assistant replies with the leading subfields and example titles for each, and the user picks one in their next message (an ordinary chat reply, like `clarify`).
+5. Criteria: on `new_topic`, the LLM drafts the question and criteria (inclusion, exclusion, minimum year, and the chosen subfield if any) from the conversation, using the chosen subfield's example titles as context. If a required item is missing, the route is `clarify`. The draft is stored as a `reviews` row and shown to the user. Confirming it with `interrupt()` before the run starts is a Should, and it is the only `interrupt()` before v1.0.
+
+The research summary is generated on request from a review's evidence table.
 
 ### 5.3 Pipeline loops
 
-**Loop 1 — after screening**
-- Condition: included papers < target (default 10).
-- Action: rewrite the query using the exclusion reasons from the screening log; exclude `seen_ids`.
-- Stop: max 2 iterations or no new papers. Report the actual count honestly.
+**Loop 1 — after ingestion**
+- Condition: included papers with a retrievable PDF < `target_included` (default 10).
+- Action: rewrite the query using the exclusion reasons from the screening log; skip papers already screened for this review.
+- Stop: max 2 iterations or no new papers. Report the included count and, if it is below target, the shortfall.
 
-**Loop 2 — after extraction**
-- Each field has a status: `found | not_reported | empty`. Only `empty` triggers the loop.
-- Action: targeted re-retrieval for that field only (different phrasing, more chunks, specific sections such as Methods/Results).
-- Stop: max 2 iterations, then set status to `not_reported`.
+**Loop 2 — after extraction (conditional)**
+- Adopted only if the Phase 2a baseline shows a meaningful share of fields the system did not find, and the Phase 2b full-paper experiment does not remove it. Parallel extraction comes first.
+- Each field has a status: `found | not_reported | missing`. `not_reported` is a claim that the paper does not contain the field. `missing` means the system did not find a value. Only `missing` triggers the loop.
+- Action: targeted re-retrieval for that field only (different phrasing, more chunks).
+- Stop: max 2 iterations. A field that is still `missing` stays `missing`; it is never converted to `not_reported`.
 
-**State:** iteration counter per loop, `seen_ids`, status per field. Both loops are conditional edges.
+**State:** graph state holds IDs, iteration counters and per-field statuses only; nodes load content from the library tables. Papers already screened for a review are read from `screenings`. Both loops are conditional edges.
 
 ### 5.4 Repository layout
 
-```
-src/
-  api/        FastAPI app, endpoints, schemas
-  graph/      main graph, router, state
-  pipeline/   subgraph: search, screening, retrieval, extraction
-  llm/        get_llm, settings, prompts/ (versioned files)
-  db/         SQLAlchemy models, Alembic migrations
-  ui/         Streamlit app
-eval/         datasets, judge prompts, eval scripts
-tests/        unit and integration tests
-deploy/       Dockerfiles, docker-compose, Kubernetes manifests
-docs/         plan_v2.md, designs/
-```
+Code lives under `src/` (`api`, `graph`, `pipeline`, `llm`, `db`, `ui`); the pipeline is its own subgraph package, and prompts are versioned files in `src/llm/prompts/`, not inline strings. `eval/`, `tests/` and `deploy/` sit next to `src/`. The full tree is in the Phase 1 design.
 
-Prompts are versioned files in `src/llm/prompts/`, not inline strings.
+### 5.5 Key decisions
+
+| Decision | Rejected alternative | Trade-off |
+| --- | --- | --- |
+| One Postgres + pgvector store for library, vectors, run status and checkpoints | Keep FAISS for vectors next to a separate database | One store to back up and query, and joins across papers and chunks; in exchange, pgvector indexing must be tuned when volume grows |
+| Local inference on Ollama | The v1 GPU cluster, or a paid API | Free and private; in exchange, slow on a fanless 16 GB laptop (latency budget in section 11) |
+| Chat-first assistant | Keep v1's one-shot batch job | Follow-ups and library reuse; in exchange, a router and conversation state to build and evaluate |
 
 ## 6. Data model
 
 Paper data is shared across users; reviews, screenings, and conversations are private.
 
-| Table | Key columns | Scope |
-| --- | --- | --- |
-| `users` | `id`, `email` | private |
-| `reviews` | `id`, `user_id`, `question`, `criteria` (jsonb) | private |
-| `conversations` | `thread_id`, `user_id`, `review_id` | private |
-| `screenings` | PK (`review_id`, `paper_id`), `decision`, `reason`, `model`, `prompt_version` | private |
-| `papers` | `id`, `openalex_id` (unique), `doi` (unique), `title`, `year`, `pdf_url` | shared |
-| `chunks` | `id`, `paper_id`, `page`, `text`, `embedding` (vector), `embedding_model` | shared |
-| `extractions` | `id`, `paper_id`, `field`, `value`, `status`, `evidence_chunk_id`, `model`, `prompt_version` | shared |
+| Entity | Holds | Scope | From |
+| --- | --- | --- | --- |
+| `users` | one seeded `local` user until authentication exists | private | Phase 1 |
+| `reviews` | question and criteria (including an optional OpenAlex subfield, from Phase 2b) | private | Phase 1 |
+| `runs` | status of one pipeline run; until Phase 2b also its screening and extraction output | private | Phase 1 |
+| `papers` | bibliographic data (including authors and venue, for BibTeX), PDF URL, ingestion status | shared | Phase 1 |
+| `chunks` | text, page, embedding, embedding model | shared | Phase 1 |
+| `screenings` | decision and reason per (review, paper) | private | Phase 2b |
+| `extractions` | field value, status, evidence chunk | shared | Phase 2b |
+| `conversations` | links a LangGraph thread to its review | private | Phase 3 |
+
+Columns, keys and enumerations are defined in the Phase 1 design (data model) and the Phase 2b design (extraction).
 
 **Rules**
 - Screening is stored per (review, paper): the same paper can be included in one review and excluded in another.
-- Upsert papers on `openalex_id` (`ON CONFLICT`); download and chunk each paper once.
-- Every extraction references its evidence chunk (traceability).
-- Every LLM output stores `model` and `prompt_version` (provenance).
-- `user_id` exists in the schema from Phase 1, even before auth.
-- LangGraph checkpoint tables are created by `PostgresSaver`; `conversations.thread_id` links to them.
-- Tooling: SQLAlchemy (or SQLModel) + Alembic. Add an HNSW index only when chunk volume requires it.
-- Future: custom fields per review require `review_id` on `extractions`.
+- A paper is stored once, whatever its OpenAlex ID or DOI variants; each paper is downloaded and chunked once.
+- Shared extractions hold only fields that do not depend on the review. Judgments tied to one review, such as relevance to its question, are stored per review.
+- LLM outputs are append-only and store `model` and `prompt_version`: a re-run adds rows and never overwrites.
+- Every `found` extraction references its evidence chunk and page.
+- A field the system did not find (`missing`) is stored separately from `not_reported`.
+- The extraction fields are a fixed, domain-generic set, defined in the Phase 2b extraction design.
+- `user_id` is on every private table from Phase 1 and is filled with the seeded `local` user. Queries on private tables filter by `user_id`.
+- One conversation holds one review. A `new_topic` in a conversation that already has a review starts a new conversation.
+- LangGraph checkpoint tables are created by the checkpointer in Phase 3; `conversations.thread_id` links to them.
 
 ## 7. LLM layer
 
-Models are configured per role:
+- One model per role, set in settings. Roles: `search` (query expansion), `router`, `screening`, `extraction`, `summary`, `embedding`, `judge`.
+- Phase 1 defaults are the v1 models: `qwen2.5-coder:7b` on local Ollama for every LLM role, and `all-MiniLM-L6-v2` (384 dimensions, in-process) for embeddings. Phase 1 changes code, not models. Candidate models (general instruct models such as `qwen3:8b`, embedders such as `nomic-embed-text`) are benchmarked in Phase 2a; router models in Phase 3.
+- `summary` uses a local model. `judge` uses a stronger model from a different family on a free API tier (provisional: Groq `llama-3.3-70b`).
+- `get_llm(role)` is the only place that builds LLM clients. It returns an Instructor-patched, OpenAI-compatible client wrapped for tracing, as in v1. `get_embedder()` builds the embedder.
+- Settings are validated at startup with Pydantic Settings. API keys come from `.env` (Kubernetes Secrets from Phase 4).
+- Profiles: `local` and `test` (`test` uses a deterministic fake LLM for unit tests).
+- On errors or rate limits (HTTP 429): retry, then the role's fallback if one is configured.
+- The model name is recorded in every trace and with every stored LLM output.
 
-```yaml
-llm:
-  router:     { provider: ollama, model: qwen3:8b }          # provisional
-  screening:  { provider: ollama, model: qwen3:8b }          # provisional
-  extraction: { provider: ollama, model: qwen3:8b }          # provisional
-  embedding:  { provider: ollama, model: nomic-embed-text }  # provisional
-  summary:    { provider: groq,   model: llama-3.3-70b, fallback: ollama }
-  judge:      { provider: groq,   model: llama-3.3-70b }
-```
+### 7.1 Prompt structure
 
-- `get_llm(role)` is the only place that builds clients. All providers use OpenAI-compatible endpoints.
-- Settings validated at startup with Pydantic Settings. API keys only in `.env` / Kubernetes Secrets.
-- Profiles: `local`, `cloud`, `test` (`test` uses a deterministic fake LLM for unit tests).
-- Fallback on errors or rate limits (HTTP 429), e.g. LangChain `with_fallbacks`.
-- Model name is recorded in every trace.
-- Default local models: general instruct model (not a code model). Phase 1 uses provisional defaults `qwen3:8b` (router, screening, extraction) and `nomic-embed-text` (embeddings). The final choice per role comes from the benchmark at the start of Phase 2; changing the embedding model then means re-embedding stored chunks and migrating the vector column.
-
-### 7.1 Prompt structure and caching (CAG + RAG)
-
-- Order every prompt stable → variable: system prompt → criteria/schema → document → question. This enables prefix/prompt caching.
-- **Cache-style context (stable data):** review criteria during screening; full paper text during extraction when it fits the context window; the evidence table for library QA and summaries.
-- **Retrieval (growing data):** the library as a whole; OpenAlex.
-- Hybrid by length: full paper if it fits, chunks otherwise.
-- Never mix data from different users in one cached context.
+- Order every prompt stable → variable: system prompt → criteria/schema → document → question. A provider that caches prompt prefixes can then reuse them; whether this saves time is measured, not assumed.
+- Extraction uses retrieved chunks. Full-paper context is a Phase 2b experiment and is adopted only if it wins on latency and faithfulness and keeps evidence links to a chunk and page.
 
 ## 8. Evaluation
 
-| Component | Metric | Method |
-| --- | --- | --- |
-| Router | Accuracy, confusion matrix | 30–50 labeled messages; no judge |
-| Search | precision@10 | Judge: relevant yes/no |
-| Screening | Agreement rate | Judge decision vs. system decision |
-| Extraction | Faithfulness, share of empty fields | Judge sees value + evidence passage |
-| Chat answers, summary | Faithfulness, citation correctness | Judge sees answer + cited sources |
-| End-to-end | Latency, tokens per step | LangSmith traces |
+> Provisional. Metrics, datasets and thresholds are settled at the start of Phase 2a from `docs/eval_notes.md` and written to `docs/designs/eval.md`.
 
-**Judge rules**
-- Binary or 1–3 scale; reasoning before verdict.
-- Judge always sees the source, not only the answer.
-- Versioned judge prompt, temperature 0.
-- Judge model must be stronger than the system model.
-- Calibrate: label 20–30 cases manually; report human–judge agreement before trusting results.
+**Components measured:** router, search, screening, retrieval, extraction, chat answers and summary, end-to-end latency.
 
-**Process**
-- Fixed datasets in `eval/` (versioned in git).
-- Results logged as LangSmith experiments.
-- CI runs a small subset on every merge (free-tier limits).
-- Every change claimed as an improvement must show a metric delta.
+**Principles**
+- The judge always sees the source, not only the answer.
+- The judge is calibrated against human labels before its results are trusted; the calibration result is reported.
+- The judge is never the model that generated the output.
+- Datasets are fixed and versioned in `eval/`.
+- The local results file in `eval/results/` is the record; the LangSmith upload is optional.
+- Live evals run locally at each phase exit from Phase 2a on. CI runs only lint and unit tests with the fake LLM.
+- An improvement is a delta larger than run-to-run noise, judged by a decision rule written before the run.
 
 ## 9. Deployment and operations
 
 - **Local dev:** docker-compose for Postgres, API, UI. Ollama runs natively on macOS (no GPU access inside Docker on Mac).
-- **Kubernetes:** local cluster via `kind` or `k3d`. Deployments for UI, API, worker, Postgres. Ollama stays outside the cluster; the API only knows its URL, so it can move to a GPU server without code changes.
+- **Kubernetes (Phase 4):** a local cluster (tool chosen in the Phase 4 design). Deployments for UI and API; Postgres with persistent storage. Ollama stays outside the cluster; the API only knows its URL, so it can move to a GPU server without code changes.
 - ConfigMap for settings, Secrets for keys.
-- Liveness/readiness probes on `/health`.
-- Alembic migrations run as a Kubernetes Job before the API starts.
-- **Job queue (Phase 4):** Redis + worker for long pipeline runs. Until then, async execution in the API is acceptable because the checkpointer persists state.
-- **Auth (Phase 4):** simple authentication; every query filters by `user_id`.
-- **CI/CD:** lint → unit tests → eval subset → build images → deploy.
+- Liveness and readiness probes.
+- Database migrations complete before the API starts (mechanism in the Phase 4 design).
+- **Long runs:** pipeline runs execute in the API process, decoupled from the request (section 5.1). There is no separate queue or worker.
+- **CI/CD:** CI runs lint → unit tests (fake LLM) → build images. Deployment is a local script. Live evals run locally (section 8).
 
 ## 10. Phases
 
-Each phase ends with a working system and a git tag. From Phase 2 on, each phase is also measured with the eval harness. Only one phase is active at a time.
+Each phase ends with a working system and a git tag. From Phase 2a on, each phase is also measured with the eval harness.
 
-### Phase 0 — Baseline · `v0.1` · done
-- [x] Fork repository, create branch `v2`
-- [x] Bootstrap documentation of the v1 codebase
-- Moved to the start of Phase 2: model benchmark, gold dataset v0, eval script (see `docs/eval_notes.md`)
+### Phase 0 — v1 documentation · `v0.1` · done
+- [x] Fork the v1 repository, create branch `v2`
+- [x] Document the v1 codebase (per-package READMEs, `CLAUDE.md`, `docs/backlog.md`)
 
-**Exit (revised 2026-11-11):** v1 codebase documented on branch `v2`. Evaluation is deferred to Phase 2; v1 quality is not yet measured.
+**Exit (revised 2026-11-11):** v1 codebase documented on branch `v2`. v1 quality is not measured; the baseline is measured in Phase 2a.
 
 ### Phase 1 — Foundation · `v0.2`
-- [ ] New repository layout
-- [ ] Settings, `get_llm(role)`, profiles, secrets; provisional models `qwen3:8b` and `nomic-embed-text` (section 7)
-- [ ] Postgres + pgvector in docker-compose; SQLAlchemy models; Alembic migrations (incl. `user_id`)
-- [ ] Ingestion: paper upsert, chunking, embeddings in pgvector
-- [ ] `PostgresSaver` checkpointer with `thread_id`
-- [ ] pytest with fake LLM; CI with lint + tests
 
-**Exit:** running the same topic twice creates no duplicates; a restart loses nothing; CI is green.
+**End state:** the v1 linear pipeline runs from `src/` with unchanged behaviour and unchanged models, behind the v1 endpoints (`POST /start_pipeline`, `GET /status/{job_id}`), and stores papers, chunks and run results in Postgres. v1 modules not used by the graph are deleted, not moved. "The system runs" means: the graph compiles, a fake-LLM end-to-end run passes, and `docker compose up` serves the API.
 
-### Phase 2 — Pipeline · `v0.3`
-Evaluation first (moved from Phase 0; input: `docs/eval_notes.md`, draft):
-- [ ] Gold dataset v0 for three test topics
-- [ ] Eval script measuring the baseline before any Phase 2 pipeline change
-- [ ] Benchmark candidate local models on target hardware per role: screening, extraction, embedding (speed, memory, quality). No tool calling; the router is benchmarked in Phase 3.
-- [ ] Decision record for the model per role; replace the provisional defaults
+- [ ] Copy the gitignored eval inputs (`Screening_Agent/search_results.json`, `extract_agent/search_results.json`) to the eval snapshot location and record their retrieval date
+- [ ] Repair the screening tests (backlog #1); add the smoke check; CI with lint + tests
+- [ ] New repository layout: port the v1 linear pipeline into `src/` with unchanged behaviour; delete unused v1 modules (backlog #2, #3); correct `CLAUDE.md` and `README.md` for the new layout (backlog #14)
+- [ ] Settings, `get_llm(role)`, `get_embedder()`, profiles; v1 models as defaults; OpenAlex contact email from settings (backlog #5)
+- [ ] Postgres + pgvector in docker-compose; SQLAlchemy models; Alembic migration creating `users` (one seeded `local` user), `reviews`, `runs`, `papers`, `chunks`
+- [ ] Ingestion: paper upsert, page-aware chunking, embeddings in pgvector (replaces FAISS)
+- [ ] Run status in Postgres instead of the in-memory job dict; unfinished runs are marked interrupted on restart
 
-Then:
-- [ ] Pipeline as subgraph
-- [ ] Screening stores decision + reason per (review, paper)
-- [ ] Loop 1 with counter and `seen_ids`
-- [ ] Extraction with field status and evidence (chunk, page)
-- [ ] Loop 2 for `empty` fields only
+**Exit:** automated tests show that running the pipeline twice with the same question and criteria leaves one `papers` row and one set of `chunks` per paper, and that after restarting the API and Postgres every completed run's results and all library rows are still present. The existing screening tests pass under the new layout. CI is green.
+
+### Phase 2a — Eval baseline and benchmark · `v0.3`
+Input: `docs/eval_notes.md` (draft brainstorm notes).
+- [ ] Resolve the open questions in `docs/eval_notes.md`; write `docs/designs/eval.md`, including the model-selection rule
+- [ ] Gold dataset v0 for three test topics: screening decisions for every topic; field status, evidence page and quote for a few papers
+- [ ] Eval harness; measure the baseline: the Phase 1 system with the v1 models
+- [ ] Benchmark candidate local models per role on the target hardware (section 11): search, screening, extraction, embedding (speed, memory, and the quality metrics in `docs/designs/eval.md`). Router models are benchmarked in Phase 3.
+- [ ] Decision record for the model per role; switch the defaults. If the embedding model changes: migrate the vector column, re-embed stored chunks, check that all `chunks` share one `embedding_model`. Update model references in READMEs (backlog #6).
+- [ ] Set the per-run latency budget (section 11) from the measured baseline
+
+**Exit:** baseline results file and decision record committed; the chosen models show a delta over the baseline under the model-selection rule, or the record says why the v1 models are kept; latency budget recorded.
+
+### Phase 2b — Pipeline · `v0.4`
+- [ ] Pipeline as subgraph, called by the existing job endpoint, which creates a `reviews` row
+- [ ] Screening stores decision + reason per (review, paper); a store node writes screenings and extractions with `model` and `prompt_version`
+- [ ] Search filter by OpenAlex subfield (`primary_topic.subfield`), taken from the review's criteria when set
+- [ ] Loop 1 with counter, counting included papers with a retrievable PDF against `target_included`; cap OpenAlex retries
+- [ ] Extraction with the fixed field set, field status and evidence (chunk, page)
+- [ ] Parallel extraction
 - [ ] Experiment: full-paper context vs. chunk retrieval for extraction (latency, faithfulness)
-- [ ] Chunk overlap; hybrid search or reranking only if metrics improve
+- [ ] Chunk overlap, if Phase 1 left it out. Then try keyword plus vector search and a reranker, separately; adopt each only if retrieval recall@k or extraction faithfulness improves
+- [ ] Loop 2 for `missing` fields, only if the baseline and the experiment show it is needed
 
-**Exit:** eval shows fewer empty fields and measured faithfulness; no unbounded loops.
+**Exit:** the eval shows fewer gold-`found` fields reported as `missing` or `not_reported` than the baseline; faithfulness is reported with human–judge agreement; fake-LLM tests show each loop stops at its limit and OpenAlex retries are capped; every `found` extraction has an evidence chunk; one run stays within the latency budget.
 
-### Phase 3 — Chat · `v0.4`
-- [ ] Router (LLM + rule) with `rewritten_query`
+### Phase 3 — Chat · `v0.5`
+Musts:
+- [ ] Async Postgres checkpointer with `thread_id`; `conversations` table
+- [ ] Router (LLM + rule) with `rewritten_query` and the route table in 5.2: `new_topic` drafts a review and starts the pipeline subgraph; `clarify` asks a follow-up
 - [ ] Context route and library QA with citations
-- [ ] Evidence table, export (CSV, BibTeX), screening log
-- [ ] Research summary from the evidence table
+- [ ] Evidence table view, export (CSV, BibTeX)
 - [ ] SSE streaming in API; chat UI in Streamlit
-- [ ] `interrupt()` + `/chat/resume`
-- [ ] Router test set (30–50 messages) and accuracy
+- [ ] Router test set (30–50 messages); benchmark router models; decision record for the router model
 
-**Exit:** a full demo conversation runs from question to export; router accuracy is measured.
+**Exit:** a scripted fake-LLM conversation passes. It exercises all four routes and a restart mid-conversation, checks that every answer sentence stating a finding cites a paper and that every `found` table cell has a chunk and page, and ends in CSV and BibTeX export. Router accuracy and the confusion matrix are reported on the test set.
 
-### Phase 4 — Deployment · `v0.5`
-- [ ] Local Kubernetes cluster; manifests for all components
-- [ ] ConfigMap, Secrets, health probes, migration Job
-- [ ] Redis job queue + worker
-- [ ] Authentication
-- [ ] CI/CD: build images, eval subset, deploy
+Shoulds, after the exit, in this order:
+- [ ] Screening log view
+- [ ] Domain disambiguation before criteria drafting (5.2 step 4)
+- [ ] Criteria confirmation with `interrupt()` and a resume endpoint
+- [ ] Research summary from the evidence table (local model, judged by a different model)
 
-**Exit:** one command deploys the full stack.
+### Phase 4 — Deployment · `v0.6`
+- [ ] Local Kubernetes cluster; new manifests for UI, API and Postgres (Ollama stays outside)
+- [ ] ConfigMap, Secrets, liveness and readiness probes, migrations before the API starts
+- [ ] CI builds images; local deploy script
+
+**Exit:** on a new local cluster, one command brings up UI, API and Postgres; migrations complete before the API starts; readiness probes pass; a pipeline run and a chat turn complete through the deployed UI.
 
 ### Phase 5 — Release · `v1.0`
 - [ ] README: problem, architecture, key decisions, measured results
-- [ ] Design docs complete and drift-free
+- [ ] Design docs complete and drift-free (section 15)
 - [ ] Demo video (~3 min)
 
-**Exit:** every claim in the README is backed by an eval result.
+**Exit:** every quality or performance number in the README links to a results file in `eval/results/`.
 
 ## 11. Constraints
 
 - **Hardware:** MacBook Air M4 (fanless; throttles on long runs), 16 GB RAM.
-- **Budget:** free only — local Ollama plus free API tiers. Free-tier limits change; verify before use.
+- **Budget:** free only — local Ollama plus free API tiers. Check free-tier limits when choosing the judge (Phase 2a).
+- **Latency budget:** one `new_topic` run with `target_included` = 10 on the target hardware finishes within a budget set in Phase 2a from the measured baseline. Phase 2b must stay within it.
 
 ## 12. Risks
 
 | Risk | Mitigation |
 | --- | --- |
-| Limited local compute | Small test sets, loop limits, judge via free API |
-| 7B models unreliable for tool calling | Structured output + rules; model per role swappable |
-| Free API limits change | Fallback to Ollama; check limits before use |
-| No deadline → scope creep | One phase at a time; exit criteria; backlog for new ideas |
-| Long context hurts small models | Hybrid full-paper/chunk strategy; measure before adopting |
+| Laptop inference too slow for a 10-paper run | Latency budget; parallel extraction; fewer papers; a GPU host if one is available |
+| Small (7–8B) local models return invalid structured output | Instructor validation and retries; model per role swappable |
+| Free API limits change | Groq is used only by the eval judge; check limits when choosing it |
+| No deadline → scope creep | Exit criteria per phase; `docs/backlog.md` for new ideas |
+| Long context hurts small models | Chunk retrieval by default; full paper only if the Phase 2b experiment favours it |
+| Local cluster plus native Ollama exceed 16 GB (Phase 4) | Resource limits on cluster pods; a smaller local model |
 
 ## 13. Working rules
 
-1. No big rewrite: the system runs after every step.
+1. No big rewrite: the system runs after every task (section 10, Phase 1 end state).
 2. One phase at a time; finish with a git tag.
-3. One EGM cycle per phase or major topic: brainstorm → draft → review → implement → drift report.
-4. One agent session per task; each session reads only this plan, the relevant design doc, and the relevant code.
+3. One EGM cycle per phase or per design subject that spans phases: brainstorm → draft → review → implement → drift report (section 15).
+4. One agent session per task; each session reads this plan, the relevant design doc, the `docs/backlog.md` items assigned to the current phase, any inputs the design doc names, and the relevant code.
 5. Commit after each task with passing tests.
-6. Improvements require a metric delta.
-7. Ideas outside the current phase go to the backlog, not into code.
+6. A claimed improvement needs a delta beyond run-to-run noise (section 8). Changes that keep behaviour, such as Phase 1, need passing tests instead.
+7. Ideas outside the current phase go to `docs/backlog.md`, not into code.
 
 ## 14. Open questions
 
-- None at plan level. Evaluation design questions are tracked in `docs/eval_notes.md`.
+- What is the per-run latency budget? Set in Phase 2a from the measured baseline.
+- Is the v1 GPU cluster still available as a fallback if laptop inference misses the budget?
+- Evaluation design: `docs/eval_notes.md` questions 1–5. Questions 6 and 7 are settled by this plan: the baseline is the Phase 1 system with the v1 models, and the embedding change is a Phase 2a task.
+
+## 15. Glossary
+
+- **Task:** one checklist item in section 10.
+- **EGM (Elephant–Goldfish Model):** the design workflow used in this repository: brainstorm → draft `docs/designs/<phase-or-subject>.md` → review by reviewers with no prior context → implement → drift report.
+- **Drift report:** compares the code with its design doc and lists the differences.
+- **Drift-free:** the last drift report for each design doc lists no open items.
+- **Agent session:** a coding-assistant session working on this repository, not one of the system's own agents.
+- **Eval harness:** the eval script, datasets and results files under `eval/`.
