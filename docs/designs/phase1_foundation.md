@@ -66,8 +66,8 @@ Measurable, from the plan's Phase 1 exit criteria and the brief:
     test with the register as its allow-list.
 *   **G4 — One LLM seam.** `get_llm(role)` / `get_embedder()` are the only places
     LLM and embedding clients are built; the `test` profile swaps in a fully fake
-    surface (LLM, OpenAlex, PDFs, embedder) so an end-to-end run passes with no
-    network and no model downloads.
+    surface (LLM, OpenAlex, PDFs, embedder, and from 2a the repository) so an
+    end-to-end run passes with no network, no model downloads and no database.
 *   **G5 — Green CI.** The existing screening tests pass under the new layout; CI
     runs ruff + unit tests (fake surface) + image build + a compose `/health`
     check, all green.
@@ -197,9 +197,9 @@ The `test` profile swaps in the **fake surface** at the same seams:
 
 | Seam | `local` profile | `test` profile |
 | --- | --- | --- |
-| `get_llm(role)` | Instructor + Ollama | Fake LLM: registry keyed by `response_model` type; values are a canned instance or `Callable[[messages], instance]`; canned screening decision is `include`; mixed buckets via `[FAKE:EXCLUDE]` sentinels in fixture abstracts |
+| `get_llm(role)` | Instructor + Ollama | Fake LLM: registry keyed by `response_model` type; values are a canned instance or `Callable[[messages], instance]`; canned screening decision is `include`; mixed buckets via `[FAKE:EXCLUDE]`, `[FAKE:UNCERTAIN]` and `[FAKE:FAIL]` (raises, producing a `failed` paper) sentinels in fixture abstracts |
 | `get_embedder()` | MiniLM in-process | Deterministic 384-dim fake (no HuggingFace download) |
-| OpenAlex client | Live API | Stub returning `tests/fixtures/search_results.json` (3–5 papers incl. the two-IDs-one-DOI pair) |
+| OpenAlex client | Live API | Stub replacing `OpenAlexClient.execute_retrieval`, returning raw work dicts from `tests/fixtures/openalex_works.json` (5 papers incl. the two-IDs-one-DOI pair) |
 | PDF download | HTTP | Two committed 2–3-page fixture PDFs from a local path |
 | `get_repository()` (from 2a/2b) | Postgres + pgvector | In-memory fake repository: same functions, brute-force cosine retrieval over the fake embedder's vectors |
 
