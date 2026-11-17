@@ -11,7 +11,8 @@ st.set_page_config(page_title="AI Academic Search Agent", page_icon="🧬", layo
 # Main Title and Subtitle
 st.title("🧬 AI-Powered Academic Research Agent")
 st.markdown(
-    "Automate your literature review. This agent expands your query, fetches papers, and structures the data instantly.")
+    "Automate your literature review. This agent expands your query, fetches papers, and structures the data instantly."
+)
 
 # --- AGENT DETAILS SECTION ---
 with st.expander("🤖 How does this Agent work? (System Architecture)", expanded=False):
@@ -25,10 +26,13 @@ with st.expander("🤖 How does this Agent work? (System Architecture)", expande
 
 # Sidebar Configuration
 st.sidebar.header("⚙️ Search Configuration")
-research_query = st.sidebar.text_area("Research Question:",
-                                      placeholder="e.g., How does social media shape adolescents' lifeworlds?")
+research_query = st.sidebar.text_area(
+    "Research Question:", placeholder="e.g., How does social media shape adolescents' lifeworlds?"
+)
 
-min_year = st.sidebar.number_input("Minimum Publication Year:", min_value=2000, max_value=2025, value=2020)
+min_year = st.sidebar.number_input(
+    "Minimum Publication Year:", min_value=2000, max_value=2025, value=2020
+)
 
 st.sidebar.divider()
 
@@ -49,12 +53,15 @@ if st.sidebar.button("🚀 Execute Research Pipeline", use_container_width=True)
                 st.write("🧹 3. Deduplicating and structuring data...")
 
                 # Run the async pipeline (removed criteria)
-                json_result = asyncio.run(agent.run_pipeline(
-                    user_query=research_query,
-                    min_year=min_year
-                ))
+                json_result = asyncio.run(
+                    agent.run_pipeline(user_query=research_query, min_year=min_year)
+                )
 
-                status.update(label="✅ Pipeline Execution Completed Successfully!", state="complete", expanded=False)
+                status.update(
+                    label="✅ Pipeline Execution Completed Successfully!",
+                    state="complete",
+                    expanded=False,
+                )
 
                 # Calculate total execution time
                 end_time = time.time()
@@ -83,7 +90,7 @@ if st.sidebar.button("🚀 Execute Research Pipeline", use_container_width=True)
                     with tab1:
                         st.subheader("Data Overview")
                         # Create a clean dataframe for the table
-                        df = pd.DataFrame(papers)[['title', 'year', 'doi', 'relevance_score']]
+                        df = pd.DataFrame(papers)[["title", "year", "doi", "relevance_score"]]
                         st.dataframe(df, use_container_width=True, hide_index=True)
 
                     with tab2:
@@ -91,10 +98,12 @@ if st.sidebar.button("🚀 Execute Research Pipeline", use_container_width=True)
                         for i, paper in enumerate(papers):
                             with st.expander(f"📌 {paper['title']} ({paper['year']})"):
                                 st.markdown(f"**👥 Authors:** {', '.join(paper['authors'])}")
-                                st.markdown(f"**⭐ Relevance Score:** {paper['relevance_score']} (Unscreened)")
+                                st.markdown(
+                                    f"**⭐ Relevance Score:** {paper['relevance_score']} (Unscreened)"
+                                )
                                 st.markdown(f"**📖 Abstract:** {paper['abstract']}")
-                                if paper['url']:
-                                    st.link_button("🔗 Read Full Paper", paper['url'])
+                                if paper["url"]:
+                                    st.link_button("🔗 Read Full Paper", paper["url"])
 
                     # --- DOWNLOAD OPTION ---
                     st.sidebar.write("### 📥 Export Data")
@@ -103,7 +112,7 @@ if st.sidebar.button("🚀 Execute Research Pipeline", use_container_width=True)
                         data=json_result,
                         file_name="research_results.json",
                         mime="application/json",
-                        use_container_width=True
+                        use_container_width=True,
                     )
 
             except Exception as e:
@@ -112,4 +121,5 @@ if st.sidebar.button("🚀 Execute Research Pipeline", use_container_width=True)
 else:
     # A welcoming message when the app first loads
     st.info(
-        "👋 Welcome! Please fill in your search parameters on the left sidebar and click 'Execute Research Pipeline'.")
+        "👋 Welcome! Please fill in your search parameters on the left sidebar and click 'Execute Research Pipeline'."
+    )

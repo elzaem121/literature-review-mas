@@ -3,10 +3,13 @@ from Orchestration.state import PipelineState
 
 # Import ALL nodes
 from Orchestration.nodes import (
-    pre_search_node, search_node,
-    pre_screening_node, screening_node,
+    pre_search_node,
+    search_node,
+    pre_screening_node,
+    screening_node,
     pre_document_processing_node,
-    pre_extraction_node, extraction_node
+    pre_extraction_node,
+    extraction_node,
 )
 
 #  NEW: Import the document processing node

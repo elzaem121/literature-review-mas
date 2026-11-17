@@ -23,20 +23,17 @@ DEFAULT_INCLUSION_OPTIONS = [
 st.sidebar.header("Review-Protokoll")
 
 with st.sidebar.form("protocol_form", clear_on_submit=False):
-
     research_question = st.text_area(
         "Forschungsfrage (Research Question)",
         placeholder="e.g., How to evaluate multi-agent systems efficiently?",
         height=100,
     )
 
-
     exclusion_criteria = st.text_area(
         "Ausschlusskriterien (Exclusion Criteria)",
         placeholder="One per line... e.g., Animal models\nReview papers",
         height=120,
     )
-
 
     additional_info = st.text_area(
         "Zusatzinfos / Instructions",
@@ -45,13 +42,11 @@ with st.sidebar.form("protocol_form", clear_on_submit=False):
     )
 
     min_year = st.number_input(
-        "Minimales Jahr (Min Year)",
-        min_value=1900, max_value=2100, value=2023, step=1
+        "Minimales Jahr (Min Year)", min_value=1900, max_value=2100, value=2023, step=1
     )
 
     target_count = st.number_input(
-        "Target Papers Count",
-        min_value=1, max_value=100, value=10, step=1
+        "Target Papers Count", min_value=1, max_value=100, value=10, step=1
     )
 
     # Using Streamlit's multiselect for a clean tag UI
@@ -62,7 +57,9 @@ with st.sidebar.form("protocol_form", clear_on_submit=False):
         accept_new_options=True,
     )
 
-    submitted = st.form_submit_button("Suche starten (Start Pipeline)", use_container_width=True, type="primary")
+    submitted = st.form_submit_button(
+        "Suche starten (Start Pipeline)", use_container_width=True, type="primary"
+    )
 
 
 # ---------------------------------------------------------
@@ -75,17 +72,19 @@ def flatten_papers(raw_papers_list):
         paper_info = item.get("paper", {})
         screening_info = item.get("screening", {})
 
-        flat_list.append({
-            "title": paper_info.get("title", "No Title"),
-            "year": paper_info.get("year", ""),
-            "authors": ", ".join(paper_info.get("authors", [])),
-            "decision": screening_info.get("decision", ""),
-            "confidence_score": screening_info.get("confidence_score", ""),
-            "relevance_score": screening_info.get("relevance_score", ""),
-            "reasoning": screening_info.get("reasoning", ""),
-            "doi": paper_info.get("doi", ""),
-            "url": paper_info.get("url", "")
-        })
+        flat_list.append(
+            {
+                "title": paper_info.get("title", "No Title"),
+                "year": paper_info.get("year", ""),
+                "authors": ", ".join(paper_info.get("authors", [])),
+                "decision": screening_info.get("decision", ""),
+                "confidence_score": screening_info.get("confidence_score", ""),
+                "relevance_score": screening_info.get("relevance_score", ""),
+                "reasoning": screening_info.get("reasoning", ""),
+                "doi": paper_info.get("doi", ""),
+                "url": paper_info.get("url", ""),
+            }
+        )
     return flat_list
 
 
@@ -109,7 +108,7 @@ def render_beautiful_dataframe(data_list):
             "authors": st.column_config.TextColumn("Authors"),
             "confidence_score": st.column_config.NumberColumn("Conf.", format="%d"),
             "relevance_score": st.column_config.NumberColumn("Rel.", format="%d"),
-        }
+        },
     )
 
 
@@ -127,9 +126,11 @@ if submitted:
         "research_question": research_question.strip(),
         "min_year": min_year,
         "inclusion_criteria": inclusion_criteria,
-        "exclusion_criteria": [line.strip() for line in exclusion_criteria.split('\n') if line.strip()],
+        "exclusion_criteria": [
+            line.strip() for line in exclusion_criteria.split("\n") if line.strip()
+        ],
         "additional_info": additional_info.strip(),
-        "target_output_count": target_count
+        "target_output_count": target_count,
     }
 
     try:
@@ -151,7 +152,9 @@ if submitted:
                         live_text.info(f"**Live Status:** {msg}")
 
                         if current_step == "completed":
-                            status_box.update(label="✅ Pipeline Completed Successfully!", state="complete")
+                            status_box.update(
+                                label="✅ Pipeline Completed Successfully!", state="complete"
+                            )
                             st.session_state.results = data
                             break
                         elif current_step == "error":
@@ -159,7 +162,10 @@ if submitted:
                             st.error(msg)
                             break
                         elif current_step == "document_processing":
-                            status_box.update(label="📄 PDFs werden heruntergeladen und verarbeitet...", state="running")
+                            status_box.update(
+                                label="📄 PDFs werden heruntergeladen und verarbeitet...",
+                                state="running",
+                            )
                         elif current_step == "extraction":
                             status_box.update(label="📝 RAG-Extraktion läuft...", state="running")
                     time.sleep(1)
@@ -211,25 +217,25 @@ if "results" in st.session_state and st.session_state.results:
 
         extracted_data = res["extracted_papers"]
 
-
         table_data = []
         for item in extracted_data:
             paper_info = item.get("paper", {})
             rag_info = item.get("rag_extraction", {})
 
-            table_data.append({
-                "Titel": paper_info.get("title", "N/A"),
-                "Paper Type": rag_info.get("paper_type", "N/A"),
-                "Method": rag_info.get("method", "N/A"),
-                "Dataset": rag_info.get("dataset", "N/A"),
-                "Task": rag_info.get("task", "N/A"),
-                "Main Findings": rag_info.get("main_findings", "N/A"),
-                "Limitations": rag_info.get("limitations", "N/A"),
-                "Confidence": rag_info.get("confidence", "N/A")
-            })
+            table_data.append(
+                {
+                    "Titel": paper_info.get("title", "N/A"),
+                    "Paper Type": rag_info.get("paper_type", "N/A"),
+                    "Method": rag_info.get("method", "N/A"),
+                    "Dataset": rag_info.get("dataset", "N/A"),
+                    "Task": rag_info.get("task", "N/A"),
+                    "Main Findings": rag_info.get("main_findings", "N/A"),
+                    "Limitations": rag_info.get("limitations", "N/A"),
+                    "Confidence": rag_info.get("confidence", "N/A"),
+                }
+            )
 
         df_extracted = pd.DataFrame(table_data)
-
 
         st.dataframe(
             df_extracted,
@@ -244,15 +250,14 @@ if "results" in st.session_state and st.session_state.results:
                 "Main Findings": st.column_config.TextColumn("Findings", width="large"),
                 "Limitations": st.column_config.TextColumn("Limitations", width="medium"),
                 "Confidence": st.column_config.TextColumn("Conf."),
-            }
+            },
         )
 
-
-        csv = df_extracted.to_csv(index=False).encode('utf-8')
+        csv = df_extracted.to_csv(index=False).encode("utf-8")
         st.download_button(
             label="📥 Daten als CSV herunterladen",
             data=csv,
-            file_name='extrahierte_daten.csv',
-            mime='text/csv',
-            type="primary"
+            file_name="extrahierte_daten.csv",
+            mime="text/csv",
+            type="primary",
         )

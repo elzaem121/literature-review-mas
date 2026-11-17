@@ -6,6 +6,7 @@ here is a no-op / passthrough, so the pipeline behaves exactly as it does
 without this module: same call sites, same return values, no added latency,
 no import failures.
 """
+
 import os
 from contextlib import nullcontext
 
@@ -13,6 +14,7 @@ try:
     from langsmith import traceable as _traceable
     from langsmith.run_helpers import trace as _trace
     from langsmith.wrappers import wrap_openai as _wrap_openai
+
     _LANGSMITH_AVAILABLE = True
 except ImportError:
     _LANGSMITH_AVAILABLE = False
@@ -41,10 +43,12 @@ def traceable_stage(name: str):
 
     Returns the function completely unmodified when tracing is disabled.
     """
+
     def decorator(fn):
         if not tracing_enabled():
             return fn
         return _traceable(name=name, run_type="chain")(fn)
+
     return decorator
 
 

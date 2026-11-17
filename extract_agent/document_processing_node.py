@@ -29,12 +29,8 @@ FIELD_QUERIES = {
     "task_chunks": [
         "research objective aim purpose research question analytical focus task contribution"
     ],
-    "findings_chunks": [
-        "main findings results conclusions key outcomes implications contribution"
-    ],
-    "limitations_chunks": [
-        "limitations weaknesses constraints future work study limitations"
-    ],
+    "findings_chunks": ["main findings results conclusions key outcomes implications contribution"],
+    "limitations_chunks": ["limitations weaknesses constraints future work study limitations"],
 }
 
 # Lazy-loaded global model to prevent reloading for every paper
@@ -120,7 +116,7 @@ def extract_text_from_pdf(pdf_path: str) -> str:
 
 
 def chunk_text(text: str, chunk_size: int) -> list:
-    return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
+    return [text[i : i + chunk_size] for i in range(0, len(text), chunk_size)]
 
 
 # ==========================================
@@ -233,5 +229,5 @@ async def document_processing_node(state: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "screening_results": current_screening,
         "current_step": "document_processing",
-        "status_message": f"Document processing complete: {processed_count} out of {len(included_papers)} PDFs ready for extraction."
+        "status_message": f"Document processing complete: {processed_count} out of {len(included_papers)} PDFs ready for extraction.",
     }

@@ -11,21 +11,18 @@ def main():
     search_agent = UniversalAcademicSearchAgent(
         openalex_email=OPENALEX_EMAIL,
         openalex_api_key=OPENALEX_API_KEY,
-        model_name="qwen2.5-coder:7b"
+        model_name="qwen2.5-coder:7b",
     )
 
     # Restored the original research query about evaluating Multi-Agent Systems
-    #sample_query = "How does social media shape adolescents' lifeworlds and everyday experiences?"
+    # sample_query = "How does social media shape adolescents' lifeworlds and everyday experiences?"
     sample_query = "How to evaluate Multiagentsystems in an efficient way?"
 
     print(" Initiating local retrieval sequence...\n" + "=" * 50)
 
     # Run the retrieval pipeline
     results = search_agent.run_precise_retrieval_cycle(
-        user_query=sample_query,
-        target_output_count=25,
-        min_citations=0,
-        start_year=2018
+        user_query=sample_query, target_output_count=25, min_citations=0, start_year=2018
     )
 
     print("\n" + "=" * 50)

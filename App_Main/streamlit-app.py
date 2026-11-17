@@ -39,6 +39,7 @@ try:
         ScreeningOutput,
         SearchAgentOutput,
     )
+
     REAL_SCREENING_AVAILABLE = True
 except Exception:
     REAL_SCREENING_AVAILABLE = False
@@ -122,6 +123,7 @@ DEFAULT_INCLUSION_OPTIONS = [
 # State machine
 # -----------------------------------------------------------------------------
 
+
 class AppState(str, Enum):
     IDLE = "idle"
     SEARCH_RUNNING = "search_running"
@@ -174,6 +176,7 @@ SCREENING_HITL = HitlPhaseConfig(
 # Agent contracts
 # -----------------------------------------------------------------------------
 
+
 class SearchAgentMain(Protocol):
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         """Existing Search Agent main(...) contract."""
@@ -199,9 +202,9 @@ class SearchAgentAdapter:
         self.entrypoint = entrypoint.strip()
 
     def run(
-            self,
-            ui_input: UiInput,
-            status_callback: Optional[Callable[[str], None]] = None,
+        self,
+        ui_input: UiInput,
+        status_callback: Optional[Callable[[str], None]] = None,
     ) -> SearchAgentOutput:
         if not self.entrypoint:
             if status_callback:
@@ -213,10 +216,10 @@ class SearchAgentAdapter:
         return normalize_search_output(result)
 
     def _call_flexible(
-            self,
-            fn: Callable[..., Any],
-            ui_input: UiInput,
-            status_callback: Optional[Callable[[str], None]] = None,
+        self,
+        fn: Callable[..., Any],
+        ui_input: UiInput,
+        status_callback: Optional[Callable[[str], None]] = None,
     ) -> Any:
         inclusion_as_text = "\n".join(ui_input.inclusion_criteria)
 
@@ -301,6 +304,7 @@ class ScreeningAgentAdapter:
 # Mock interfaces
 # -----------------------------------------------------------------------------
 
+
 def mock_search_agent_main(ui_input: UiInput) -> SearchAgentOutput:
     """
     Mock replacement for your Search Agent main(...).
@@ -345,7 +349,9 @@ def mock_search_agent_main(ui_input: UiInput) -> SearchAgentOutput:
     return SearchAgentOutput(papers=papers)
 
 
-def mock_screening_agent_main(search_output: SearchAgentOutput, protocol: ReviewProtocol) -> ScreeningOutput:
+def mock_screening_agent_main(
+    search_output: SearchAgentOutput, protocol: ReviewProtocol
+) -> ScreeningOutput:
     output = ScreeningOutput()
     min_year = protocol.publication_year.min_year
 
@@ -360,7 +366,10 @@ def mock_screening_agent_main(search_output: SearchAgentOutput, protocol: Review
             confidence = 8
             relevance = 3
             reasoning = "The paper appears to focus on single-agent or cost-only optimization."
-        elif "multi-agent" in (paper.title + " " + paper.abstract).lower() or "agentic" in paper.abstract.lower():
+        elif (
+            "multi-agent" in (paper.title + " " + paper.abstract).lower()
+            or "agentic" in paper.abstract.lower()
+        ):
             decision = ScreeningDecision.INCLUDE
             confidence = 8
             relevance = 8
@@ -393,6 +402,7 @@ def mock_screening_agent_main(search_output: SearchAgentOutput, protocol: Review
 # -----------------------------------------------------------------------------
 # Utilities
 # -----------------------------------------------------------------------------
+
 
 def split_criteria(raw: str) -> list[str]:
     return [line.strip(" -\t") for line in raw.splitlines() if line.strip(" -\t")]
@@ -433,7 +443,9 @@ def normalize_search_output(raw: Any) -> SearchAgentOutput:
     if isinstance(raw, str):
         raw = json.loads(raw)
     if isinstance(raw, list):
-        raw = {"papers": [item.model_dump() if hasattr(item, "model_dump") else item for item in raw]}
+        raw = {
+            "papers": [item.model_dump() if hasattr(item, "model_dump") else item for item in raw]
+        }
     if hasattr(raw, "model_dump"):
         raw = raw.model_dump()
     if not isinstance(raw, dict):
@@ -461,15 +473,14 @@ def stable_uid(paper: ResearchPaper) -> str:
 
 
 def rows_hash(rows: Iterable[dict[str, Any]]) -> str:
-    relevant = [
-        {"uid": row.get("uid"), "decision": row.get("decision")}
-        for row in rows
-    ]
+    relevant = [{"uid": row.get("uid"), "decision": row.get("decision")} for row in rows]
     payload = json.dumps(relevant, sort_keys=True, ensure_ascii=False)
     return hashlib.sha1(payload.encode("utf-8")).hexdigest()
 
 
-def flatten_screening_output(output: ScreeningOutput) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]]]:
+def flatten_screening_output(
+    output: ScreeningOutput,
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]]]:
     rows: list[dict[str, Any]] = []
     item_map: dict[str, dict[str, Any]] = {}
 
@@ -520,7 +531,9 @@ def rebuild_screening_output_from_rows(
 
         reasoning = base_item.screening.reasoning
         if decision != original_decision and "Human override" not in reasoning:
-            reasoning = f"{reasoning} [Human override: {original_decision.value} -> {decision.value}]"
+            reasoning = (
+                f"{reasoning} [Human override: {original_decision.value} -> {decision.value}]"
+            )
 
         updated_screening = base_item.screening.model_copy(
             update={"decision": decision, "reasoning": reasoning}
@@ -540,6 +553,7 @@ def rebuild_screening_output_from_rows(
 # -----------------------------------------------------------------------------
 # Session state operations
 # -----------------------------------------------------------------------------
+
 
 def init_state() -> None:
     defaults = {
@@ -562,9 +576,7 @@ def set_state(state: AppState) -> None:
 
 
 def log_event(message: str) -> None:
-    st.session_state.pipeline_log.append(
-        {"ts": time.strftime("%H:%M:%S"), "message": message}
-    )
+    st.session_state.pipeline_log.append({"ts": time.strftime("%H:%M:%S"), "message": message})
 
 
 def start_hitl_phase(config: HitlPhaseConfig, screening_output: ScreeningOutput) -> None:
@@ -634,6 +646,7 @@ def reset_pipeline() -> None:
 # -----------------------------------------------------------------------------
 # UI components
 # -----------------------------------------------------------------------------
+
 
 def render_sidebar_input() -> None:
     st.sidebar.header("Review-Protokoll")
@@ -728,7 +741,7 @@ def render_search_running() -> None:
 
     with st.status("Search Agent läuft...", expanded=True) as status:
         try:
-            #logging für den Nutzer
+            # logging für den Nutzer
             def search_status(message: str) -> None:
                 st.write(message)
                 log_event(message)
@@ -756,6 +769,7 @@ def render_screening_running() -> None:
 
     with st.status("Screening Agent läuft...", expanded=True) as status:
         try:
+
             def status_callback(message: str) -> None:
                 st.write(message)
                 log_event(message)
@@ -872,12 +886,16 @@ def _timer_body() -> None:
 if hasattr(st, "fragment"):
     render_timer_fragment = st.fragment(run_every=1)(_timer_body)  # type: ignore[attr-defined]
 else:
+
     def render_timer_fragment() -> None:
         try:
             from streamlit_autorefresh import st_autorefresh
+
             st_autorefresh(interval=1000, key="hitl_autorefresh")
         except Exception:
-            st.warning("Installiere `streamlit-autorefresh` oder nutze Streamlit mit `st.fragment`.")
+            st.warning(
+                "Installiere `streamlit-autorefresh` oder nutze Streamlit mit `st.fragment`."
+            )
         _timer_body()
 
 
@@ -950,9 +968,17 @@ def render_screening_summary(output: ScreeningOutput) -> None:
         (tabs[2], "Uncertain", output.uncertain_papers),
     ]:
         with tab:
-            st.dataframe(pd.DataFrame([screened_to_row(item) for item in items]), use_container_width=True, hide_index=True)
+            st.dataframe(
+                pd.DataFrame([screened_to_row(item) for item in items]),
+                use_container_width=True,
+                hide_index=True,
+            )
     with tabs[3]:
-        st.dataframe(pd.DataFrame([model_to_dict(item) for item in output.failed_papers]), use_container_width=True, hide_index=True)
+        st.dataframe(
+            pd.DataFrame([model_to_dict(item) for item in output.failed_papers]),
+            use_container_width=True,
+            hide_index=True,
+        )
 
 
 def screened_to_row(item: ScreenedPaper) -> dict[str, Any]:
@@ -976,6 +1002,7 @@ def render_error() -> None:
 # -----------------------------------------------------------------------------
 # Main app
 # -----------------------------------------------------------------------------
+
 
 def main() -> None:
     st.set_page_config(page_title=APP_TITLE, layout="wide")

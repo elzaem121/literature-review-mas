@@ -12,7 +12,7 @@ def chunk_text(text: str, chunk_size: int = 1200):
     chunks = []
 
     for i in range(0, len(text), chunk_size):
-        chunk = text[i:i + chunk_size]
+        chunk = text[i : i + chunk_size]
         chunks.append(chunk)
 
     return chunks
@@ -23,11 +23,9 @@ with INPUT_FILE.open("r", encoding="utf-8") as file:
 
 
 for paper in data["papers"]:
-
     full_text = paper.get("full_text")
 
     if full_text:
-
         chunks = chunk_text(full_text, CHUNK_SIZE)
 
         paper["chunks"] = chunks
