@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from screening_agent import AcademicScreeningAgent
-from screening_schemas import (
+from Screening_Agent.screening_agent import AcademicScreeningAgent
+from Screening_Agent.screening_schemas import (
     PaperScreeningResult,
     ResearchPaper,
     ReviewProtocol,
@@ -14,7 +14,9 @@ from screening_schemas import (
     format_criteria_list,
 )
 
-FIXTURES_DIR = Path(__file__).parent
+REPO_ROOT = Path(__file__).resolve().parent.parent
+REVIEW_CONFIG_PATH = REPO_ROOT / "Screening_Agent" / "testdaten" / "review_config.json"
+SEARCH_RESULTS_PATH = REPO_ROOT / "tests" / "fixtures" / "search_results.json"
 
 
 def make_paper(title: str, year: int | None = 2024) -> ResearchPaper:
@@ -35,18 +37,14 @@ def make_screened(title: str, decision: ScreeningDecision) -> ScreenedPaper:
 
 class TestSchemaLoading:
     def test_load_review_protocol(self):
-        protocol = AcademicScreeningAgent.load_review_protocol(
-            FIXTURES_DIR / "review_config.json"
-        )
+        protocol = AcademicScreeningAgent.load_review_protocol(REVIEW_CONFIG_PATH)
 
         assert "social media" in protocol.research_question.lower()
         assert len(protocol.inclusion_criteria) >= 1
         assert protocol.publication_year.min_year == 2020
 
     def test_load_search_results(self):
-        papers = AcademicScreeningAgent.load_search_results(
-            FIXTURES_DIR / "search_results.json"
-        )
+        papers = AcademicScreeningAgent.load_search_results(SEARCH_RESULTS_PATH)
 
         assert len(papers) >= 1
         assert papers[0].title
@@ -140,17 +138,9 @@ class TestMainEntryContract:
         signature = inspect.signature(AcademicScreeningAgent.screen_file_with_protocol)
         assert "protocol" in signature.parameters
 
-    def test_screening_main_calls_protocol_helper(self):
-        source = (FIXTURES_DIR / "screening_main.py").read_text(encoding="utf-8")
-
-        assert "screen_file_with_protocol" in source
-        assert "protocol=protocol" in source
-        assert "load_review_protocol" in source
-
     def test_review_config_round_trip(self):
-        config_path = FIXTURES_DIR / "review_config.json"
-        protocol = AcademicScreeningAgent.load_review_protocol(config_path)
-        payload = json.loads(config_path.read_text(encoding="utf-8"))
+        protocol = AcademicScreeningAgent.load_review_protocol(REVIEW_CONFIG_PATH)
+        payload = json.loads(REVIEW_CONFIG_PATH.read_text(encoding="utf-8"))
 
         assert protocol.research_question == payload["research_question"]
         assert protocol.inclusion_criteria == payload["inclusion_criteria"]

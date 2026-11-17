@@ -1,0 +1,17 @@
+[project]
+name = "literature-review-mas"
+version = "0.1.0"
+description = "Chat-based research assistant that builds a library of scientific papers (v2)."
+requires-python = ">=3.13"
+
+[tool.pytest.ini_options]
+markers = ["integration: needs the docker-compose Postgres; run with `make integration`"]
+addopts = "-m 'not integration'"
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
