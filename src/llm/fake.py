@@ -12,18 +12,31 @@ from pydantic import BaseModel
 
 FIXTURES_DIR = Path(__file__).resolve().parents[2] / "tests" / "fixtures"
 EMBEDDING_DIMENSIONS = 384
-FAIL_SENTINEL = "[FAKE:FAIL]"
-EXCLUDE_SENTINEL = "[FAKE:EXCLUDE]"
-UNCERTAIN_SENTINEL = "[FAKE:UNCERTAIN]"
 
 Messages = List[Dict[str, str]]
 RegistryValue = Union[BaseModel, Callable[[Messages], BaseModel]]
+Registry = Dict[Type[BaseModel], RegistryValue]
+
+_fake_answers: Registry = {}
+
+
+def set_fake_answers(registry: Registry) -> None:
+    """Register the answers `get_llm` hands to the fake LLM on the `test` profile."""
+    _fake_answers.clear()
+    _fake_answers.update(registry)
+
+
+def get_fake_answers() -> Registry:
+    """Return the registered fake answers; fail clearly if the test side registered none."""
+    if not _fake_answers:
+        raise RuntimeError("No fake LLM answers registered; call set_fake_answers() first")
+    return _fake_answers
 
 
 class FakeLLM:
     """Stands in for an Instructor client: answers `chat.completions.create` from a registry."""
 
-    def __init__(self, registry: Dict[Type[BaseModel], RegistryValue]):
+    def __init__(self, registry: Registry):
         self._registry = registry
         self.chat = SimpleNamespace(completions=SimpleNamespace(create=self._create))
 
@@ -52,50 +65,6 @@ class FakeEmbedder:
         seed = int.from_bytes(hashlib.sha256(text.encode("utf-8")).digest()[:8], "big")
         vector = np.random.default_rng(seed).standard_normal(EMBEDDING_DIMENSIONS)
         return (vector / np.linalg.norm(vector)).astype("float32")
-
-
-def default_registry() -> Dict[Type[BaseModel], RegistryValue]:
-    """Canned answers for the three wired roles; screening answers via sentinels in the prompt."""
-    from extract_agent.extraction_schemas import ExtractedPaperInfo, ExtractionConfidence
-    from Screening_Agent.screening_schemas import PaperScreeningResult, ScreeningDecision
-    from search_agent.schemas import AcademicQueryExpansionSchema
-
-    def screen(messages: Messages) -> PaperScreeningResult:
-        prompt = messages[-1]["content"]
-        if FAIL_SENTINEL in prompt:
-            raise RuntimeError("Simulated LLM API error")
-        if EXCLUDE_SENTINEL in prompt:
-            decision, relevance = ScreeningDecision.EXCLUDE, 2
-        elif UNCERTAIN_SENTINEL in prompt:
-            decision, relevance = ScreeningDecision.UNCERTAIN, 5
-        else:
-            decision, relevance = ScreeningDecision.INCLUDE, 8
-        return PaperScreeningResult(
-            decision=decision,
-            confidence_score=8,
-            relevance_score=relevance,
-            reasoning=f"Fake screening decision: {decision.value}.",
-        )
-
-    return {
-        AcademicQueryExpansionSchema: AcademicQueryExpansionSchema(
-            synthetic_abstract=(
-                "Social media use among adolescents shapes identity, peer relations and wellbeing."
-            ),
-            mandatory_entities=["social media", "adolescents", "wellbeing"],
-        ),
-        PaperScreeningResult: screen,
-        ExtractedPaperInfo: ExtractedPaperInfo(
-            paper_type="qualitative interview study",
-            method="semi-structured interviews",
-            dataset="interviews with adolescents",
-            task="how adolescents experience social media",
-            main_findings="Adolescents use social media to negotiate identity and belonging.",
-            limitations="not explicitly specified",
-            relevance_to_research_question="Directly addresses the research question.",
-            confidence=ExtractionConfidence.MEDIUM,
-        ),
-    }
 
 
 def fake_execute_retrieval(
