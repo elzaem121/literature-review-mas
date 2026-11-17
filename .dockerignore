@@ -7,6 +7,7 @@ pdfs_auto
 extract_agent/pdfs
 App_Main
 eval
+tests
 .mas_runs
 .kube
 Screening_Agent/screening_results.json

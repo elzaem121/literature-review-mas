@@ -1,20 +1,19 @@
-from langgraph.graph import StateGraph, END
-from Orchestration.state import PipelineState
+from langgraph.graph import END, StateGraph
 
 # Import ALL nodes
-from Orchestration.nodes import (
-    pre_search_node,
-    search_node,
-    pre_screening_node,
-    screening_node,
+from src.graph.nodes import (
     pre_document_processing_node,
     pre_extraction_node,
-    extraction_node,
+    pre_screening_node,
+    pre_search_node,
+    screening_node,
+    search_node,
 )
+from src.graph.state import PipelineState
 
 #  NEW: Import the document processing node
-
-from extract_agent.document_processing_node import document_processing_node
+from src.pipeline.extraction.node import extraction_node
+from src.pipeline.ingestion.node import document_processing_node
 
 workflow = StateGraph(PipelineState)
 
@@ -40,7 +39,8 @@ workflow.add_edge("search_agent", "pre_screening")
 workflow.add_edge("pre_screening", "screening_agent")
 
 # Extraction phase wiring:
-# screening_agent -> pre_document_processing -> document_processing_node -> pre_extraction -> extraction_node -> END
+# screening_agent -> pre_document_processing -> document_processing_node
+# -> pre_extraction -> extraction_node -> END
 workflow.add_edge("screening_agent", "pre_document_processing")
 workflow.add_edge("pre_document_processing", "document_processing_node")
 workflow.add_edge("document_processing_node", "pre_extraction")

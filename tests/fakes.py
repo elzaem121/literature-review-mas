@@ -1,9 +1,9 @@
 """Canned fake-LLM answers for the pipeline's response models, registered by tests/conftest.py."""
 
-from extract_agent.extraction_schemas import ExtractedPaperInfo, ExtractionConfidence
-from Screening_Agent.screening_schemas import PaperScreeningResult, ScreeningDecision
-from search_agent.schemas import AcademicQueryExpansionSchema
 from src.llm.fake import Messages, Registry
+from src.pipeline.extraction.schemas import ExtractedPaperInfo, ExtractionConfidence
+from src.pipeline.screening.screening_schemas import PaperScreeningResult, ScreeningDecision
+from src.pipeline.search.schemas import AcademicQueryExpansionSchema
 
 FAIL_SENTINEL = "[FAKE:FAIL]"
 EXCLUDE_SENTINEL = "[FAKE:EXCLUDE]"

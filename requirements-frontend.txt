@@ -1,5 +1,5 @@
-# Lean dependency set for Dockerfile.frontend (ui_app.py only).
-# ui_app.py imports: streamlit, requests, pandas, time (stdlib).
+# Lean dependency set for Dockerfile.frontend (src/ui/app.py only).
+# src/ui/app.py imports: streamlit, requests, pandas, time (stdlib).
 #
 # All entries below are pinned to the exact versions installed in the local
 # .venv (Python 3.13), including streamlit's and requests'/pandas' full direct

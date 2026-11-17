@@ -1,10 +1,8 @@
 import json
 from pathlib import Path
 
-import pytest
-
-from Screening_Agent.screening_agent import AcademicScreeningAgent
-from Screening_Agent.screening_schemas import (
+from src.pipeline.screening.screening_agent import AcademicScreeningAgent
+from src.pipeline.screening.screening_schemas import (
     PaperScreeningResult,
     ResearchPaper,
     ReviewProtocol,
@@ -14,8 +12,8 @@ from Screening_Agent.screening_schemas import (
     format_criteria_list,
 )
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-REVIEW_CONFIG_PATH = REPO_ROOT / "Screening_Agent" / "testdaten" / "review_config.json"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+REVIEW_CONFIG_PATH = REPO_ROOT / "tests" / "fixtures" / "review_config.json"
 SEARCH_RESULTS_PATH = REPO_ROOT / "tests" / "fixtures" / "search_results.json"
 
 

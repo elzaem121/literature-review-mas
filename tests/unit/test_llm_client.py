@@ -3,7 +3,6 @@ import asyncio
 import numpy as np
 import pytest
 
-from Screening_Agent.screening_schemas import PaperScreeningResult, ScreeningDecision
 from src.llm.client import (
     INSTRUCTOR_MAX_RETRIES,
     SDK_MAX_RETRIES,
@@ -11,6 +10,7 @@ from src.llm.client import (
     get_llm,
 )
 from src.llm.settings import get_settings
+from src.pipeline.screening.screening_schemas import PaperScreeningResult, ScreeningDecision
 
 
 def test_unknown_role_raises():

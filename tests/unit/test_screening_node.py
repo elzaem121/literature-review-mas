@@ -2,7 +2,7 @@ import asyncio
 import json
 from pathlib import Path
 
-from Orchestration.nodes import screening_node
+from src.graph.nodes import screening_node
 
 FIXTURES = Path(__file__).resolve().parent.parent / "fixtures"
 

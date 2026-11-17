@@ -9,9 +9,7 @@ RUN apt-get update \
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-# /app is the repo root: Backend/, Orchestration/, search_agent/, Screening_Agent/,
-# and extract_agent/ stay as flat siblings here so `Backend.main:app` and the
-# package-relative imports inside search_agent resolve the same way they do locally.
+# /app is the repo root, so `src.api.main:app` resolves the same way it does locally.
 WORKDIR /app
 
 COPY requirements.txt .
@@ -21,4 +19,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "Backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,12 +1,13 @@
 import asyncio
 import re
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 
-# Internal local imports
-from .schemas import AcademicQueryExpansionSchema
-from .api_client import OpenAlexClient
 from src.llm.client import INSTRUCTOR_MAX_RETRIES, get_llm
 from src.llm.prompts.search import SYSTEM_PROMPT
+from src.pipeline.search.api_client import OpenAlexClient
+
+# Internal local imports
+from src.pipeline.search.schemas import AcademicQueryExpansionSchema
 
 OPENALEX_ID_PREFIX = "https://openalex.org/"
 

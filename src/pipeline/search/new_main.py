@@ -6,8 +6,7 @@ import os
 from pathlib import Path
 
 from src.llm.settings import get_settings
-
-from .agent import UniversalAcademicSearchAgent
+from src.pipeline.search.agent import UniversalAcademicSearchAgent
 
 OPENALEX_API_KEY = os.getenv("OPENALEX_API_KEY") or None
 
@@ -85,7 +84,10 @@ async def main(
 if __name__ == "__main__":
     result = asyncio.run(
         main(
-            research_question="What are the risks when AI systems that plan and act on their own are deployed in healthcare, and how are these risks currently managed?",
+            research_question=(
+                "What are the risks when AI systems that plan and act on their own are "
+                "deployed in healthcare, and how are these risks currently managed?"
+            ),
             min_year=2018,
             target_output_count=20,
             min_citations=0,

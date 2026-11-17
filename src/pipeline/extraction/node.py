@@ -1,15 +1,8 @@
-import asyncio
-import json
-import sys
-from pathlib import Path
-
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-
-from extract_agent.extraction_schemas import ExtractedPaperInfo
 from src.llm.client import INSTRUCTOR_MAX_RETRIES, get_llm
 from src.llm.prompts.extraction import SYSTEM_PROMPT, render_user_prompt
 from src.llm.settings import get_settings
 from src.llm.tracing import traceable_stage
+from src.pipeline.extraction.schemas import ExtractedPaperInfo
 
 
 async def extract_from_retrieved_chunks(paper, research_question: str):

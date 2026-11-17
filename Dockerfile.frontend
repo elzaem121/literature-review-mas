@@ -3,8 +3,8 @@ FROM python:3.13-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-# /app is the repo root, same layout as Dockerfile.backend, so ui_app.py runs
-# from the same working directory it expects locally.
+# /app is the repo root, same layout as Dockerfile.backend, so src/ui/app.py
+# runs from the same working directory it expects locally.
 WORKDIR /app
 
 COPY requirements-frontend.txt .
@@ -14,4 +14,4 @@ COPY . .
 
 EXPOSE 8501
 
-CMD ["streamlit", "run", "ui_app.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
+CMD ["streamlit", "run", "src/ui/app.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
