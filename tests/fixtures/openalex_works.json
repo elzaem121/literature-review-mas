@@ -1,0 +1,452 @@
+[
+  {
+    "id": "https://openalex.org/W9000000001",
+    "doi": "https://doi.org/10.1000/fixture.shared.1",
+    "title": "Social Media Use and Everyday Identity Work Among Teenagers",
+    "publication_year": 2023,
+    "cited_by_count": 42,
+    "abstract_inverted_index": {
+      "Teenagers": [
+        0
+      ],
+      "use": [
+        1
+      ],
+      "social": [
+        2
+      ],
+      "media": [
+        3
+      ],
+      "every": [
+        4
+      ],
+      "day": [
+        5
+      ],
+      "to": [
+        6
+      ],
+      "negotiate": [
+        7
+      ],
+      "identity": [
+        8
+      ],
+      "and": [
+        9,
+        20
+      ],
+      "peer": [
+        10
+      ],
+      "relations.": [
+        11
+      ],
+      "This": [
+        12
+      ],
+      "interview": [
+        13
+      ],
+      "study": [
+        14
+      ],
+      "describes": [
+        15
+      ],
+      "how": [
+        16
+      ],
+      "adolescents": [
+        17
+      ],
+      "experience": [
+        18
+      ],
+      "wellbeing": [
+        19
+      ],
+      "belonging": [
+        21
+      ],
+      "online.": [
+        22
+      ]
+    },
+    "authorships": [
+      {
+        "author": {
+          "display_name": "Alice Example"
+        }
+      },
+      {
+        "author": {
+          "display_name": "Bob Sample"
+        }
+      }
+    ],
+    "primary_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/1.pdf",
+      "source": {
+        "display_name": "Journal of Fixture Studies"
+      }
+    },
+    "best_oa_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/1.pdf"
+    }
+  },
+  {
+    "id": "https://openalex.org/W9000000002",
+    "doi": "https://doi.org/10.1000/fixture.2",
+    "title": "Click-Through Optimisation in Marketing Recommender Systems",
+    "publication_year": 2022,
+    "cited_by_count": 17,
+    "abstract_inverted_index": {
+      "[FAKE:EXCLUDE]": [
+        0
+      ],
+      "We": [
+        1
+      ],
+      "tune": [
+        2
+      ],
+      "a": [
+        3
+      ],
+      "recommender": [
+        4
+      ],
+      "system": [
+        5
+      ],
+      "to": [
+        6
+      ],
+      "maximise": [
+        7
+      ],
+      "click-through": [
+        8
+      ],
+      "rates": [
+        9
+      ],
+      "for": [
+        10
+      ],
+      "advertising": [
+        11
+      ],
+      "campaigns": [
+        12
+      ],
+      "and": [
+        13
+      ],
+      "report": [
+        14
+      ],
+      "marketing": [
+        15
+      ],
+      "performance": [
+        16
+      ],
+      "gains.": [
+        17
+      ]
+    },
+    "authorships": [
+      {
+        "author": {
+          "display_name": "Carol Test"
+        }
+      }
+    ],
+    "primary_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/2.pdf",
+      "source": {
+        "display_name": "Marketing Metrics Review"
+      }
+    },
+    "best_oa_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/2.pdf"
+    }
+  },
+  {
+    "id": "https://openalex.org/W9000000003",
+    "doi": "https://doi.org/10.1000/fixture.3",
+    "title": "Online Communities and Young Adults: A Borderline Case",
+    "publication_year": 2021,
+    "cited_by_count": 9,
+    "abstract_inverted_index": {
+      "[FAKE:UNCERTAIN]": [
+        0
+      ],
+      "Young": [
+        1
+      ],
+      "adults": [
+        2
+      ],
+      "between": [
+        3
+      ],
+      "eighteen": [
+        4
+      ],
+      "and": [
+        5
+      ],
+      "twenty-five": [
+        6
+      ],
+      "describe": [
+        7
+      ],
+      "their": [
+        8
+      ],
+      "use": [
+        9
+      ],
+      "of": [
+        10
+      ],
+      "online": [
+        11
+      ],
+      "communities,": [
+        12
+      ],
+      "but": [
+        13
+      ],
+      "the": [
+        14
+      ],
+      "sample": [
+        15
+      ],
+      "is": [
+        16
+      ],
+      "not": [
+        17
+      ],
+      "clearly": [
+        18
+      ],
+      "adolescent.": [
+        19
+      ]
+    },
+    "authorships": [
+      {
+        "author": {
+          "display_name": "Dan Placeholder"
+        }
+      },
+      {
+        "author": {
+          "display_name": "Eve Mock"
+        }
+      }
+    ],
+    "primary_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/3.pdf",
+      "source": {
+        "display_name": "Fixture Quarterly"
+      }
+    },
+    "best_oa_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/3.pdf"
+    }
+  },
+  {
+    "id": "https://openalex.org/W9000000004",
+    "doi": "https://doi.org/10.1000/fixture.4",
+    "title": "Screening Failure Fixture Paper",
+    "publication_year": 2024,
+    "cited_by_count": 5,
+    "abstract_inverted_index": {
+      "[FAKE:FAIL]": [
+        0
+      ],
+      "This": [
+        1
+      ],
+      "paper": [
+        2
+      ],
+      "exists": [
+        3
+      ],
+      "so": [
+        4
+      ],
+      "that": [
+        5
+      ],
+      "the": [
+        6
+      ],
+      "fake": [
+        7
+      ],
+      "LLM": [
+        8
+      ],
+      "raises": [
+        9
+      ],
+      "an": [
+        10
+      ],
+      "error": [
+        11
+      ],
+      "while": [
+        12
+      ],
+      "screening": [
+        13
+      ],
+      "it,": [
+        14
+      ],
+      "producing": [
+        15
+      ],
+      "a": [
+        16
+      ],
+      "failed": [
+        17
+      ],
+      "paper.": [
+        18
+      ]
+    },
+    "authorships": [
+      {
+        "author": {
+          "display_name": "Frank Stub"
+        }
+      }
+    ],
+    "primary_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/4.pdf",
+      "source": {
+        "display_name": "Journal of Simulated Errors"
+      }
+    },
+    "best_oa_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/4.pdf"
+    }
+  },
+  {
+    "id": "https://openalex.org/W9000000005",
+    "doi": "https://doi.org/10.1000/fixture.shared.1",
+    "title": "Social Media Use and Everyday Identity Work Among Teenagers (Preprint)",
+    "publication_year": 2023,
+    "cited_by_count": 11,
+    "abstract_inverted_index": {
+      "Teenagers": [
+        0
+      ],
+      "use": [
+        1
+      ],
+      "social": [
+        2
+      ],
+      "media": [
+        3
+      ],
+      "every": [
+        4
+      ],
+      "day": [
+        5
+      ],
+      "to": [
+        6
+      ],
+      "negotiate": [
+        7
+      ],
+      "identity": [
+        8
+      ],
+      "and": [
+        9
+      ],
+      "peer": [
+        10
+      ],
+      "relations.": [
+        11
+      ],
+      "This": [
+        12
+      ],
+      "preprint": [
+        13
+      ],
+      "version": [
+        14
+      ],
+      "reports": [
+        15
+      ],
+      "the": [
+        16
+      ],
+      "same": [
+        17
+      ],
+      "interview": [
+        18
+      ],
+      "study": [
+        19
+      ],
+      "of": [
+        20
+      ],
+      "adolescent": [
+        21
+      ],
+      "wellbeing": [
+        22
+      ],
+      "online.": [
+        23
+      ]
+    },
+    "authorships": [
+      {
+        "author": {
+          "display_name": "Alice Example"
+        }
+      },
+      {
+        "author": {
+          "display_name": "Bob Sample"
+        }
+      }
+    ],
+    "primary_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/5.pdf",
+      "source": {
+        "display_name": "Fixture Preprint Server"
+      }
+    },
+    "best_oa_location": {
+      "pdf_url": "https://fixtures.invalid/pdf/5.pdf"
+    }
+  }
+]

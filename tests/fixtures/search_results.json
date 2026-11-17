@@ -1,0 +1,77 @@
+{
+  "papers": [
+    {
+      "title": "Social Media Use and Everyday Identity Work Among Teenagers",
+      "abstract": "Teenagers use social media every day to negotiate identity and peer relations. This interview study describes how adolescents experience wellbeing and belonging online.",
+      "year": 2023,
+      "authors": [
+        "Alice Example",
+        "Bob Sample"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.shared.1",
+      "url": "https://openalex.org/W9000000001",
+      "relevance_score": 0,
+      "openalex_id": "W9000000001",
+      "pdf_url": "https://fixtures.invalid/pdf/1.pdf",
+      "venue": "Journal of Fixture Studies"
+    },
+    {
+      "title": "Click-Through Optimisation in Marketing Recommender Systems",
+      "abstract": "[FAKE:EXCLUDE] We tune a recommender system to maximise click-through rates for advertising campaigns and report marketing performance gains.",
+      "year": 2022,
+      "authors": [
+        "Carol Test"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.2",
+      "url": "https://openalex.org/W9000000002",
+      "relevance_score": 0,
+      "openalex_id": "W9000000002",
+      "pdf_url": "https://fixtures.invalid/pdf/2.pdf",
+      "venue": "Marketing Metrics Review"
+    },
+    {
+      "title": "Online Communities and Young Adults: A Borderline Case",
+      "abstract": "[FAKE:UNCERTAIN] Young adults between eighteen and twenty-five describe their use of online communities, but the sample is not clearly adolescent.",
+      "year": 2021,
+      "authors": [
+        "Dan Placeholder",
+        "Eve Mock"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.3",
+      "url": "https://openalex.org/W9000000003",
+      "relevance_score": 0,
+      "openalex_id": "W9000000003",
+      "pdf_url": "https://fixtures.invalid/pdf/3.pdf",
+      "venue": "Fixture Quarterly"
+    },
+    {
+      "title": "Screening Failure Fixture Paper",
+      "abstract": "[FAKE:FAIL] This paper exists so that the fake LLM raises an error while screening it, producing a failed paper.",
+      "year": 2024,
+      "authors": [
+        "Frank Stub"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.4",
+      "url": "https://openalex.org/W9000000004",
+      "relevance_score": 0,
+      "openalex_id": "W9000000004",
+      "pdf_url": "https://fixtures.invalid/pdf/4.pdf",
+      "venue": "Journal of Simulated Errors"
+    },
+    {
+      "title": "Social Media Use and Everyday Identity Work Among Teenagers (Preprint)",
+      "abstract": "Teenagers use social media every day to negotiate identity and peer relations. This preprint version reports the same interview study of adolescent wellbeing online.",
+      "year": 2023,
+      "authors": [
+        "Alice Example",
+        "Bob Sample"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.shared.1",
+      "url": "https://openalex.org/W9000000005",
+      "relevance_score": 0,
+      "openalex_id": "W9000000005",
+      "pdf_url": "https://fixtures.invalid/pdf/5.pdf",
+      "venue": "Fixture Preprint Server"
+    }
+  ]
+}
