@@ -1,0 +1,365 @@
+{
+  "additional_info": null,
+  "current_step": "completed",
+  "exclusion_criteria": [
+    "Marketing studies"
+  ],
+  "extracted_papers": [
+    {
+      "paper": {
+        "authors": [
+          "Alice Example",
+          "Bob Sample"
+        ],
+        "doi": "https://doi.org/10.1000/fixture.shared.1",
+        "title": "Social Media Use and Everyday Identity Work Among Teenagers",
+        "url": "https://openalex.org/W9000000001",
+        "year": 2023
+      },
+      "rag_extraction": {
+        "confidence": "medium",
+        "dataset": "interviews with adolescents",
+        "limitations": "not explicitly specified",
+        "main_findings": "Adolescents use social media to negotiate identity and belonging.",
+        "method": "semi-structured interviews",
+        "paper_type": "qualitative interview study",
+        "relevance_to_research_question": "Directly addresses the research question.",
+        "task": "how adolescents experience social media"
+      }
+    },
+    {
+      "paper": {
+        "authors": [
+          "Alice Example",
+          "Bob Sample"
+        ],
+        "doi": "https://doi.org/10.1000/fixture.shared.1",
+        "title": "Social Media Use and Everyday Identity Work Among Teenagers (Preprint)",
+        "url": "https://openalex.org/W9000000005",
+        "year": 2023
+      },
+      "rag_extraction": {
+        "confidence": "medium",
+        "dataset": "interviews with adolescents",
+        "limitations": "not explicitly specified",
+        "main_findings": "Adolescents use social media to negotiate identity and belonging.",
+        "method": "semi-structured interviews",
+        "paper_type": "qualitative interview study",
+        "relevance_to_research_question": "Directly addresses the research question.",
+        "task": "how adolescents experience social media"
+      }
+    }
+  ],
+  "inclusion_criteria": [
+    "Studies adolescents"
+  ],
+  "min_year": 2020,
+  "raw_papers": [
+    {
+      "abstract": "Teenagers use social media every day to negotiate identity and peer relations. This interview study describes how adolescents experience wellbeing and belonging online.",
+      "authors": [
+        "Alice Example",
+        "Bob Sample"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.shared.1",
+      "openalex_id": "W9000000001",
+      "pdf_url": "https://fixtures.invalid/pdf/1.pdf",
+      "relevance_score": 0,
+      "title": "Social Media Use and Everyday Identity Work Among Teenagers",
+      "url": "https://openalex.org/W9000000001",
+      "venue": "Journal of Fixture Studies",
+      "year": 2023
+    },
+    {
+      "abstract": "[FAKE:EXCLUDE] We tune a recommender system to maximise click-through rates for advertising campaigns and report marketing performance gains.",
+      "authors": [
+        "Carol Test"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.2",
+      "openalex_id": "W9000000002",
+      "pdf_url": "https://fixtures.invalid/pdf/2.pdf",
+      "relevance_score": 0,
+      "title": "Click-Through Optimisation in Marketing Recommender Systems",
+      "url": "https://openalex.org/W9000000002",
+      "venue": "Marketing Metrics Review",
+      "year": 2022
+    },
+    {
+      "abstract": "[FAKE:UNCERTAIN] Young adults between eighteen and twenty-five describe their use of online communities, but the sample is not clearly adolescent.",
+      "authors": [
+        "Dan Placeholder",
+        "Eve Mock"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.3",
+      "openalex_id": "W9000000003",
+      "pdf_url": "https://fixtures.invalid/pdf/3.pdf",
+      "relevance_score": 0,
+      "title": "Online Communities and Young Adults: A Borderline Case",
+      "url": "https://openalex.org/W9000000003",
+      "venue": "Fixture Quarterly",
+      "year": 2021
+    },
+    {
+      "abstract": "[FAKE:FAIL] This paper exists so that the fake LLM raises an error while screening it, producing a failed paper.",
+      "authors": [
+        "Frank Stub"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.4",
+      "openalex_id": "W9000000004",
+      "pdf_url": "https://fixtures.invalid/pdf/4.pdf",
+      "relevance_score": 0,
+      "title": "Screening Failure Fixture Paper",
+      "url": "https://openalex.org/W9000000004",
+      "venue": "Journal of Simulated Errors",
+      "year": 2024
+    },
+    {
+      "abstract": "Teenagers use social media every day to negotiate identity and peer relations. This preprint version reports the same interview study of adolescent wellbeing online.",
+      "authors": [
+        "Alice Example",
+        "Bob Sample"
+      ],
+      "doi": "https://doi.org/10.1000/fixture.shared.1",
+      "openalex_id": "W9000000005",
+      "pdf_url": "https://fixtures.invalid/pdf/5.pdf",
+      "relevance_score": 0,
+      "title": "Social Media Use and Everyday Identity Work Among Teenagers (Preprint)",
+      "url": "https://openalex.org/W9000000005",
+      "venue": "Fixture Preprint Server",
+      "year": 2023
+    }
+  ],
+  "research_question": "How do teenagers use social media?",
+  "screening_results": {
+    "excluded_papers": [
+      {
+        "paper": {
+          "abstract": "[FAKE:EXCLUDE] We tune a recommender system to maximise click-through rates for advertising campaigns and report marketing performance gains.",
+          "authors": [
+            "Carol Test"
+          ],
+          "doi": "https://doi.org/10.1000/fixture.2",
+          "openalex_id": "W9000000002",
+          "pdf_url": "https://fixtures.invalid/pdf/2.pdf",
+          "relevance_score": 0,
+          "title": "Click-Through Optimisation in Marketing Recommender Systems",
+          "url": "https://openalex.org/W9000000002",
+          "venue": "Marketing Metrics Review",
+          "year": 2022
+        },
+        "screening": {
+          "confidence_score": 8,
+          "decision": "exclude",
+          "matched_exclusion_criteria": [],
+          "matched_inclusion_criteria": [],
+          "reasoning": "Fake screening decision: exclude.",
+          "relevance_score": 2
+        }
+      }
+    ],
+    "failed_papers": [
+      {
+        "error": "Simulated LLM API error",
+        "paper": {
+          "abstract": "[FAKE:FAIL] This paper exists so that the fake LLM raises an error while screening it, producing a failed paper.",
+          "authors": [
+            "Frank Stub"
+          ],
+          "doi": "https://doi.org/10.1000/fixture.4",
+          "openalex_id": "W9000000004",
+          "pdf_url": "https://fixtures.invalid/pdf/4.pdf",
+          "relevance_score": 0,
+          "title": "Screening Failure Fixture Paper",
+          "url": "https://openalex.org/W9000000004",
+          "venue": "Journal of Simulated Errors",
+          "year": 2024
+        }
+      }
+    ],
+    "included_papers": [
+      {
+        "paper": {
+          "abstract": "Teenagers use social media every day to negotiate identity and peer relations. This interview study describes how adolescents experience wellbeing and belonging online.",
+          "authors": [
+            "Alice Example",
+            "Bob Sample"
+          ],
+          "doi": "https://doi.org/10.1000/fixture.shared.1",
+          "openalex_id": "W9000000001",
+          "pdf_path": "<PDF_PATH>",
+          "pdf_status": "Downloaded",
+          "pdf_url": "https://fixtures.invalid/pdf/1.pdf",
+          "relevance_score": 0,
+          "retrieved_chunks_by_field": {
+            "dataset_chunks": [
+              "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting",
+              "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n"
+            ],
+            "findings_chunks": [
+              "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting",
+              "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n"
+            ],
+            "limitations_chunks": [
+              "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n",
+              "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting"
+            ],
+            "method_chunks": [
+              "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n",
+              "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting"
+            ],
+            "task_chunks": [
+              "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n",
+              "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting"
+            ]
+          },
+          "title": "Social Media Use and Everyday Identity Work Among Teenagers",
+          "url": "https://openalex.org/W9000000001",
+          "venue": "Journal of Fixture Studies",
+          "year": 2023
+        },
+        "pdf_path": "<PDF_PATH>",
+        "retrieved_chunks_by_field": {
+          "dataset_chunks": [
+            "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting",
+            "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n"
+          ],
+          "findings_chunks": [
+            "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting",
+            "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n"
+          ],
+          "limitations_chunks": [
+            "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n",
+            "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting"
+          ],
+          "method_chunks": [
+            "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n",
+            "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting"
+          ],
+          "task_chunks": [
+            "uish three mechanisms: shared interest, mutual support and visible reputation. The\ntheoretical discussion draws on earlier qualitative and quantitative studies. Findings and implications. The\nframework implies that moderation practices shape wellbeing outcomes. Limitations. The framework is untested\nand needs empirical validation in future work. Framework. We distinguish three mechanisms: shared interest,\nmutual support and visible reputation. The theoretical discussion draws on earlier qualitative and quantitative\nstudies. Findings and implications. The framework implies that moderation practices shape wellbeing outcomes.\nLimitations. The framework is untested and needs empirical validation in future work. Framework. We\ndistinguish three mechanisms: shared interest, mutual support and visible reputation. The theoretical discussion\ndraws on earlier qualitative and quantitative studies. Findings and implications. The framework implies that\nmoderation practices shape wellbeing outcomes. Limitations. The framework is untested and needs empirical\nvalidation in future work.\n",
+            "Online Communities and Young Adults. Abstract. This conceptual paper discusses how online communities\nsupport young adults. The aim is theoretical: we review prior literature and propose a framework linking\nparticipation, trust and wellbeing. No new data are collected. Introduction. Researchers have studied forums,\ngroups and chat servers separately; this paper brings the strands together. Online Communities and Young\nAdults. Abstract. This conceptual paper discusses how online communities support young adults. The aim is\ntheoretical: we review prior literature and propose a framework linking participation, trust and wellbeing. No new\ndata are collected. Introduction. Researchers have studied forums, groups and chat servers separately; this\npaper brings the strands together. Online Communities and Young Adults. Abstract. This conceptual paper\ndiscusses how online communities support young adults. The aim is theoretical: we review prior literature and\npropose a framework linking participation, trust and wellbeing. No new data are collected. Introduction.\nResearchers have studied forums, groups and chat servers separately; this paper brings the strands together.\nFramework. We disting"
+          ]
+        },
+        "screening": {
+          "confidence_score": 8,
+          "decision": "include",
+          "matched_exclusion_criteria": [],
+          "matched_inclusion_criteria": [],
+          "reasoning": "Fake screening decision: include.",
+          "relevance_score": 8
+        }
+      },
+      {
+        "paper": {
+          "abstract": "Teenagers use social media every day to negotiate identity and peer relations. This preprint version reports the same interview study of adolescent wellbeing online.",
+          "authors": [
+            "Alice Example",
+            "Bob Sample"
+          ],
+          "doi": "https://doi.org/10.1000/fixture.shared.1",
+          "openalex_id": "W9000000005",
+          "pdf_path": "<PDF_PATH>",
+          "pdf_status": "Downloaded",
+          "pdf_url": "https://fixtures.invalid/pdf/5.pdf",
+          "relevance_score": 0,
+          "retrieved_chunks_by_field": {
+            "dataset_chunks": [
+              "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations",
+              "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta",
+              ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n"
+            ],
+            "findings_chunks": [
+              ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n",
+              "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations",
+              "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta"
+            ],
+            "limitations_chunks": [
+              ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n",
+              "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta",
+              "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations"
+            ],
+            "method_chunks": [
+              ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n",
+              "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations",
+              "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta"
+            ],
+            "task_chunks": [
+              "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations",
+              ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n",
+              "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta"
+            ]
+          },
+          "title": "Social Media Use and Everyday Identity Work Among Teenagers (Preprint)",
+          "url": "https://openalex.org/W9000000005",
+          "venue": "Fixture Preprint Server",
+          "year": 2023
+        },
+        "pdf_path": "<PDF_PATH>",
+        "retrieved_chunks_by_field": {
+          "dataset_chunks": [
+            "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations",
+            "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta",
+            ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n"
+          ],
+          "findings_chunks": [
+            ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n",
+            "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations",
+            "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta"
+          ],
+          "limitations_chunks": [
+            ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n",
+            "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta",
+            "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations"
+          ],
+          "method_chunks": [
+            ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n",
+            "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations",
+            "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta"
+          ],
+          "task_chunks": [
+            "tion.\nMethodology. We used a qualitative study design based on semi-structured interviews. Participants were twenty\nadolescents aged fourteen to seventeen recruited through two secondary schools. Data source: interview\nrecordings, transcribed and analysed with thematic coding. The sample was purposive and the field data were\ncollected over one term. Each interview lasted about forty minutes and followed a topic guide on platform use,\nfriendships, and moments of exclusion. Methodology. We used a qualitative study design based on\nsemi-structured interviews. Participants were twenty adolescents aged fourteen to seventeen recruited through\ntwo secondary schools. Data source: interview recordings, transcribed and analysed with thematic coding. The\nsample was purposive and the field data were collected over one term. Each interview lasted about forty\nminutes and followed a topic guide on platform use, friendships, and moments of exclusion.\nResults. The main findings show that adolescents use social media mostly to maintain existing friendships and\nto experiment with self-presentation. Key outcomes include a strong sense of belonging and occasional\npressure to respond quickly. Limitations",
+            ". The study is limited to two schools and relies on self-reported\naccounts, so conclusions about other settings are tentative. Future work should combine interviews with\nobservation. Results. The main findings show that adolescents use social media mostly to maintain existing\nfriendships and to experiment with self-presentation. Key outcomes include a strong sense of belonging and\noccasional pressure to respond quickly. Limitations. The study is limited to two schools and relies on\nself-reported accounts, so conclusions about other settings are tentative. Future work should combine\ninterviews with observation.\n",
+            "Social Media Use and Everyday Identity Work Among Teenagers. Abstract. This paper examines how\nteenagers use social media to negotiate identity, peer relations and a sense of belonging. The research\nobjective is to describe adolescent experiences of wellbeing online. The contribution is an interpretive account\ngrounded in interview data. Introduction. Public debate about adolescents and screens often assumes harm, yet\nthe empirical evidence is mixed. The research question asks how young people themselves describe everyday\nplatform use, and what role it plays in friendships and self-presentation. Social Media Use and Everyday Identity\nWork Among Teenagers. Abstract. This paper examines how teenagers use social media to negotiate identity,\npeer relations and a sense of belonging. The research objective is to describe adolescent experiences of\nwellbeing online. The contribution is an interpretive account grounded in interview data. Introduction. Public\ndebate about adolescents and screens often assumes harm, yet the empirical evidence is mixed. The research\nquestion asks how young people themselves describe everyday platform use, and what role it plays in\nfriendships and self-presenta"
+          ]
+        },
+        "screening": {
+          "confidence_score": 8,
+          "decision": "include",
+          "matched_exclusion_criteria": [],
+          "matched_inclusion_criteria": [],
+          "reasoning": "Fake screening decision: include.",
+          "relevance_score": 8
+        }
+      }
+    ],
+    "uncertain_papers": [
+      {
+        "paper": {
+          "abstract": "[FAKE:UNCERTAIN] Young adults between eighteen and twenty-five describe their use of online communities, but the sample is not clearly adolescent.",
+          "authors": [
+            "Dan Placeholder",
+            "Eve Mock"
+          ],
+          "doi": "https://doi.org/10.1000/fixture.3",
+          "openalex_id": "W9000000003",
+          "pdf_url": "https://fixtures.invalid/pdf/3.pdf",
+          "relevance_score": 0,
+          "title": "Online Communities and Young Adults: A Borderline Case",
+          "url": "https://openalex.org/W9000000003",
+          "venue": "Fixture Quarterly",
+          "year": 2021
+        },
+        "screening": {
+          "confidence_score": 8,
+          "decision": "uncertain",
+          "matched_exclusion_criteria": [],
+          "matched_inclusion_criteria": [],
+          "reasoning": "Fake screening decision: uncertain.",
+          "relevance_score": 5
+        }
+      }
+    ]
+  },
+  "status_message": "Extraktion abgeschlossen! (Daten sind bereit)",
+  "target_output_count": 5
+}

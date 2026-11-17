@@ -61,6 +61,9 @@ class ResearchPaper(BaseModel):
     relevance_score: Optional[int] = Field(
         None, description="Optional score from the Search Agent."
     )
+    openalex_id: Optional[str] = Field(None, description="Bare OpenAlex work ID, e.g. W123.")
+    pdf_url: Optional[str] = Field(None, description="Open-access PDF URL found at search time.")
+    venue: Optional[str] = Field(None, description="Journal or venue name.")
 
 
 class SearchAgentOutput(BaseModel):

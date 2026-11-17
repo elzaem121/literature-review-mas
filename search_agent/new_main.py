@@ -1,24 +1,18 @@
 from __future__ import annotations
 
+import asyncio
 import json
 import os
-import sys
 from pathlib import Path
-from typing import Optional
 
-if __package__ in (None, ""):
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-    from search_agent.agent import UniversalAcademicSearchAgent
-else:
-    from .agent import UniversalAcademicSearchAgent
+from src.llm.settings import get_settings
 
+from .agent import UniversalAcademicSearchAgent
 
-OPENALEX_EMAIL = os.getenv("OPENALEX_EMAIL", "elzaem408@gmail.com")
 OPENALEX_API_KEY = os.getenv("OPENALEX_API_KEY") or None
-SEARCH_MODEL = os.getenv("SEARCH_MODEL", "qwen2.5-coder:7b")
 
 
-def main(
+async def main(
     research_question=None,
     min_year=None,
     inclusion_criteria=None,
@@ -61,14 +55,15 @@ def main(
 
     expanded_query = "\n".join(query_parts)
 
+    settings = get_settings()
     search_agent = UniversalAcademicSearchAgent(
-        openalex_email=OPENALEX_EMAIL,
+        openalex_email=settings.openalex_email,
         openalex_api_key=OPENALEX_API_KEY,
-        model_name=SEARCH_MODEL,
+        model_name=settings.search_model,
     )
     if progress_callback:
         progress_callback("Search Agent initialisiert.")
-    results = search_agent.run_precise_retrieval_cycle(
+    results = await search_agent.run_precise_retrieval_cycle(
         user_query=expanded_query,
         target_output_count=target_output_count,
         min_citations=min_citations,
@@ -88,11 +83,13 @@ def main(
 
 
 if __name__ == "__main__":
-    result = main(
-        research_question="What are the risks when AI systems that plan and act on their own are deployed in healthcare, and how are these risks currently managed?",
-        min_year=2018,
-        target_output_count=20,
-        min_citations=0,
-        save_to_file=True,
+    result = asyncio.run(
+        main(
+            research_question="What are the risks when AI systems that plan and act on their own are deployed in healthcare, and how are these risks currently managed?",
+            min_year=2018,
+            target_output_count=20,
+            min_citations=0,
+            save_to_file=True,
+        )
     )
     print(f"[SUCCESS] Retrieved {len(result.get('papers', []))} papers.")
