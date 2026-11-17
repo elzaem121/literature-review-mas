@@ -1,6 +1,7 @@
-import requests
 import time
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
+
+import requests
 
 
 class OpenAlexClient:
@@ -16,7 +17,7 @@ class OpenAlexClient:
 
     def reconstruct_inverted_abstract(self, inverted_index: Optional[Dict[str, List[int]]]) -> str:
         """
-        Reconstructs the original abstract plain-text from the OpenAlex inverted index representation.
+        Reconstructs the original abstract plain-text from the OpenAlex inverted index.
         Required to bypass legal and copyright indexation constraints programmatically.
         """
         if not inverted_index:

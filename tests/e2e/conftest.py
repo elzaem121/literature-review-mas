@@ -17,6 +17,6 @@ INITIAL_STATE = {
 @pytest.fixture
 def final_state(fake_surface) -> dict:
     """Final graph state of one full run on the fake surface."""
-    from Orchestration.graph import app
+    from src.graph.graph import app
 
     return asyncio.run(app.ainvoke(dict(INITIAL_STATE)))

@@ -29,3 +29,18 @@ fixture PDFs. That is what lets the whole pipeline run in a test with no network
 "golden transcript" is that run's final output saved to a file; any later commit that changes the
 output by accident now fails a test. Also in 1a: search became `async`, and the screening agent's own
 retry loop is gone (the OpenAI client retries 3 times and Instructor 2 times, and nothing else).
+
+## Commit 1b — Move into `src/`
+
+1b only moves code; it does not change what the code does, and the golden transcript test proves it:
+the fake end-to-end run produces exactly the output it produced before the move. Everything now lives
+under `src/` by job: `api` (FastAPI), `graph` (the LangGraph pipeline), `pipeline` (search, screening,
+ingestion, extraction), `llm`, and `ui`. Files were moved with `git mv`, so their history follows them,
+and every import now starts with `src.`. The old document-processing file was split by function into
+`pdf.py` (download and read PDFs), `chunking.py`, `retrieval.py` (still FAISS until 2b) and `node.py`
+(the graph node that ties them together). The API gained `GET /health`, a plain "I am alive" answer
+that the CI compose check will call. The Dockerfiles, `.dockerignore` and CI were pointed at the new
+paths, and CI now also runs ruff. One layering fix from 1a: `src/llm/fake.py` used to import the
+pipeline's schemas to build its default answers, which made the lower layer depend on the upper one.
+Now the fake only holds a registry that tests fill (`tests/fakes.py`, registered in `tests/conftest.py`),
+so `src/llm` imports nothing from `src/pipeline`.

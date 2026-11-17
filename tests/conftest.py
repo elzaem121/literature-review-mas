@@ -30,10 +30,10 @@ def test_profile(monkeypatch: pytest.MonkeyPatch):
 @pytest.fixture
 def fake_surface(monkeypatch: pytest.MonkeyPatch, tmp_path):
     """Replace OpenAlex and the PDF download with fixtures, and write PDFs to a temp dir."""
-    from extract_agent import document_processing_node
-    from search_agent.api_client import OpenAlexClient
+    from src.pipeline.ingestion import node as ingestion_node
+    from src.pipeline.search.api_client import OpenAlexClient
 
     monkeypatch.setattr(OpenAlexClient, "execute_retrieval", fake_execute_retrieval)
-    monkeypatch.setattr(document_processing_node, "get_openalex_pdf_url", fake_pdf_url)
-    monkeypatch.setattr(document_processing_node, "download_pdf", fake_download_pdf)
-    monkeypatch.setattr(document_processing_node, "PDF_DIR", tmp_path)
+    monkeypatch.setattr(ingestion_node, "get_openalex_pdf_url", fake_pdf_url)
+    monkeypatch.setattr(ingestion_node, "download_pdf", fake_download_pdf)
+    monkeypatch.setattr(ingestion_node, "PDF_DIR", tmp_path)

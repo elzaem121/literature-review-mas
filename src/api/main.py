@@ -1,12 +1,13 @@
 import uuid
-from fastapi import FastAPI, BackgroundTasks, HTTPException
-from typing import Dict, Any
+from typing import Any, Dict
+
+from fastapi import BackgroundTasks, FastAPI, HTTPException
 
 # Import the request and response schemas
-from Backend.schemas import ResearchRequest, ResearchResponse, ScreeningResults
+from src.api.schemas import ResearchRequest, ResearchResponse, ScreeningResults
 
 # Import the compiled LangGraph workflow
-from Orchestration.graph import app as workflow_app
+from src.graph.graph import app as workflow_app
 from src.llm.settings import get_settings
 from src.llm.tracing import root_trace
 
@@ -139,7 +140,13 @@ async def get_status(job_id: str):
     )
 
 
-# Root endpoint for health check
+@app.get("/health")
+def health() -> dict[str, str]:
+    """Liveness check for the compose and CI health probe."""
+    return {"status": "ok"}
+
+
+# Root endpoint
 @app.get("/")
 def read_root():
     return {"message": "MAS Literature Review API is running in Async Mode!"}

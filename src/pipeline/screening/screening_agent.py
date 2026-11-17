@@ -4,7 +4,9 @@ import logging
 from pathlib import Path
 from typing import List, Optional
 
-from Screening_Agent.screening_schemas import (
+from src.llm.client import INSTRUCTOR_MAX_RETRIES, get_llm
+from src.llm.prompts.screening import render_system_prompt, render_user_prompt
+from src.pipeline.screening.screening_schemas import (
     PaperScreeningResult,
     ResearchPaper,
     ReviewProtocol,
@@ -14,8 +16,6 @@ from Screening_Agent.screening_schemas import (
     ScreeningOutput,
     SearchAgentOutput,
 )
-from src.llm.client import INSTRUCTOR_MAX_RETRIES, get_llm
-from src.llm.prompts.screening import render_system_prompt, render_user_prompt
 
 logger = logging.getLogger(__name__)
 
@@ -140,7 +140,9 @@ class AcademicScreeningAgent:
             else:
                 output.uncertain_papers.append(item)
 
-        sort_key = lambda item: (item.screening.relevance_score, item.screening.confidence_score)
+        def sort_key(item: ScreenedPaper) -> tuple[int, int]:
+            return (item.screening.relevance_score, item.screening.confidence_score)
+
         output.included_papers.sort(key=sort_key, reverse=True)
         output.uncertain_papers.sort(key=sort_key, reverse=True)
         output.excluded_papers.sort(key=sort_key, reverse=True)
