@@ -13,8 +13,8 @@ and a Streamlit frontend. All LLM calls go to a **local (or port-forwarded Kuber
 via the `instructor` library patched onto the OpenAI SDK client — there is no cloud LLM provider involved.
 
 This is the v2 rewrite (branch `v2`). Phase 1 is in progress: the code has moved into `src/` and goes
-through one LLM seam; Postgres-backed state and ingestion land in commits 2a/2b (see
-`docs/designs/phase1_foundation.md`). Until then, job state is in memory and retrieval is FAISS.
+through one LLM seam; run state is in Postgres (commit 2a). Ingestion and retrieval move onto
+Postgres/pgvector in commit 2b (see `docs/designs/phase1_foundation.md`); until then retrieval is FAISS.
 
 ## Setup & running
 
@@ -38,7 +38,11 @@ uvicorn src.api.main:app --reload
 # Terminal 2 — frontend (polls the FastAPI backend)
 streamlit run src/ui/app.py
 
-# Or the whole stack in containers
+# Postgres (pgvector) must be up, with DATABASE_URL set and the schema migrated
+docker compose up -d db
+make migrate   # alembic upgrade head; the API never migrates by itself
+
+# Or the whole stack in containers (then `make migrate` once, from the host)
 make up        # docker compose up -d --build
 ```
 
@@ -53,7 +57,8 @@ ruff format --check src tests
 
 `make test` runs with the `test` profile's fake surface (fake LLM, fake embedder, stubbed OpenAlex,
 fixture PDFs from `tests/fixtures/`). Tests marked `integration` are excluded by default and need the
-compose Postgres (`make integration`, from 2a on). The golden-transcript test
+compose Postgres (`make integration`; they use their own `literature_review_test` database on that
+server, recreated each session). Unit tests need no database. The golden-transcript test
 (`tests/e2e/test_golden_transcript.py`) diffs the fake end-to-end run against
 `tests/fixtures/golden_run.json`; regenerate that file only as a deliberate, reviewed step.
 
@@ -70,6 +75,7 @@ src/
     screening/  per-paper include/exclude/uncertain classification
     ingestion/  PDF download (pdf.py), chunking, retrieval, and the graph node (node.py)
     extraction/ RAG-based structured extraction (node.py, schemas.py)
+  db/         SQLAlchemy models, session, repository (all SQL), Alembic migrations
   llm/        settings.py, client.py (get_llm / get_embedder), tracing.py, fake.py, prompts/
   ui/         Streamlit frontend (app.py)
 tests/        unit/, e2e/, fixtures/ (golden_run.json, OpenAlex works, PDFs, review config)
@@ -92,9 +98,11 @@ pre_search → search_agent → pre_screening → screening_agent
 ```
 
 `src/api/main.py` compiles this graph once and, per request, runs it with `workflow_app.astream(...)`
-inside a FastAPI `BackgroundTasks` job, streaming state after each node into an **in-memory** `JOBS` dict
-keyed by `job_id` (no persistence yet — restarting the backend loses all job state; this changes in 2a).
-`src/ui/app.py` polls `GET /status/{job_id}` to drive its progress UI.
+inside a FastAPI `BackgroundTasks` job, writing each node's state to the run's row in Postgres
+(`runs`, keyed by `job_id`; `result` holds exactly the `GET /status` payload, starting with a provenance
+envelope of models and prompt versions). `POST /start_pipeline` inserts the `reviews` and `runs` rows;
+on process start the lifespan marks unfinished runs `interrupted`. `src/ui/app.py` polls
+`GET /status/{job_id}` and stops on 404 and on `completed`/`error`/`interrupted`.
 
 ### The four stages and their data contracts
 
@@ -142,7 +150,7 @@ Every call passes `response_model=<a Pydantic schema>` to force structured JSON 
 All configuration is `src/llm/settings.py` (pydantic-settings, validated at startup, read from the
 environment and `.env`): `PROFILE`, `OLLAMA_BASE_URL`, `SEARCH_MODEL` / `SCREENING_MODEL` /
 `EXTRACTION_MODEL` (default `qwen2.5-coder:7b`), `EMBEDDING_MODEL` (default
-`sentence-transformers/all-MiniLM-L6-v2`), `DATABASE_URL` (optional until 2a), `OPENALEX_EMAIL`
+`sentence-transformers/all-MiniLM-L6-v2`), `DATABASE_URL` (required), `OPENALEX_EMAIL`
 (required), `LANGSMITH_TRACING`, `PDF_DIR`. `.env.example` documents each one. The frontend also reads
 `BACKEND_URL`; `src/pipeline/search/new_main.py` still reads the optional `OPENALEX_API_KEY` and
 `src/llm/tracing.py` the `LANGSMITH_*` variables directly. New configuration goes through settings.

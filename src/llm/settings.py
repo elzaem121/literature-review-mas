@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     screening_model: str = "qwen2.5-coder:7b"
     extraction_model: str = "qwen2.5-coder:7b"
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
-    database_url: str | None = None
+    database_url: str
     openalex_email: str
     langsmith_tracing: bool = False
     pdf_dir: Path = Path("pdfs_auto")

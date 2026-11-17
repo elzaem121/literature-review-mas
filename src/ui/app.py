@@ -145,6 +145,10 @@ if submitted:
 
                 while True:
                     res = requests.get(f"{BACKEND_URL}/status/{job_id}")
+                    if res.status_code == 404:
+                        status_box.update(label="❌ Job not found", state="error")
+                        st.error("The backend does not know this job. Please start a new run.")
+                        break
                     if res.status_code == 200:
                         data = res.json()
                         current_step = data.get("current_step")
@@ -161,6 +165,10 @@ if submitted:
                         elif current_step == "error":
                             status_box.update(label="❌ Pipeline Failed!", state="error")
                             st.error(msg)
+                            break
+                        elif current_step == "interrupted":
+                            status_box.update(label="⚠️ Pipeline interrupted", state="error")
+                            st.warning(msg)
                             break
                         elif current_step == "document_processing":
                             status_box.update(

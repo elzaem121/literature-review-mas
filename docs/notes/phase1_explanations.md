@@ -57,3 +57,21 @@ the two search-result files were first checked byte for byte against the copies 
 `CLAUDE.md` and `README.md` now describe the `src/` layout, the new run and test commands and the settings
 file, and no longer mention the deleted code or the old "3 tests fail" note. Nothing in `src/` changed, so
 the tests and the golden transcript stay exactly as green as before.
+
+## Commit 2a — Postgres: runs, schema, migrations
+
+Until 2a the backend kept every job in a Python dictionary, so a restart erased everything. Now a
+Postgres database (the `pgvector/pgvector:pg17` image, started by `docker compose`) holds five tables:
+`users` (one seeded `local` user), `reviews` (a question and its criteria), `runs` (one row per pipeline
+run), `papers` and `chunks` (the shared library, with a 384-number vector per chunk). The tables are created
+by Alembic migrations (`make migrate`); the API never migrates by itself. `src/db/repository.py` is the only
+file that contains SQL, so the API and the graph never touch the database directly.
+`POST /start_pipeline` now writes a `reviews` row and a `runs` row and returns the run's id as the `job_id`;
+after every graph step the background task writes the step, the message and the new results into that row,
+exactly as v1 wrote into the dictionary. `GET /status/{job_id}` rebuilds v1's response from the row, with the
+mapping from the design (a failed run shows `error`; an unknown id is a 404). When the API starts, one
+statement marks every `pending` or `running` run as `interrupted`, because the process that was running
+them is gone; the UI now stops polling on 404 and on `completed`, `error` and `interrupted`, which fixes v1's
+endless polling of a dead job. Each run also stores which models and prompt versions it used, so Phase 2a can
+tell a baseline run from a candidate run. The paper upsert, chunk replacement and similarity search are
+already in the repository and tested, but the ingestion node only starts using them in 2b.

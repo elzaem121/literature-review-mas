@@ -35,6 +35,12 @@ pymupdf==1.27.2.3
 sentence-transformers==5.5.1
 faiss-cpu==1.14.3
 
+# Database
+sqlalchemy==2.1.9
+alembic==1.20.1
+pgvector==0.5.1
+psycopg[binary]==3.3.9
+
 # Environment Variables
 python-dotenv==1.2.2
 

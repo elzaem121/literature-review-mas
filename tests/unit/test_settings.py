@@ -7,7 +7,6 @@ from src.llm.settings import Settings, get_settings
 def test_v1_models_are_the_defaults(monkeypatch: pytest.MonkeyPatch):
     for name in ("SEARCH_MODEL", "SCREENING_MODEL", "EXTRACTION_MODEL", "EMBEDDING_MODEL"):
         monkeypatch.delenv(name, raising=False)
-    monkeypatch.delenv("DATABASE_URL", raising=False)
 
     settings = get_settings()
 
@@ -15,7 +14,13 @@ def test_v1_models_are_the_defaults(monkeypatch: pytest.MonkeyPatch):
     assert settings.screening_model == "qwen2.5-coder:7b"
     assert settings.extraction_model == "qwen2.5-coder:7b"
     assert settings.embedding_model == "sentence-transformers/all-MiniLM-L6-v2"
-    assert settings.database_url is None
+
+
+def test_database_url_is_required(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.delenv("DATABASE_URL")
+
+    with pytest.raises(ValidationError, match="database_url"):
+        Settings(_env_file=None)
 
 
 def test_openalex_email_is_required(monkeypatch: pytest.MonkeyPatch):

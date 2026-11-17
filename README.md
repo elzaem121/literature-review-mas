@@ -150,7 +150,8 @@ kubectl port-forward svc/ollama-service 11434:11434 -n mas-project
 Then start both services:
 
 ```bash
-docker compose up
+docker compose up -d --build
+make migrate   # once, and after pulling new migrations; needs DATABASE_URL (see .env.example)
 ```
 
 The UI is at `http://localhost:8501`.
@@ -171,7 +172,7 @@ backend refuses to start if `OPENALEX_EMAIL` is missing.
 | `SEARCH_MODEL`, `SCREENING_MODEL`, `EXTRACTION_MODEL` | `qwen2.5-coder:7b` | backend (model per role) |
 | `EMBEDDING_MODEL` | `sentence-transformers/all-MiniLM-L6-v2` | backend |
 | `PDF_DIR` | `pdfs_auto` | backend |
-| `DATABASE_URL` | unset | backend (used from the Postgres commits on) |
+| `DATABASE_URL` | required | backend, Alembic (set by Compose for the backend) |
 | `OPENALEX_API_KEY` | unset | backend |
 | `LANGSMITH_TRACING` | unset (tracing off) | backend |
 | `LANGSMITH_API_KEY`, `LANGSMITH_ENDPOINT`, `LANGSMITH_PROJECT` | unset | backend |
@@ -185,6 +186,7 @@ the frontend reaches the backend by service name.
 
 ```bash
 pip install -r requirements.txt
+docker compose up -d db && make migrate   # Postgres with pgvector, then the schema
 uvicorn src.api.main:app --port 8000
 streamlit run src/ui/app.py
 ```
@@ -196,6 +198,7 @@ src/
   api/        FastAPI app: POST /start_pipeline, GET /status/{job_id}, GET /health
   graph/      LangGraph graph and shared PipelineState
   pipeline/   search/, screening/, ingestion/, extraction/ — the four stages
+  db/         SQLAlchemy models, repository, Alembic migrations
   llm/        settings, get_llm / get_embedder, tracing, fake test surface, versioned prompts
   ui/         Streamlit frontend
 tests/        unit/, e2e/, fixtures/
@@ -206,7 +209,8 @@ docs/         plan, designs, backlog
 
 Papers flow as dicts through `PipelineState`: `raw_papers` → `screening_results` (four buckets:
 `included_papers`, `excluded_papers`, `uncertain_papers`, `failed_papers`) → `extracted_papers`.
-Job state is still held in memory, so a backend restart loses running jobs.
+Run state lives in Postgres (`runs`): finished runs survive a backend restart, unfinished ones are
+marked `interrupted`.
 
 ## Development
 
