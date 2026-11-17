@@ -201,6 +201,7 @@ The `test` profile swaps in the **fake surface** at the same seams:
 | `get_embedder()` | MiniLM in-process | Deterministic 384-dim fake (no HuggingFace download) |
 | OpenAlex client | Live API | Stub returning `tests/fixtures/search_results.json` (3–5 papers incl. the two-IDs-one-DOI pair) |
 | PDF download | HTTP | Two committed 2–3-page fixture PDFs from a local path |
+| `get_repository()` (from 2a/2b) | Postgres + pgvector | In-memory fake repository: same functions, brute-force cosine retrieval over the fake embedder's vectors |
 
 ### Data model
 
@@ -413,9 +414,10 @@ CI instead of surfacing in the Phase 2a baseline.
 ## Detailed Implementation Plan
 
 One unified list, ordered by execution (Batch 0 → commits 1a, 1b, 1c, 2a, 2b).
-Every touched file appears once, under the step that first touches it; later
-steps that touch it again say so. No production code here — signatures and
-schemas only.
+A file's first entry sits under the step that first touches it and names the
+later steps that touch it again; those later touches either get entries of
+their own or are described in that first entry. No production code here —
+signatures and schemas only.
 
 ### Batch 0 — Safety net
 
@@ -424,25 +426,36 @@ schemas only.
 *   **Type / Scope**: Unit tests (repaired in place; moved in 1b)
 *   **Proposed Changes**: Repoint the config fixture to
     `Screening_Agent/testdaten/review_config.json` (the path the test names does
-    not exist); fix the duplicate `screening_schemas` import so Pydantic sees one
+    not exist); rewrite the test's flat imports to the package-qualified
+    `Screening_Agent.screening_agent` / `Screening_Agent.screening_schemas` —
+    the identity `screening_agent.py` itself uses — so Pydantic sees one
     `ResearchPaper` class; load search data from `tests/fixtures/search_results.json`
     instead of the gitignored file; delete only
     `test_screening_main_calls_protocol_helper` (reads the source of a file 1c
     deletes); keep the class's other two tests.
 
-#### 0.2 `./Screening_Agent/conftest.py` (Create — temporary)
+#### 0.2 `./Screening_Agent/conftest.py` (Dropped — not created)
 
-*   **Type / Scope**: Test scaffolding
-*   **Proposed Changes**: `sys.path` shim so collection works from the repo root
-    without `PYTHONPATH=..`. Declared throwaway; deleted in 1b when tests move.
+*   **Type / Scope**: Test scaffolding (removed from the plan)
+*   **Proposed Changes**: None. 0.4's `pythonpath = ["."]` already makes
+    repo-root collection resolve 0.1's package-qualified imports; a shim that
+    inserted `Screening_Agent/` into `sys.path` would re-create the dual module
+    identity 0.1 removes.
 
-#### 0.3 `./tests/fixtures/search_results.json` (Create)
+#### 0.3 `./tests/fixtures/search_results.json`, `./tests/fixtures/openalex_works.json` (Create)
 
-*   **Type / Scope**: Committed fixture
-*   **Proposed Changes**: 3–5 papers trimmed from the real v1 output, extended
-    with `openalex_id`, `pdf_url`, `venue`, `authors`, including two OpenAlex IDs
-    sharing one DOI (feeds the G1 duplicate-DOI test) and sentinel-token abstracts
-    for mixed screening buckets.
+*   **Type / Scope**: Committed fixtures
+*   **Proposed Changes**: The same 5 papers in two shapes.
+    `openalex_works.json` holds them as raw OpenAlex work dicts (`id`, `doi`,
+    `abstract_inverted_index`, `authorships`, `primary_location`,
+    `best_oa_location`, …) and feeds the stub OpenAlex client (1a.4).
+    `search_results.json` holds them in the formatted `{"papers": [...]}`
+    shape, trimmed from the v1 output and extended with `openalex_id`,
+    `pdf_url`, `venue`, `authors`; it feeds the screening tests. Roster: P1
+    plain abstract (include), P2 `[FAKE:EXCLUDE]`, P3 `[FAKE:UNCERTAIN]`, P4
+    `[FAKE:FAIL]`, P5 plain abstract (include). P1 and P5 are two OpenAlex
+    records sharing one DOI, both included so the G1 duplicate-DOI upsert merge
+    is exercised downstream.
 
 #### 0.4 `./pyproject.toml` (Create)
 
@@ -450,6 +463,8 @@ schemas only.
 *   **Proposed Changes**: Project metadata; pytest config
     (`markers = ["integration"]`, `addopts = "-m 'not integration'"`,
     `pythonpath = ["."]`); ruff configuration (gate turned on in CI in 1b).
+    `requires-python` matches the Dockerfile's Python base image; CI's
+    `python-version` uses the same value.
 
 #### 0.5 `./.github/workflows/ci.yml` (Create)
 
@@ -462,8 +477,11 @@ schemas only.
 
 *   **Type / Scope**: Developer entry points
 *   **Proposed Changes**: Targets `up` (compose), `migrate` (`alembic upgrade
-    head`), `test` (unit), `integration` (marker run). Keeps agent sessions
-    reproducible; targets become functional as their subjects land.
+    head`), `test` (unit + fake e2e), `integration` (marker run). Keeps agent
+    sessions reproducible; targets become functional as their subjects land.
+    `integration` assumes `make up` and `make migrate` have run; the test DSN
+    comes from `DATABASE_URL`, defaulting to the compose service on
+    `localhost:5432`.
 
 #### 0.7 `./eval/snapshots/v1/` (Create: `screening_search_results.json`, `extract_search_results.json`, `README.md`)
 
@@ -472,16 +490,19 @@ schemas only.
     files, renamed per source; `README.md` records their retrieval date. Plan §10
     checklist item.
 
-#### 0.8 `./.gitignore` (Modify)
+#### 0.8 `./.gitignore` (Verify — no expected edit)
 
 *   **Type / Scope**: VCS configuration
-*   **Proposed Changes**: Ensure `eval/snapshots/` and `tests/fixtures/` are
-    tracked despite the existing `search_results.json` ignore patterns.
+*   **Proposed Changes**: Confirm the new fixture paths are tracked. The
+    existing ignores are path-anchored (`Screening_Agent/search_results.json`,
+    `extract_agent/search_results.json`) and do not match `tests/fixtures/` or
+    `eval/snapshots/`; `git add` failing loudly is the backstop.
 
 #### 0.9 `./requirements.txt` (Modify; touched again in 1a, 2a, 2b)
 
 *   **Type / Scope**: Dependencies
-*   **Proposed Changes**: Batch 0 adds `ruff` and `pytest` pins. 1a adds
+*   **Proposed Changes**: Batch 0 adds a `ruff` pin (`pytest==9.1.0` is
+    already pinned). 1a adds
     `pydantic-settings`. 2a adds `sqlalchemy`, `alembic`, `pgvector`,
     `psycopg[binary]`. 2b removes `faiss-cpu`. `sentence-transformers` stays.
 
@@ -491,7 +512,8 @@ schemas only.
 
 *   **Type / Scope**: Configuration module
 *   **Proposed Changes**: Pydantic Settings: `profile` (`local`/`test`),
-    `ollama_base_url`, model per wired role, `embedding_model`, `database_url`,
+    `ollama_base_url`, model per wired role, `embedding_model`, `database_url`
+    (optional until 2a — no Postgres exists before it; required from 2a),
     `openalex_email` (required, no default — closes backlog #5), LangSmith
     switch, PDF directory. Validated at startup.
 
@@ -506,24 +528,39 @@ schemas only.
 #### 1a.3 `./tracing.py` → `./src/llm/tracing.py` (Move)
 
 *   **Type / Scope**: Tracing wrapper
-*   **Proposed Changes**: `maybe_wrap_openai` moved unchanged; root module removed
-    so only one import path exists.
+*   **Proposed Changes**: All four public helpers (`maybe_wrap_openai`,
+    `traceable_stage`, `root_trace`, `tracing_enabled`) moved unchanged. The
+    four remaining v1-path imports — `Backend/main.py` (first touched here;
+    moved in 1b), `Orchestration/nodes.py`,
+    `extract_agent/document_processing_node.py`,
+    `extract_agent/rag_extraction_main.py` — are rewritten to
+    `from src.llm.tracing import ...` in this commit; the root module is then
+    removed so only one import path exists. (`search_agent/agent.py` and
+    `Screening_Agent/screening_agent.py` lose their tracing imports via 1a.6 /
+    1a.9.)
 
 #### 1a.4 `./src/llm/fake.py` (Create)
 
 *   **Type / Scope**: Test-profile fake surface
 *   **Proposed Changes**: Fake LLM (registry keyed by `response_model` type;
     values: canned instance or `Callable[[messages], instance]`; canned screening
-    decision `include`; `[FAKE:EXCLUDE]`/`[FAKE:UNCERTAIN]` sentinel handling);
-    deterministic 384-dim fake embedder; stub OpenAlex client returning 0.3's
-    fixture; fixture-PDF provider.
+    decision `include`; `[FAKE:EXCLUDE]`/`[FAKE:UNCERTAIN]` sentinel handling;
+    `[FAKE:FAIL]`, whose registry callable raises a simulated API error so the
+    paper lands in `failed_papers` exactly as a v1 LLM failure did);
+    deterministic 384-dim fake embedder (vector seeded from the SHA-256 of the
+    input text, L2-normalized); stub OpenAlex client replacing
+    `OpenAlexClient.execute_retrieval`, returning raw work dicts from
+    `tests/fixtures/openalex_works.json` so the agent's formatting loop runs
+    unmodified; fixture-PDF provider.
 
 #### 1a.5 `./src/llm/prompts/` (Create: `__init__.py`, `search.py`, `screening.py`, `extraction.py`)
 
 *   **Type / Scope**: Versioned prompts
 *   **Proposed Changes**: v1's inline prompt strings moved byte-identical, one
     module per role, each with `PROMPT_VERSION = "v1"`. Plan §5.4 mandate; feeds
-    the provenance envelope.
+    the provenance envelope. Interpolated v1 prompts (the per-call f-strings in
+    screening and extraction) become `.format` templates with a per-role
+    `render_*` function; rendered output is byte-identical to v1's f-strings.
 
 #### 1a.6 `./search_agent/agent.py` (Modify; moved in 1b)
 
@@ -533,13 +570,17 @@ schemas only.
     carries `openalex_id`, `pdf_url`, `venue`
     (`primary_location.source.display_name` — new, behaviour-neutral), `authors`.
     Fallback-to-tokenized-query preserved after SDK retries (register V6).
+    `pdf_url` = `primary_location.pdf_url or best_oa_location.pdf_url` (the
+    expression `execute_retrieval` already computes); `openalex_id` stored bare
+    (the `https://openalex.org/` prefix stripped at formatting time) — the form
+    `papers.openalex_id` uses.
 
 #### 1a.7 `./search_agent/new_main.py` (Modify; moved in 1b)
 
 *   **Type / Scope**: Search entry point
 *   **Proposed Changes**: Async `main`; OpenAlex contact email from settings,
     hardcoded fallback removed; `sys.path` workaround dropped (obsolete once 1b
-    moves it, harmless now).
+    moves it; the 1a fake-e2e smoke covers the removal).
 
 #### 1a.8 `./search_agent/api_client.py` (Modify; moved in 1b)
 
@@ -557,21 +598,23 @@ schemas only.
 
 *   **Type / Scope**: Shared paper contract
 *   **Proposed Changes**: `ResearchPaper` gains optional-with-default
-    `openalex_id`, `pdf_url`, `venue` so old fixtures keep validating. Consumers
-    (`Backend/schemas.py`, `ui_app.py`) updated in the same commit.
+    `openalex_id`, `pdf_url`, `venue` so old fixtures keep validating. No
+    consumer edits needed: `Backend/schemas.py` carries papers as
+    `List[Dict[str, Any]]` and `ui_app.py` reads raw JSON, so the added
+    optional fields flow through unchanged.
 
 #### 1a.11 `./extract_agent/rag_extraction_main.py` (Modify; moved in 1b)
 
 *   **Type / Scope**: Extraction node
 *   **Proposed Changes**: Module-import-time client replaced by call-time
-    `get_llm("extraction")` (the real defect behind the old "sync" claim); prompt
-    from 1a.5.
+    `get_llm("extraction")`; prompt from 1a.5; tracing import rewritten (1a.3).
 
 #### 1a.12 `./extract_agent/document_processing_node.py` (Modify; split in 1b, rewritten in 2b)
 
 *   **Type / Scope**: Ingestion node
 *   **Proposed Changes**: 1a only swaps the embedder construction to
-    `get_embedder()`. FAISS logic untouched until 2b.
+    `get_embedder()` and rewrites the tracing import (1a.3). FAISS logic
+    untouched until 2b.
 
 #### 1a.13 `./Orchestration/nodes.py` (Modify; moved in 1b)
 
@@ -596,8 +639,8 @@ schemas only.
 #### 1a.16 `./tests/fixtures/paper_small_1.pdf`, `./tests/fixtures/paper_small_2.pdf` (Create)
 
 *   **Type / Scope**: Committed binary fixtures
-*   **Proposed Changes**: Two generated 2–3-page PDFs so page-aware chunking and
-    the partition invariant are exercised offline.
+*   **Proposed Changes**: Two generated 2–3-page PDFs so that 2b's page-aware
+    chunking and partition test run offline (in 1a they feed v1's FAISS path).
 
 #### 1a.17 `./tests/fixtures/golden_run.json` + `./tests/e2e/test_golden_transcript.py` (Create)
 
@@ -605,13 +648,18 @@ schemas only.
 *   **Proposed Changes**: Captured final-state JSON of the fake e2e run, taken
     before any package moves; the test diffs current runs against it with the
     deviation register as allow-list. Regeneration is a deliberate, reviewed step
-    (2b regenerates when V1–V3/V5 land).
+    (2b regenerates when V1–V3/V5 land). Mechanics: before diffing, volatile
+    fields (run/job ids, timestamps, filesystem paths) are replaced with fixed
+    placeholders; the allow-list is a list of JSON-path prefixes per register
+    entry, defined beside the test; any difference outside an allowed prefix
+    fails.
 
 #### 1a.18 `./.env.example` (Create; touched in 2a)
 
 *   **Type / Scope**: Configuration documentation
 *   **Proposed Changes**: Every setting from 1a.1 with native-vs-compose Ollama
-    URL comments; 2a adds `DATABASE_URL`.
+    URL comments; `DATABASE_URL` is listed commented out from the start, and 2a
+    uncomments it with the compose default.
 
 #### 1a.19 `./docs/notes/phase1_explanations.md` (Create; appended throughout)
 
@@ -640,11 +688,11 @@ schemas only.
 #### 1b.2 `./Screening_Agent/test_screening.py` → `./tests/unit/test_screening.py` (Move)
 
 *   **Type / Scope**: Test relocation
-*   **Proposed Changes**: Imports switch to `src.pipeline.screening`; 0.2's
-    conftest shim deleted; `Screening_Agent/testdaten/review_config.json` →
+*   **Proposed Changes**: Imports switch to `src.pipeline.screening`;
+    `Screening_Agent/testdaten/review_config.json` →
     `./tests/fixtures/review_config.json`.
 
-#### 1b.3 `./src/api/main.py` (Modify — within the move)
+#### 1b.3 `./src/api/main.py` (Modify — within the move; touched again in 2a.5)
 
 *   **Type / Scope**: API
 *   **Proposed Changes**: `GET /health` returning plain 200 (CI compose check
@@ -672,7 +720,14 @@ schemas only.
     `extract_agent/{auto_pdf_downloader,add_full_text_from_pdfs,rag_chunker,rag_retriever}.py`;
     `Screening_Agent/screening_main.py`;
     `Screening_Agent/review_config_Evaluation.json`; `export_graph.py`;
-    per-package `README.md` files; the now-empty v1 directories.
+    per-package `README.md` files; the remaining tracked leftovers
+    `Backend/__init__.py`, `Orchestration/__init__.py`,
+    `search_agent/__init__.py`, `extract_agent/.gitignore`; then the emptied
+    `Backend/`, `Orchestration/`, `search_agent/`, `Screening_Agent/`,
+    `extract_agent/` directories. Untracked leftovers
+    (`Screening_Agent/screening_results.json`, `search_agent/.mas_runs/`, the
+    two gitignored `search_results.json` files) are deleted locally; they were
+    never tracked.
 
 #### 1c.2 `./CLAUDE.md`, `./README.md` (Modify)
 
@@ -686,7 +741,8 @@ schemas only.
 
 *   **Type / Scope**: Local stack
 *   **Proposed Changes**: `pgvector/pgvector:pg17` service with named volume
-    `pgdata`; backend gets `DATABASE_URL`; `pdfs_auto` volume name kept.
+    `pgdata`, published on host port 5432; backend gets `DATABASE_URL` plus
+    `OPENALEX_EMAIL` and `PROFILE` passthrough; `pdfs_auto` volume name kept.
 
 #### 2a.2 `./src/db/models.py`, `./src/db/session.py` (Create)
 
@@ -694,7 +750,13 @@ schemas only.
 *   **Proposed Changes**: SQLAlchemy models for `users`, `reviews`, `runs`,
     `papers`, `chunks` exactly as the Technical Plan's column table (text + CHECK
     enums, `vector(384)`); sync engine + session factory; all calls from async
-    contexts go through `asyncio.to_thread` (R4).
+    contexts go through `asyncio.to_thread` (R4). Completing the column table
+    to DDL level: PKs — `runs.id` uuid, all other tables integer identity.
+    FKs — `chunks.paper_id` ON DELETE CASCADE; all other FKs RESTRICT.
+    Uniques — `users.email`, `papers.openalex_id`, `papers.doi` (nullable
+    unique), `chunks (paper_id, ordinal)`. `papers` gains `created_at` /
+    `updated_at`. Columns not listed in the Technical Plan's table plus these
+    do not exist.
 
 #### 2a.3 `./alembic.ini`, `./src/db/migrations/` (Create: `env.py`, `versions/0001_initial.py`, `versions/0002_seed_local_user.py`)
 
@@ -709,13 +771,17 @@ schemas only.
 *   **Type / Scope**: Data access
 *   **Proposed Changes**: Functions for run lifecycle (`create_run`,
     `update_run_step`, `finish_run`, `mark_unfinished_interrupted`), review
-    insertion, paper upsert (3.1 algorithm — used from 2b), chunk replace +
-    retrieval queries (used from 2b). Keeps SQL out of nodes and API.
+    insertion, paper upsert (the Technical Plan's "Ingestion and retrieval"
+    step 1; `concepts_brief.md` decision 3.1 — used from 2b), chunk replace +
+    retrieval queries (used from 2b). Keeps SQL out of nodes and API. Also
+    defines the repository seam: `get_repository()` returns the Postgres
+    implementation on the `local` profile and an in-memory fake on `test`
+    (built in 2b.1); nodes and API call only this seam.
 
 #### 2a.5 `./src/api/main.py` (Modify)
 
 *   **Type / Scope**: Run lifecycle
-*   **Proposed Changes**: `JOBS` dict removed. `POST /start_pipeline` inserts
+*   **Proposed Changes**: `JOBS` dict removed (register V4). `POST /start_pipeline` inserts
     `reviews` + `runs` (`pending`, provenance envelope written from settings),
     returns `runs.id` as `job_id`. Background task flips to `running`, updates
     per `astream` step. Lifespan runs the one-statement `interrupted` update.
@@ -735,7 +801,8 @@ schemas only.
     Postgres; test completes one fake run, leaves one mid-run row, tears the app
     down, builds a second instance on the same DSN, invokes the lifespan, asserts
     survivors and `interrupted` marking, and asserts the 404 and interrupted
-    status responses.
+    status responses. Also asserts the `failed → current_step="error"` mapping
+    via one forced-failure run, completing coverage of the status-mapping table.
 
 #### 2a.8 `./scripts/restart_check.sh` (Create)
 
@@ -755,9 +822,15 @@ schemas only.
     check, stored-URL-then-fallback resolution (register V1, V3). `chunking.py`:
     per-page 1200-char windows, 1-based pages, per-paper ordinals, skip
     whitespace-only pages, keep tails; delete-then-insert in one transaction with
-    `chunked` status; skip rule keyed on `embedding_model` + `chunker_version`
-    (register V2). `retrieval.py`: pgvector cosine top-5 per `FIELD_QUERIES`
-    field filtered by `paper_id`; FAISS removed (register V5).
+    `chunked` status; skip rule keyed on `embedding_model` + `chunker_version`,
+    checked on any single chunk row of the paper — uniform by the
+    delete-then-insert invariant (register V2). `CHUNKER_VERSION = "v1"` is
+    defined in `chunking.py` and written to every chunk row. `retrieval.py`:
+    pgvector cosine top-5 per `FIELD_QUERIES` field filtered by `paper_id`;
+    FAISS removed (register V5). `test` profile: an in-memory fake repository
+    (same functions as 2a.4; retrieval is brute-force cosine over the fake
+    embedder's vectors) backs the fake e2e and golden-transcript tests, which
+    therefore stay in `make test` and CI with no Postgres.
 
 #### 2b.2 `./tests/unit/test_chunking.py` (Create)
 
@@ -771,37 +844,42 @@ schemas only.
 *   **Type / Scope**: Integration tests (G1)
 *   **Proposed Changes**: Same fake run twice → one `papers` row and one chunk
     set per paper; the fixture's two-OpenAlex-IDs-one-DOI pair merges into one
-    paper under the 3.1 merge rule.
+    paper under the upsert merge rule ("Ingestion and retrieval" step 1;
+    `concepts_brief.md` decision 3.1).
 
 #### 2b.4 `./tests/fixtures/golden_run.json` (Modify — deliberate regeneration)
 
 *   **Type / Scope**: Characterization baseline
-*   **Proposed Changes**: Regenerated once, with register entries V1–V3, V5 as
-    the documented justification; the allow-list in the test shrinks accordingly.
+*   **Proposed Changes**: Regenerated once, with register entries V1–V3, V5 and
+    the FAISS→pgvector retrieval swap as the documented justification; the
+    allow-list empties: V1–V3/V5 are baked into the regenerated baseline, V6
+    predates the original capture, and V4 is API-layer state invisible in
+    graph-level output.
 
 #### 2b.5 `./.github/workflows/ci.yml` (Modify)
 
 *   **Type / Scope**: CI
 *   **Proposed Changes**: Image build (buildx layer cache) + compose up of
-    backend + Postgres with dummy `OLLAMA_BASE_URL` + `GET /health` assertion.
+    backend + Postgres with dummy `OLLAMA_BASE_URL` and dummy `OPENALEX_EMAIL`
+    (e.g. `ci@example.invalid`) + `GET /health` assertion.
 
 ### Verification Plan
 
 *   **Compilation/Build**: `docker compose build`; CI image-build stage green.
 *   **Unit Tests**: `make test` (pytest, `-m "not integration"`, fake surface) —
     includes node tests (1a.14), fake e2e (1a.15), golden transcript (1a.17),
-    partition invariant (2b.2), and the repaired screening tests.
+    partition invariant (2b.2), and the repaired screening tests (post-2b,
+    ingestion runs against the in-memory fake repository).
 *   **Static Analysis & Linting**: `ruff check src tests` (CI gate from 1b).
 *   **Integration (local, R2)**: `make integration` — G1 (duplicate run,
     duplicate DOI) and G2 (restart simulation) against compose Postgres.
 *   **Phase exit**: `scripts/restart_check.sh` (literal compose restart); one
-    optional live smoke run with real Ollama + MiniLM; exit criteria G1–G6
+    non-gating live smoke run with real Ollama + MiniLM (recommended before
+    tagging; exit criteria do not depend on it); exit criteria G1–G6
     checked against the plan §10 exit block; git tag `v0.2`.
 *   **Per-commit check**: from 1a on, the fake e2e smoke passes after every
     commit; Batch 0's check is unit tests green in CI.
 
 --------------------------------------------------------------------------------
-
-<!-- Provenance: Indicates initial structural drafting via EGM. -->
 
 *Drafted with EGM*
