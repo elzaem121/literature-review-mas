@@ -6,9 +6,9 @@ import faiss
 import numpy as np
 from pathlib import Path
 from typing import Dict, Any
-from sentence_transformers import SentenceTransformer
 
-from tracing import traceable_stage
+from src.llm.client import get_embedder
+from src.llm.tracing import traceable_stage
 
 # ==========================================
 # CONSTANTS & CONFIGURATION
@@ -17,7 +17,6 @@ PDF_DIR = Path("pdfs_auto")
 PDF_DIR.mkdir(exist_ok=True)
 
 CHUNK_SIZE = 1200
-MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 FIELD_QUERIES = {
     "method_chunks": [
@@ -32,17 +31,6 @@ FIELD_QUERIES = {
     "findings_chunks": ["main findings results conclusions key outcomes implications contribution"],
     "limitations_chunks": ["limitations weaknesses constraints future work study limitations"],
 }
-
-# Lazy-loaded global model to prevent reloading for every paper
-_embedding_model = None
-
-
-def get_embedding_model():
-    global _embedding_model
-    if _embedding_model is None:
-        print("[INIT] Loading SentenceTransformer model...")
-        _embedding_model = SentenceTransformer(MODEL_NAME)
-    return _embedding_model
 
 
 # ==========================================
@@ -134,7 +122,7 @@ def perform_faiss_retrieval(chunks: list[str]) -> dict:
     if not chunks:
         return {}
 
-    model = get_embedding_model()
+    model = get_embedder()
     chunk_embeddings = embed_texts(model, chunks)
 
     dimension = chunk_embeddings.shape[1]

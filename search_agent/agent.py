@@ -1,13 +1,14 @@
-import os
+import asyncio
 import re
 from typing import List, Dict, Any, Optional
-from openai import OpenAI
-import instructor  # Added to support structured outputs on local Ollama
 
 # Internal local imports
 from .schemas import AcademicQueryExpansionSchema
 from .api_client import OpenAlexClient
-from tracing import maybe_wrap_openai
+from src.llm.client import INSTRUCTOR_MAX_RETRIES, get_llm
+from src.llm.prompts.search import SYSTEM_PROMPT
+
+OPENALEX_ID_PREFIX = "https://openalex.org/"
 
 
 def _emit(self, message: str, progress_callback=None) -> None:
@@ -25,57 +26,32 @@ class UniversalAcademicSearchAgent:
     def __init__(
         self,
         openalex_email: str,
+        model_name: str,
         openalex_api_key: Optional[str] = None,
-        model_name: str = "qwen2.5-coder:7b",
     ):
         """
-        Initialize the agent with academic database client and local Ollama credentials.
+        Initialize the agent with academic database client and the search-role LLM.
         """
         self.model_name = model_name
-
-        # Patching the standard OpenAI client with Instructor to enforce JSON schema on local models
-        self.llm_client = instructor.from_openai(
-            maybe_wrap_openai(
-                OpenAI(
-                    base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1"),
-                    api_key="local-ollama-key",
-                )
-            ),
-            mode=instructor.Mode.JSON,
-        )
-
+        self.llm_client = get_llm("search")
         self.openalex_client = OpenAlexClient(email=openalex_email, api_key=openalex_api_key)
 
-    def _generate_academic_search_strategy(self, raw_user_query: str) -> Dict[str, Any]:
+    async def _generate_academic_search_strategy(self, raw_user_query: str) -> Dict[str, Any]:
         """
         Transforms raw, colloquial user input into a dense scientific pseudo-abstract
         and extracts strict programmatic gatekeeping entities using Structured Outputs.
         """
-        system_instruction = (
-            "You are an expert AI Systems Architect interacting with a dense Vector Embeddings Database (like SPECTER/OpenAlex). "
-            "Your objective is to translate the user's natural language question into a 'synthetic_abstract' (120-150 words) "
-            "that represents the ideal paper answering this query.\n\n"
-            "CRITICAL RULES FOR VECTOR SEARCH OPTIMIZATION:\n"
-            "1. STRICT SCOPE ADHERENCE: Use only concepts, methods, and domains explicitly present in the user's question. "
-            "Never introduce specific techniques, frameworks, algorithms, or subfields the user did not mention. "
-            "If the question is broad, keep the abstract broad; do not narrow it to one subfield.\n"
-            "2. IMPLICIT IMRaD STRUCTURE: The paragraph must seamlessly flow from context/background, to methodology, to precise findings.\n"
-            "3. MAXIMIZE NOUN DENSITY: Pack the text with exact scientific jargon, methodologies, and technical noun-chunks. Minimize generic verbs.\n"
-            "4. POSITIVE FRAMING ONLY: Vector databases struggle with negation. Never use 'without', 'not', or 'avoids'. "
-            "Frame concepts positively (e.g., use 'high safety profile' instead of 'without side effects').\n"
-            "5. NO FILLER PHRASES: Omit conversational text like 'This paper demonstrates...'. Jump directly into the scientific context."
-        )
-
         try:
             # Using Instructor's overridden create method to directly return the Pydantic model
-            response = self.llm_client.chat.completions.create(
+            response = await self.llm_client.chat.completions.create(
                 model=self.model_name,
                 messages=[
-                    {"role": "system", "content": system_instruction},
+                    {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": raw_user_query},
                 ],
                 response_model=AcademicQueryExpansionSchema,
                 temperature=0.1,
+                max_retries=INSTRUCTOR_MAX_RETRIES,
             )
             # Response is already parsed as AcademicQueryExpansionSchema
             return response.model_dump()
@@ -132,7 +108,7 @@ class UniversalAcademicSearchAgent:
 
         return validated_papers
 
-    def run_precise_retrieval_cycle(
+    async def run_precise_retrieval_cycle(
         self,
         user_query: str,
         target_output_count: int = 20,
@@ -147,14 +123,15 @@ class UniversalAcademicSearchAgent:
         print(f"[INFO] Initializing retrieval cycle for query: '{user_query}'")
 
         # Step 1: Query understanding and pseudo-abstract generation
-        strategy = self._generate_academic_search_strategy(user_query)
+        strategy = await self._generate_academic_search_strategy(user_query)
         print(f"[INFO] Formulated Synthetic Abstract:\n---\n{strategy['synthetic_abstract']}\n---")
 
         # Step 2: Fetch exactly the target count directly from semantic search
         print(
             f"[INFO] Querying OpenAlex Semantic Endpoint (Target limit: {target_output_count})..."
         )
-        candidate_pool = self.openalex_client.execute_retrieval(
+        candidate_pool = await asyncio.to_thread(
+            self.openalex_client.execute_retrieval,
             synthetic_abstract=strategy["synthetic_abstract"],
             limit=target_output_count,  # Fetch exactly 20
             min_citations=min_citations,
@@ -181,6 +158,10 @@ class UniversalAcademicSearchAgent:
                 if author_name:
                     authors_list.append(author_name)
 
+            primary_loc = paper.get("primary_location") or {}
+            best_oa = paper.get("best_oa_location") or {}
+            openalex_id = paper.get("id")
+
             # 3. Build the paper object
             paper_obj = {
                 "title": title,
@@ -190,6 +171,11 @@ class UniversalAcademicSearchAgent:
                 "doi": paper.get("doi"),
                 "url": paper.get("id") or paper.get("doi"),
                 "relevance_score": 0,
+                "openalex_id": openalex_id.removeprefix(OPENALEX_ID_PREFIX)
+                if openalex_id
+                else None,
+                "pdf_url": primary_loc.get("pdf_url") or best_oa.get("pdf_url"),
+                "venue": (primary_loc.get("source") or {}).get("display_name"),
             }
 
             # 4. Append DIRECTLY to the 'papers' list (No nested 'paper' key anymore)

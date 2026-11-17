@@ -7,7 +7,11 @@ from Backend.schemas import ResearchRequest, ResearchResponse, ScreeningResults
 
 # Import the compiled LangGraph workflow
 from Orchestration.graph import app as workflow_app
-from tracing import root_trace
+from src.llm.settings import get_settings
+from src.llm.tracing import root_trace
+
+# Fail at startup, not mid-run, when required settings (e.g. OPENALEX_EMAIL) are missing
+get_settings()
 
 # Initialize the FastAPI application
 app = FastAPI(

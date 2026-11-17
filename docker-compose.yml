@@ -7,6 +7,7 @@ services:
       - "8000:8000"
     environment:
       - OLLAMA_BASE_URL=http://host.docker.internal:11434/v1
+      - OPENALEX_EMAIL
       - LANGSMITH_TRACING
       - LANGSMITH_ENDPOINT=${LANGSMITH_ENDPOINT:-https://eu.api.smith.langchain.com}
       - LANGSMITH_API_KEY
