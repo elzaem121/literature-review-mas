@@ -17,8 +17,9 @@ extract_agent/pdfs_auto/
 # Secrets
 .env
 
-# Claude Code
-.claude/
+# Claude Code (shared hooks in settings.json are tracked; local overrides are not)
+.claude/*
+!.claude/settings.json
 
 # Personal notes
 PROJECT_FACTS.md
