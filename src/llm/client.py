@@ -7,7 +7,7 @@ import instructor
 from instructor.core.client import AsyncInstructor
 from openai import AsyncOpenAI
 
-from src.llm.fake import FakeEmbedder, FakeLLM, default_registry
+from src.llm.fake import FakeEmbedder, FakeLLM, get_fake_answers
 from src.llm.settings import get_settings
 from src.llm.tracing import maybe_wrap_openai
 
@@ -23,7 +23,7 @@ def get_llm(role: str) -> AsyncInstructor | FakeLLM:
         raise ValueError(f"Unknown LLM role '{role}'; expected one of {WIRED_ROLES}")
     settings = get_settings()
     if settings.profile == "test":
-        return FakeLLM(default_registry())
+        return FakeLLM(get_fake_answers())
     client = AsyncOpenAI(
         base_url=settings.ollama_base_url, api_key=OLLAMA_API_KEY, max_retries=SDK_MAX_RETRIES
     )

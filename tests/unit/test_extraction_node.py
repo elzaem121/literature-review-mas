@@ -2,7 +2,7 @@ import asyncio
 
 from extract_agent.extraction_schemas import ExtractedPaperInfo
 from extract_agent.rag_extraction_main import extraction_node
-from src.llm.fake import default_registry
+from tests.fakes import default_registry
 
 CHUNKS = {"method_chunks": ["We interviewed twenty adolescents."]}
 

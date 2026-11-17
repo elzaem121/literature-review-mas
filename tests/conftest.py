@@ -2,8 +2,14 @@ import os
 
 import pytest
 
-from src.llm.fake import fake_download_pdf, fake_execute_retrieval, fake_pdf_url
+from src.llm.fake import (
+    fake_download_pdf,
+    fake_execute_retrieval,
+    fake_pdf_url,
+    set_fake_answers,
+)
 from src.llm.settings import Settings, get_settings
+from tests.fakes import default_registry
 
 # Tracing wraps the graph nodes at import time, so a developer's key must never reach tests.
 os.environ.pop("LANGSMITH_API_KEY", None)
@@ -16,6 +22,7 @@ def test_profile(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setenv("PROFILE", "test")
     monkeypatch.setenv("OPENALEX_EMAIL", "tests@example.invalid")
     get_settings.cache_clear()
+    set_fake_answers(default_registry())
     yield
     get_settings.cache_clear()
 
