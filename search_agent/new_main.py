@@ -17,19 +17,20 @@ OPENALEX_EMAIL = os.getenv("OPENALEX_EMAIL", "elzaem408@gmail.com")
 OPENALEX_API_KEY = os.getenv("OPENALEX_API_KEY") or None
 SEARCH_MODEL = os.getenv("SEARCH_MODEL", "qwen2.5-coder:7b")
 
+
 def main(
-        research_question=None,
-        min_year=None,
-        inclusion_criteria=None,
-        exclusion_criteria=None,
-        additional_info=None,
-        user_query=None,
-        criteria=None,
-        target_output_count=25,
-        min_citations=0,
-        save_to_file=False,
-        output_path=".mas_runs/search_results.json",
-        progress_callback=None,
+    research_question=None,
+    min_year=None,
+    inclusion_criteria=None,
+    exclusion_criteria=None,
+    additional_info=None,
+    user_query=None,
+    criteria=None,
+    target_output_count=25,
+    min_citations=0,
+    save_to_file=False,
+    output_path=".mas_runs/search_results.json",
+    progress_callback=None,
 ) -> dict:
     """
     Search-Agent EntryPoint für die Streamlit-HITL-App.

@@ -129,8 +129,7 @@ class AcademicScreeningAgent:
                 confidence_score=10,
                 relevance_score=1,
                 reasoning=(
-                    f"Publication year {paper.year} is outside the allowed range "
-                    f"({reason})."
+                    f"Publication year {paper.year} is outside the allowed range ({reason})."
                 ),
             ),
         )
@@ -204,9 +203,9 @@ class AcademicScreeningAgent:
         Title: {paper.title}
         Year: {paper.year}
         Authors: {authors}
-        DOI: {paper.doi or 'No DOI'}
-        URL: {paper.url or 'No URL'}
-        Abstract: {paper.abstract or 'No abstract available.'}
+        DOI: {paper.doi or "No DOI"}
+        URL: {paper.url or "No URL"}
+        Abstract: {paper.abstract or "No abstract available."}
         ---END PAPER METADATA---
         """
 

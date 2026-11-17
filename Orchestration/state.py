@@ -1,5 +1,6 @@
 from typing import TypedDict, List, Dict, Any, Optional
 
+
 class PipelineState(TypedDict):
     """
     The shared state for the LangGraph pipeline.
@@ -31,5 +32,7 @@ class PipelineState(TypedDict):
     # ---------------------------------------------------------
     # 3. UI TRACKING (For Streamlit Progress Bar / Status)
     # ---------------------------------------------------------
-    current_step: str  # e.g., "search", "screening", "document_processing", "extraction", "completed"
+    current_step: (
+        str  # e.g., "search", "screening", "document_processing", "extraction", "completed"
+    )
     status_message: str  # e.g., "Searching OpenAlex for semantic matches..."

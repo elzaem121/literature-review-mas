@@ -57,9 +57,7 @@ def get_openalex_pdf_url(doi: str):
 
 def download_pdf(url: str, output_path: Path) -> bool:
     try:
-        headers = {
-            "User-Agent": "Mozilla/5.0"
-        }
+        headers = {"User-Agent": "Mozilla/5.0"}
 
         response = requests.get(url, headers=headers, timeout=30, allow_redirects=True)
 
@@ -137,4 +135,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

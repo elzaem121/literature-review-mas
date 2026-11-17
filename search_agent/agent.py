@@ -9,10 +9,12 @@ from .schemas import AcademicQueryExpansionSchema
 from .api_client import OpenAlexClient
 from tracing import maybe_wrap_openai
 
+
 def _emit(self, message: str, progress_callback=None) -> None:
     print(message)
     if progress_callback:
         progress_callback(message)
+
 
 class UniversalAcademicSearchAgent:
     """
@@ -21,10 +23,10 @@ class UniversalAcademicSearchAgent:
     """
 
     def __init__(
-            self,
-            openalex_email: str,
-            openalex_api_key: Optional[str] = None,
-            model_name: str = "qwen2.5-coder:7b"
+        self,
+        openalex_email: str,
+        openalex_api_key: Optional[str] = None,
+        model_name: str = "qwen2.5-coder:7b",
     ):
         """
         Initialize the agent with academic database client and local Ollama credentials.
@@ -33,11 +35,13 @@ class UniversalAcademicSearchAgent:
 
         # Patching the standard OpenAI client with Instructor to enforce JSON schema on local models
         self.llm_client = instructor.from_openai(
-            maybe_wrap_openai(OpenAI(
-                base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1"),
-                api_key="local-ollama-key"
-            )),
-            mode=instructor.Mode.JSON
+            maybe_wrap_openai(
+                OpenAI(
+                    base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1"),
+                    api_key="local-ollama-key",
+                )
+            ),
+            mode=instructor.Mode.JSON,
         )
 
         self.openalex_client = OpenAlexClient(email=openalex_email, api_key=openalex_api_key)
@@ -68,10 +72,10 @@ class UniversalAcademicSearchAgent:
                 model=self.model_name,
                 messages=[
                     {"role": "system", "content": system_instruction},
-                    {"role": "user", "content": raw_user_query}
+                    {"role": "user", "content": raw_user_query},
                 ],
                 response_model=AcademicQueryExpansionSchema,
-                temperature=0.1
+                temperature=0.1,
             )
             # Response is already parsed as AcademicQueryExpansionSchema
             return response.model_dump()
@@ -80,16 +84,11 @@ class UniversalAcademicSearchAgent:
             # Safe programmatic fallback in case of local LLM timeout/failure
             print(f" [!] Query expansion failed: {e}. Falling back to tokenized query.")
             fallback_terms = [word for word in raw_user_query.split() if len(word) > 4]
-            return {
-                "synthetic_abstract": raw_user_query,
-                "mandatory_entities": fallback_terms
-            }
+            return {"synthetic_abstract": raw_user_query, "mandatory_entities": fallback_terms}
 
     # The gatekeeper function is kept in the code for future use, but bypassed in the run cycle
     def _apply_programmatic_gatekeeping_firewall(
-            self,
-            papers: List[Dict[str, Any]],
-            mandatory_entities: List[str]
+        self, papers: List[Dict[str, Any]], mandatory_entities: List[str]
     ) -> List[Dict[str, Any]]:
         """
         Applies local, highly fast programmatic filters to secure high precision.
@@ -100,7 +99,9 @@ class UniversalAcademicSearchAgent:
         for paper in papers:
             title = paper.get("title", "") or ""
             inverted_abstract = paper.get("abstract_inverted_index", {})
-            reconstructed_abstract = self.openalex_client.reconstruct_inverted_abstract(inverted_abstract)
+            reconstructed_abstract = self.openalex_client.reconstruct_inverted_abstract(
+                inverted_abstract
+            )
             search_corpus = f"{title} {reconstructed_abstract}".lower()
 
             matched_entities = []
@@ -116,26 +117,28 @@ class UniversalAcademicSearchAgent:
                 source = primary_loc.get("source") or {}
                 journal_name = source.get("display_name") or "Unknown Venue"
 
-                validated_papers.append({
-                    "openalex_id": paper.get("id"),
-                    "doi": paper.get("doi"),
-                    "title": title,
-                    "abstract": reconstructed_abstract,
-                    "publication_year": paper.get("publication_year"),
-                    "cited_by_count": paper.get("cited_by_count"),
-                    "matched_gatekeeping_entities": matched_entities,
-                    "journal": journal_name
-                })
+                validated_papers.append(
+                    {
+                        "openalex_id": paper.get("id"),
+                        "doi": paper.get("doi"),
+                        "title": title,
+                        "abstract": reconstructed_abstract,
+                        "publication_year": paper.get("publication_year"),
+                        "cited_by_count": paper.get("cited_by_count"),
+                        "matched_gatekeeping_entities": matched_entities,
+                        "journal": journal_name,
+                    }
+                )
 
         return validated_papers
 
     def run_precise_retrieval_cycle(
-            self,
-            user_query: str,
-            target_output_count: int = 20,
-            min_citations: int = 10,
-            start_year: Optional[int] = None,
-            progress_callback=None,
+        self,
+        user_query: str,
+        target_output_count: int = 20,
+        min_citations: int = 10,
+        start_year: Optional[int] = None,
+        progress_callback=None,
     ) -> Dict[str, Any]:
         """
         Executes the high-precision retrieval cycle.
@@ -148,26 +151,28 @@ class UniversalAcademicSearchAgent:
         print(f"[INFO] Formulated Synthetic Abstract:\n---\n{strategy['synthetic_abstract']}\n---")
 
         # Step 2: Fetch exactly the target count directly from semantic search
-        print(f"[INFO] Querying OpenAlex Semantic Endpoint (Target limit: {target_output_count})...")
+        print(
+            f"[INFO] Querying OpenAlex Semantic Endpoint (Target limit: {target_output_count})..."
+        )
         candidate_pool = self.openalex_client.execute_retrieval(
             synthetic_abstract=strategy["synthetic_abstract"],
             limit=target_output_count,  # Fetch exactly 20
             min_citations=min_citations,
-            start_year=start_year
+            start_year=start_year,
         )
         print(f"[INFO] Retrieved {len(candidate_pool)} raw semantic candidate papers.")
         # Step 3: BYPASS GATEKEEPER
         print("[INFO] Gatekeeper is DISABLED. Formatting raw results directly...")
 
         # 1. Initialize the new base structure with "papers" key
-        formatted_output = {
-            "papers": []
-        }
+        formatted_output = {"papers": []}
 
         for paper in candidate_pool:
             title = paper.get("title", "") or ""
             inverted_abstract = paper.get("abstract_inverted_index", {})
-            reconstructed_abstract = self.openalex_client.reconstruct_inverted_abstract(inverted_abstract)
+            reconstructed_abstract = self.openalex_client.reconstruct_inverted_abstract(
+                inverted_abstract
+            )
 
             # 2. Extract author names
             authors_list = []
@@ -184,7 +189,7 @@ class UniversalAcademicSearchAgent:
                 "authors": authors_list,
                 "doi": paper.get("doi"),
                 "url": paper.get("id") or paper.get("doi"),
-                "relevance_score": 0
+                "relevance_score": 0,
             }
 
             # 4. Append DIRECTLY to the 'papers' list (No nested 'paper' key anymore)

@@ -13,7 +13,7 @@ from tracing import root_trace
 app = FastAPI(
     title="MAS Literature Review API",
     description="API bridging Streamlit and the LangGraph Multi-Agent System asynchronously",
-    version="2.0.0"
+    version="2.0.0",
 )
 
 # ---------------------------------------------------------
@@ -36,14 +36,17 @@ async def run_graph_in_background(job_id: str, initial_state: dict):
         # workflow_app.astream() yields the state step-by-step!
         async with root_trace(job_id):
             async for step_result in workflow_app.astream(initial_state):
-
                 # Extract the node name (e.g., 'search_agent', 'screening_agent')
                 node_name = list(step_result.keys())[0]
                 latest_state = step_result[node_name]
 
                 # Update our global job tracker with the latest progression
-                JOBS[job_id]["current_step"] = latest_state.get("current_step", JOBS[job_id]["current_step"])
-                JOBS[job_id]["status_message"] = latest_state.get("status_message", JOBS[job_id]["status_message"])
+                JOBS[job_id]["current_step"] = latest_state.get(
+                    "current_step", JOBS[job_id]["current_step"]
+                )
+                JOBS[job_id]["status_message"] = latest_state.get(
+                    "status_message", JOBS[job_id]["status_message"]
+                )
 
                 # If new data is generated, save it to the job tracker
                 if "raw_papers" in latest_state:
@@ -78,7 +81,7 @@ async def start_pipeline(request: ResearchRequest, background_tasks: BackgroundT
         "raw_papers_count": 0,
         "screening_results": None,
         "extracted_papers": None,
-        "final_analysis": None
+        "final_analysis": None,
     }
 
     initial_state = {
@@ -89,7 +92,7 @@ async def start_pipeline(request: ResearchRequest, background_tasks: BackgroundT
         "additional_info": request.additional_info,
         "target_output_count": request.target_output_count,
         "current_step": "initialized",
-        "status_message": "Starting search..."
+        "status_message": "Starting search...",
     }
 
     # Send the heavy lifting to the background
@@ -119,7 +122,7 @@ async def get_status(job_id: str):
             included_papers=sd.get("included_papers", []),
             excluded_papers=sd.get("excluded_papers", []),
             uncertain_papers=sd.get("uncertain_papers", []),
-            failed_papers=sd.get("failed_papers", [])
+            failed_papers=sd.get("failed_papers", []),
         )
 
     return ResearchResponse(
@@ -128,7 +131,7 @@ async def get_status(job_id: str):
         raw_papers_count=job_data.get("raw_papers_count", 0),
         screening_results=screening_obj,
         extracted_papers=job_data.get("extracted_papers"),
-        final_analysis=job_data.get("final_analysis")
+        final_analysis=job_data.get("final_analysis"),
     )
 
 

@@ -1,11 +1,13 @@
 from pydantic import BaseModel, Field
 from typing import List
 
+
 class AcademicQueryExpansionSchema(BaseModel):
     """
     Enforces a strict structured output schema from the LLM, ensuring
     perfect partition between the target semantic content and gatekeeping tokens.
     """
+
     synthetic_abstract: str = Field(
         description="A highly dense, jargon-rich academic paragraph (100-150 words) that represents the abstract of an ideal paper answering the query."
     )

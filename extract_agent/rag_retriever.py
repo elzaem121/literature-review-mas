@@ -21,13 +21,11 @@ FIELD_QUERIES = {
     "task_chunks": [
         "research objective aim purpose research question analytical focus task contribution"
     ],
-    "findings_chunks": [
-        "main findings results conclusions key outcomes implications contribution"
-    ],
-    "limitations_chunks": [
-        "limitations weaknesses constraints future work study limitations"
-    ],
+    "findings_chunks": ["main findings results conclusions key outcomes implications contribution"],
+    "limitations_chunks": ["limitations weaknesses constraints future work study limitations"],
 }
+
+
 def embed_texts(model, texts):
     embeddings = model.encode(texts, convert_to_numpy=True)
     embeddings = embeddings.astype("float32")

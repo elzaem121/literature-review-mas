@@ -45,11 +45,11 @@ class OpenAlexClient:
             return ""
 
     def execute_retrieval(
-            self,
-            synthetic_abstract: str,
-            limit: int = 50,
-            min_citations: int = 5,
-            start_year: Optional[int] = None
+        self,
+        synthetic_abstract: str,
+        limit: int = 50,
+        min_citations: int = 5,
+        start_year: Optional[int] = None,
     ) -> List[Dict[str, Any]]:
         """
         Executes a semantic search query against the OpenAlex REST API.
@@ -60,8 +60,8 @@ class OpenAlexClient:
             headers["Authorization"] = f"Bearer {self.api_key}"
 
         # [FIX]: Only use strictly supported filters by the Semantic API endpoint
-        #api_filters = "has_abstract:true,type:journal-article|preprint"
-            # [FIX]: Only use strictly supported filters by the Semantic API endpoint
+        # api_filters = "has_abstract:true,type:journal-article|preprint"
+        # [FIX]: Only use strictly supported filters by the Semantic API endpoint
         api_filters = "has_abstract:true,type:journal-article|preprint,is_oa:true"
 
         params = {
@@ -69,19 +69,14 @@ class OpenAlexClient:
             "filter": api_filters,
             "per_page": 50,  # Fetch max allowed to buffer our local filtering
             "page": 1,
-            "mailto": self.email
+            "mailto": self.email,
         }
 
         retrieved_documents = []
 
         while len(retrieved_documents) < limit:
             try:
-                response = requests.get(
-                    self.base_url,
-                    params=params,
-                    headers=headers,
-                    timeout=20
-                )
+                response = requests.get(self.base_url, params=params, headers=headers, timeout=20)
 
                 if response.status_code == 429:
                     print(" Rate limit encountered. Sleeping for 2 seconds...")

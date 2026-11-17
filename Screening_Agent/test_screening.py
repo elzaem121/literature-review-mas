@@ -77,9 +77,7 @@ class TestPublicationYearFilter:
             make_paper("Recent paper", 2024),
         ]
 
-        eligible, excluded = AcademicScreeningAgent.apply_publication_year_filter(
-            papers, protocol
-        )
+        eligible, excluded = AcademicScreeningAgent.apply_publication_year_filter(papers, protocol)
 
         assert len(eligible) == 1
         assert eligible[0].title == "Recent paper"
@@ -93,9 +91,7 @@ class TestPublicationYearFilter:
         )
         papers = [make_paper("Unknown year", None)]
 
-        eligible, excluded = AcademicScreeningAgent.apply_publication_year_filter(
-            papers, protocol
-        )
+        eligible, excluded = AcademicScreeningAgent.apply_publication_year_filter(papers, protocol)
 
         assert len(eligible) == 1
         assert excluded == []
