@@ -140,3 +140,13 @@ Every agent talks to Ollama through `instructor.from_openai(...)` / `instructor.
 Pydantic schema>` to force structured JSON output — this is the consistent way structured extraction is
 enforced everywhere in the codebase (search query expansion, screening decisions, RAG extraction). Default
 model is `qwen2.5-coder:7b`; `extract_agent` additionally reads `OLLAMA_BASE_URL`/`OLLAMA_MODEL` env vars.
+
+## Coding standards
+
+- Follow the design; do not add abstractions, layers or options it does not ask for (YAGNI).
+- Small functions with one responsibility and clear names; type hints on all public functions; one-line docstrings on public functions.
+- Layers: api -> graph/pipeline -> llm/db. Lower layers never import upper ones.
+- LLM clients only via `get_llm()`, database only via the repository, configuration only via settings.
+- No hardcoded values, no dead or commented-out code, no bare `except`; fail with clear error messages.
+- Keep each change inside the current task; no unrelated refactors.
+- Code must pass `ruff check` and `ruff format`; new behaviour gets a test.
