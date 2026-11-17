@@ -1,1 +1,0 @@
-"""Academic search agent package."""

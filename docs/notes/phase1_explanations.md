@@ -44,3 +44,16 @@ paths, and CI now also runs ruff. One layering fix from 1a: `src/llm/fake.py` us
 pipeline's schemas to build its default answers, which made the lower layer depend on the upper one.
 Now the fake only holds a registry that tests fill (`tests/fakes.py`, registered in `tests/conftest.py`),
 so `src/llm` imports nothing from `src/pipeline`.
+
+## Commit 1c — Delete and correct docs
+
+1c removes everything the pipeline no longer uses, so there is one place for each thing. Gone are the old
+step-by-step command-line scripts for PDF download and chunking (the graph does that now inside
+`src/pipeline/ingestion/`), the older standalone Streamlit app `App_Main/`, the archived search app, the
+`screening_main.py` script, `export_graph.py`, the per-folder READMEs and the five emptied top-level
+folders (`Backend`, `Orchestration`, `search_agent`, `Screening_Agent`, `extract_agent`). Local-only
+leftovers that git never tracked (old result files, `.mas_runs/`, empty `testdaten/`) were deleted by hand;
+the two search-result files were first checked byte for byte against the copies in `eval/snapshots/v1/`.
+`CLAUDE.md` and `README.md` now describe the `src/` layout, the new run and test commands and the settings
+file, and no longer mention the deleted code or the old "3 tests fail" note. Nothing in `src/` changed, so
+the tests and the golden transcript stay exactly as green as before.
