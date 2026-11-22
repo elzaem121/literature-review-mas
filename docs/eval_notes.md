@@ -354,6 +354,12 @@ The review's full findings and its list of points still to settle are in `concep
 
    N is set before the benchmark from the number of decisions that flip between two baseline screening runs. The exact gates and the rule for extraction and embedding are settled in `docs/designs/eval.md`.
 
+5. **Phase 2a is minimal** (2026-11-23): gold set, harness, baseline, error analysis, so that Phase 2b starts soon.
+   - The candidate-model benchmark and the decision record move to Phase 2b as one of its experiments, measured with the same harness and under the paired rule in point 4. The two baseline screening runs that set N stay in Phase 2a, as the baseline's run-to-run noise.
+   - The latency budget is still recorded in Phase 2a, from the baseline run.
+   - This supersedes the Phase 2a parts of "Benchmark decides" and "Done means" in "Positions stated during the brainstorm": the comparison table, the decision record and the 45-minute run per candidate model now belong to Phase 2b.
+   - No second Goldfish review for this design; the author reviews the draft of `docs/designs/eval.md`.
+
 ## Open questions
 
 1. **Answered (2026-11-22):** topic 3 is E1, mobile money and household welfare in Sub-Saharan Africa. Duplicate rule accepted.

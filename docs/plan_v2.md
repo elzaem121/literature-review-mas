@@ -163,7 +163,7 @@ Columns, keys and enumerations are defined in the Phase 1 design (data model) an
 ## 7. LLM layer
 
 - One model per role, set in settings. Roles: `search` (query expansion), `router`, `screening`, `extraction`, `summary`, `embedding`, `judge`.
-- Phase 1 defaults are the v1 models: `qwen2.5-coder:7b` on local Ollama for every LLM role, and `all-MiniLM-L6-v2` (384 dimensions, in-process) for embeddings. Phase 1 changes code, not models. Candidate models (general instruct models such as `qwen3:8b`, embedders such as `nomic-embed-text`) are benchmarked in Phase 2a; router models in Phase 3.
+- Phase 1 defaults are the v1 models: `qwen2.5-coder:7b` on local Ollama for every LLM role, and `all-MiniLM-L6-v2` (384 dimensions, in-process) for embeddings. Phase 1 changes code, not models. Candidate models (general instruct models such as `qwen3:8b`, embedders such as `nomic-embed-text`) are benchmarked in Phase 2b with the Phase 2a eval harness; router models in Phase 3.
 - `summary` uses a local model. `judge` uses a stronger model from a different family on a free API tier (provisional: Groq `llama-3.3-70b`).
 - `get_llm(role)` is the only place that builds LLM clients. It returns an Instructor-patched, OpenAI-compatible client wrapped for tracing, as in v1. `get_embedder()` builds the embedder.
 - Settings are validated at startup with Pydantic Settings. API keys come from `.env` (Kubernetes Secrets from Phase 4).
@@ -225,19 +225,17 @@ Each phase ends with a working system and a git tag. From Phase 2a on, each phas
 
 **Exit:** automated tests show that running the pipeline twice with the same question and criteria leaves one `papers` row and one set of `chunks` per paper, and that after restarting the API and Postgres every completed run's results and all library rows are still present. The existing screening tests pass under the new layout. CI is green.
 
-### Phase 2a — Eval baseline and benchmark · `v0.3`
-Input: `docs/eval_notes.md` (draft brainstorm notes).
-- [ ] Resolve the open questions in `docs/eval_notes.md`; write `docs/designs/eval.md`, including the model-selection rule
+### Phase 2a — Eval baseline · `v0.3`
+Input: `docs/eval_notes.md` (brainstorm record) and `concepts_brief.md`. Phase 2a is kept minimal: gold set, harness, baseline, error analysis. The model benchmark is a Phase 2b experiment.
+- [ ] Write `docs/designs/eval.md` from the brainstorm decisions, including the paired model-selection rule used in Phase 2b
 - [ ] Gold dataset v0 for three test topics: screening decisions for every topic; for a few papers, the `found` fields with evidence page and a script-verified quote
 - [ ] Check with one logged run whether Ollama truncates extraction prompts; if it does, set the context length explicitly for all runs, including the baseline
-- [ ] Eval harness; measure the baseline: the Phase 1 system with the v1 models. Extraction is scored by field status and retrieval recall only; the baseline extraction outputs are saved for the Phase 2b faithfulness judge
+- [ ] Eval harness; measure the baseline: the Phase 1 system with the v1 models. Extraction is scored by field status and retrieval recall only; the baseline extraction outputs are saved for the Phase 2b faithfulness judge. Baseline screening runs twice, and the number of flipped decisions is recorded as the run-to-run noise
 - [ ] Error analysis on the baseline: inspect wrong outputs per agent (search, screening, retrieval, extraction), group them by cause, and record the groups with examples
 - [ ] Report baseline search precision@10, scored from the gold labels of each topic's frozen baseline top-10 (no judge)
-- [ ] Benchmark candidate local models per role on the target hardware (section 11): screening, extraction, embedding (speed, memory, and the quality metrics in `docs/designs/eval.md`). Search models are not benchmarked in Phase 2a: search problems are logic problems for the Phase 2b agent review. Router models are benchmarked in Phase 3.
-- [ ] Decision record for the model per role; switch the defaults. If the embedding model changes: migrate the vector column, re-embed stored chunks, check that all `chunks` share one `embedding_model`. Update model references in READMEs (backlog #6).
 - [ ] Set the per-run latency budget (section 11) from the measured baseline
 
-**Exit:** baseline results file and decision record committed; the chosen models show a delta over the baseline under the model-selection rule, or the record says why the v1 models are kept; latency budget recorded.
+**Exit:** baseline results file committed (screening with the flip count, search precision@10, retrieval recall, extraction field status); baseline extraction outputs saved; error analysis recorded; latency budget recorded.
 
 ### Phase 2b — Pipeline · `v0.4`
 - [ ] Agent review in the EGM brainstorm: read the agents' code together with the Phase 2a numbers and error analysis, and propose improvements, each with how it is measured; the project owner decides which are adopted, and the tasks below are adjusted to match
@@ -246,6 +244,8 @@ Input: `docs/eval_notes.md` (draft brainstorm notes).
 - [ ] Search filter by OpenAlex subfield (`primary_topic.subfield`), taken from the review's criteria when set
 - [ ] Search judge for precision@10 on new search results, calibrated against human-labeled top-10 papers from the Phase 2a gold set
 - [ ] Faithfulness judge (required): calibrate it against human labels, then score the saved Phase 2a baseline extraction outputs and the Phase 2b outputs, for a before/after faithfulness number
+- [ ] Experiment: benchmark candidate local models for screening, extraction and embedding on the target hardware (section 11) with the Phase 2a harness, under the paired model-selection rule in `docs/designs/eval.md`. Compare models on one pipeline version, separately from logic changes, so each delta has one cause. Search models are not benchmarked: search problems are logic problems for the agent review. Router models are benchmarked in Phase 3.
+- [ ] Decision record for the model per role; switch the defaults. If the embedding model changes: migrate the vector column, re-embed stored chunks, check that all `chunks` share one `embedding_model`. Update model references in READMEs (backlog #6).
 - [ ] Loop 1 with counter, counting included papers with a retrievable PDF against `target_included`; cap OpenAlex retries
 - [ ] Extraction with the fixed field set, field status and evidence (chunk, page)
 - [ ] Parallel extraction
@@ -253,7 +253,7 @@ Input: `docs/eval_notes.md` (draft brainstorm notes).
 - [ ] Chunk overlap, if Phase 1 left it out. Then try keyword plus vector search and a reranker, separately; adopt each only if retrieval recall@k or extraction faithfulness improves
 - [ ] Loop 2 for `missing` fields, only if the baseline and the experiment show it is needed
 
-**Exit:** the eval shows fewer gold-`found` fields reported as `missing` or `not_reported` than the baseline; faithfulness of the baseline and of Phase 2b is reported with human–judge agreement; fake-LLM tests show each loop stops at its limit and OpenAlex retries are capped; every `found` extraction has an evidence chunk; one run stays within the latency budget.
+**Exit:** model decision record committed: the chosen models show a delta over the baseline under the model-selection rule, or the record says why the v1 models are kept; the eval shows fewer gold-`found` fields reported as `missing` or `not_reported` than the baseline; faithfulness of the baseline and of Phase 2b is reported with human–judge agreement; fake-LLM tests show each loop stops at its limit and OpenAlex retries are capped; every `found` extraction has an evidence chunk; one run stays within the latency budget.
 
 ### Phase 3 — Chat · `v0.5`
 Musts:
@@ -289,7 +289,7 @@ Shoulds, after the exit, in this order:
 ## 11. Constraints
 
 - **Hardware:** MacBook Air M4 (fanless; throttles on long runs), 16 GB RAM.
-- **Budget:** free only — local Ollama plus free API tiers. Check free-tier limits when choosing the judge (Phase 2a).
+- **Budget:** free only — local Ollama plus free API tiers. Check free-tier limits when choosing the judge (Phase 2b).
 - **Latency budget:** one `new_topic` run with `target_included` = 10 on the target hardware finishes within a budget set in Phase 2a from the measured baseline. Phase 2b must stay within it.
 
 ## 12. Risks
@@ -317,7 +317,7 @@ Shoulds, after the exit, in this order:
 
 - What is the per-run latency budget? Set in Phase 2a from the measured baseline.
 - Is the v1 GPU cluster still available as a fallback if laptop inference misses the budget?
-- Evaluation design: `docs/eval_notes.md` questions 1–5. Questions 6 and 7 are settled by this plan: the baseline is the Phase 1 system with the v1 models, and the embedding change is a Phase 2a task.
+- Evaluation design: the brainstorm questions in `docs/eval_notes.md` are answered (2026-11-23); the remaining details are settled in `docs/designs/eval.md`. The baseline is the Phase 1 system with the v1 models; the model benchmark and any embedding change are Phase 2b tasks.
 
 ## 15. Glossary
 
