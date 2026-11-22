@@ -228,10 +228,12 @@ Each phase ends with a working system and a git tag. From Phase 2a on, each phas
 ### Phase 2a — Eval baseline and benchmark · `v0.3`
 Input: `docs/eval_notes.md` (draft brainstorm notes).
 - [ ] Resolve the open questions in `docs/eval_notes.md`; write `docs/designs/eval.md`, including the model-selection rule
-- [ ] Gold dataset v0 for three test topics: screening decisions for every topic; field status, evidence page and quote for a few papers
-- [ ] Eval harness; measure the baseline: the Phase 1 system with the v1 models
+- [ ] Gold dataset v0 for three test topics: screening decisions for every topic; for a few papers, the `found` fields with evidence page and a script-verified quote
+- [ ] Check with one logged run whether Ollama truncates extraction prompts; if it does, set the context length explicitly for all runs, including the baseline
+- [ ] Eval harness; measure the baseline: the Phase 1 system with the v1 models. Extraction is scored by field status and retrieval recall only; the baseline extraction outputs are saved for the Phase 2b faithfulness judge
 - [ ] Error analysis on the baseline: inspect wrong outputs per agent (search, screening, retrieval, extraction), group them by cause, and record the groups with examples
-- [ ] Benchmark candidate local models per role on the target hardware (section 11): search, screening, extraction, embedding (speed, memory, and the quality metrics in `docs/designs/eval.md`). Router models are benchmarked in Phase 3.
+- [ ] Report baseline search precision@10, scored from the gold labels of each topic's frozen baseline top-10 (no judge)
+- [ ] Benchmark candidate local models per role on the target hardware (section 11): screening, extraction, embedding (speed, memory, and the quality metrics in `docs/designs/eval.md`). Search models are not benchmarked in Phase 2a: search problems are logic problems for the Phase 2b agent review. Router models are benchmarked in Phase 3.
 - [ ] Decision record for the model per role; switch the defaults. If the embedding model changes: migrate the vector column, re-embed stored chunks, check that all `chunks` share one `embedding_model`. Update model references in READMEs (backlog #6).
 - [ ] Set the per-run latency budget (section 11) from the measured baseline
 
@@ -242,6 +244,8 @@ Input: `docs/eval_notes.md` (draft brainstorm notes).
 - [ ] Pipeline as subgraph, called by the existing job endpoint, which creates a `reviews` row
 - [ ] Screening stores decision + reason per (review, paper); a store node writes screenings and extractions with `model` and `prompt_version`
 - [ ] Search filter by OpenAlex subfield (`primary_topic.subfield`), taken from the review's criteria when set
+- [ ] Search judge for precision@10 on new search results, calibrated against human-labeled top-10 papers from the Phase 2a gold set
+- [ ] Faithfulness judge (required): calibrate it against human labels, then score the saved Phase 2a baseline extraction outputs and the Phase 2b outputs, for a before/after faithfulness number
 - [ ] Loop 1 with counter, counting included papers with a retrievable PDF against `target_included`; cap OpenAlex retries
 - [ ] Extraction with the fixed field set, field status and evidence (chunk, page)
 - [ ] Parallel extraction
@@ -249,7 +253,7 @@ Input: `docs/eval_notes.md` (draft brainstorm notes).
 - [ ] Chunk overlap, if Phase 1 left it out. Then try keyword plus vector search and a reranker, separately; adopt each only if retrieval recall@k or extraction faithfulness improves
 - [ ] Loop 2 for `missing` fields, only if the baseline and the experiment show it is needed
 
-**Exit:** the eval shows fewer gold-`found` fields reported as `missing` or `not_reported` than the baseline; faithfulness is reported with human–judge agreement; fake-LLM tests show each loop stops at its limit and OpenAlex retries are capped; every `found` extraction has an evidence chunk; one run stays within the latency budget.
+**Exit:** the eval shows fewer gold-`found` fields reported as `missing` or `not_reported` than the baseline; faithfulness of the baseline and of Phase 2b is reported with human–judge agreement; fake-LLM tests show each loop stops at its limit and OpenAlex retries are capped; every `found` extraction has an evidence chunk; one run stays within the latency budget.
 
 ### Phase 3 — Chat · `v0.5`
 Musts:

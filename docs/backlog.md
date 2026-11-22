@@ -1,6 +1,6 @@
 # Backlog
 
-Findings from the EGM bootstrap (2026-11-10, items 1-6), deferred ideas (from 2026-11-13, items 7-14), and plan-level candidates from the Phase 1 brainstorm Goldfish review (2026-11-14, `docs/reviews/phase1_brainstorm_goldfish.md`, items 15-31), and Phase 1 follow-ups for the Phase 2b agent review (2026-11-22, items 32-36). No code has been changed for these yet.
+Findings from the EGM bootstrap (2026-11-10, items 1-6), deferred ideas (from 2026-11-13, items 7-14), and plan-level candidates from the Phase 1 brainstorm Goldfish review (2026-11-14, `docs/reviews/phase1_brainstorm_goldfish.md`, items 15-31), and Phase 1 follow-ups for the Phase 2b agent review (2026-11-22, items 32-36), and findings from the Phase 2a eval brainstorm (2026-11-22, item 37). No code has been changed for these yet.
 
 > Phases refer to `docs/plan_v2.md` (section 10).
 
@@ -42,3 +42,4 @@ Findings from the EGM bootstrap (2026-11-10, items 1-6), deferred ideas (from 20
 | 34 | A screened paper without `openalex_id` fails the whole run. Skip such a paper instead? | ingestion | Open | Phase 2b review |
 | 35 | Upsert edge case: when an OpenAlex id and a DOI match two different existing rows, the upsert keeps both and leaves a duplicate. | `src/db/repository.py` | Open | Phase 2b review (related: #19) |
 | 36 | Later paper sources: arXiv and PubMed (a non-goal until v1.0). Look at LlamaIndex's OpenAlex reader. | search | Deferred | after v1.0 |
+| 37 | Papers screened `uncertain` are never ingested or extracted: ingestion and extraction read only `included_papers`, so downstream an `uncertain` paper is lost like an excluded one. The screening prompt (`v1`) still says "uncertain is better than wrongly excluding a potentially useful paper", so following it loses papers. Found in the Phase 2a eval brainstorm (`docs/eval_notes.md`). | `src/llm/prompts/screening.py`, `src/pipeline/ingestion/node.py`, `src/pipeline/extraction/node.py` | Open | Phase 2a error analysis (measure how many gold includes the baseline marks `uncertain`); Phase 2b agent review (decide the fix) |
