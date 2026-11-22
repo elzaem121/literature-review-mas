@@ -49,3 +49,13 @@ def test_empty_env_values_fall_back_to_defaults(monkeypatch: pytest.MonkeyPatch)
     monkeypatch.setenv("LANGSMITH_TRACING", "")
 
     assert Settings(_env_file=None).langsmith_tracing is False
+
+
+def test_openalex_api_key_is_optional_and_read_from_the_environment(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    assert Settings(_env_file=None).openalex_api_key is None
+
+    monkeypatch.setenv("OPENALEX_API_KEY", "secret")
+
+    assert Settings(_env_file=None).openalex_api_key == "secret"

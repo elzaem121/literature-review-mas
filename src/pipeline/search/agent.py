@@ -2,7 +2,7 @@ import asyncio
 import re
 from typing import Any, Dict, List, Optional
 
-from src.llm.client import INSTRUCTOR_MAX_RETRIES, get_llm
+from src.llm.client import get_llm
 from src.llm.prompts.search import SYSTEM_PROMPT
 from src.pipeline.search.api_client import OpenAlexClient
 
@@ -52,7 +52,6 @@ class UniversalAcademicSearchAgent:
                 ],
                 response_model=AcademicQueryExpansionSchema,
                 temperature=0.1,
-                max_retries=INSTRUCTOR_MAX_RETRIES,
             )
             # Response is already parsed as AcademicQueryExpansionSchema
             return response.model_dump()

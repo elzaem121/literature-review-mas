@@ -35,6 +35,9 @@ class ResearchResponse(BaseModel):
         default=None, description="Categorized papers from Screening Agent"
     )
     extracted_papers: Optional[List[Dict[str, Any]]] = Field(default=None)
+    provenance: Optional[Dict[str, Any]] = Field(
+        default=None, description="Models, prompt versions and profile the run started with"
+    )
     final_analysis: Optional[Any] = Field(
         default=None, description="Reserved for the Extraction Agent's final synthesis report"
     )

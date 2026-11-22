@@ -1,6 +1,6 @@
 """The only place LLM and embedding clients are built."""
 
-from functools import lru_cache
+from functools import lru_cache, partial
 from typing import Any
 
 import instructor
@@ -27,7 +27,9 @@ def get_llm(role: str) -> AsyncInstructor | FakeLLM:
     client = AsyncOpenAI(
         base_url=settings.ollama_base_url, api_key=OLLAMA_API_KEY, max_retries=SDK_MAX_RETRIES
     )
-    return instructor.from_openai(maybe_wrap_openai(client), mode=instructor.Mode.JSON)
+    llm = instructor.from_openai(maybe_wrap_openai(client), mode=instructor.Mode.JSON)
+    llm.create = partial(llm.create, max_retries=INSTRUCTOR_MAX_RETRIES)
+    return llm
 
 
 def get_embedder() -> Any:

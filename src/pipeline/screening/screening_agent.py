@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 from typing import List, Optional
 
-from src.llm.client import INSTRUCTOR_MAX_RETRIES, get_llm
+from src.llm.client import get_llm
 from src.llm.prompts.screening import render_system_prompt, render_user_prompt
 from src.pipeline.screening.screening_schemas import (
     PaperScreeningResult,
@@ -178,7 +178,6 @@ class AcademicScreeningAgent:
                 },
             ],
             temperature=0,
-            max_retries=INSTRUCTOR_MAX_RETRIES,
         )
         return ScreenedPaper(paper=paper, screening=result)
 

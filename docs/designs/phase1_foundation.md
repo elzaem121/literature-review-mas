@@ -65,9 +65,10 @@ Measurable, from the plan's Phase 1 exit criteria and the brief:
     v1 except the six register-tracked deviations, enforced by a golden-transcript
     test with the register as its allow-list.
 *   **G4 — One LLM seam.** `get_llm(role)` / `get_embedder()` are the only places
-    LLM and embedding clients are built; the `test` profile swaps in a fully fake
-    surface (LLM, OpenAlex, PDFs, embedder, and from 2a the repository) so an
-    end-to-end run passes with no network, no model downloads and no database.
+    LLM and embedding clients are built; the `test` profile makes both return
+    fakes. Together with the fixture OpenAlex and PDF replacements the test
+    fixtures install and `REPOSITORY_BACKEND=memory`, an end-to-end run passes
+    with no network, no model downloads and no database.
 *   **G5 — Green CI.** The existing screening tests pass under the new layout; CI
     runs ruff + unit tests (fake surface) + image build + a compose `/health`
     check, all green.
@@ -89,8 +90,10 @@ Measurable, from the plan's Phase 1 exit criteria and the brief:
     page-partition invariant that keeps the 2b re-chunk cheap.
 *   **No integration tests in CI** — owner ruling R2; they run locally and at phase
     exit.
-*   **No auto-migration on API start** — the migrations-before-API mechanism is a
-    Phase 4 design item; Phase 1 uses `make migrate`.
+*   **No auto-migration inside the API** — the API never migrates by itself;
+    local runs use `make migrate`. The compose stack runs a one-shot `migrate`
+    service (`alembic upgrade head`) that the backend waits for; a
+    migrations-before-API mechanism beyond that is a Phase 4 design item.
 *   **No pipeline changes** — no loops, no subgraph split, no year-prefilter wiring
     (`pre_excluded=[]` stays as in v1); the graph shape is untouched.
 *   **No plan changes** — the plan is frozen; plan-level ideas went to
@@ -144,8 +147,11 @@ src/
     extraction/ node + schemas (moved rag_extraction_main, extraction_schemas)
   llm/        settings.py, client.py (get_llm/get_embedder), tracing.py,
               fake.py (test profile), prompts/ (versioned files, PROMPT_VERSION)
-  db/         SQLAlchemy models, session, Alembic migrations
+  db/         SQLAlchemy models, session, repository.py (Postgres),
+              memory_repository.py (in-memory), records.py (shared constants,
+              NewChunk, normalize_doi), Alembic migrations
   ui/         Streamlit app (moved ui_app.py)
+scripts/      restart_check.sh, fake_run.py
 tests/        unit + integration (marker: integration), fixtures/
 eval/snapshots/v1/   frozen v1 search results + retrieval date
 ```
@@ -183,25 +189,33 @@ No HTTP library changes in Phase 1.
 `get_llm(role)` is the only constructor of LLM clients: it returns an
 Instructor-patched `AsyncOpenAI` pointed at Ollama, wrapped by
 `maybe_wrap_openai` (tracing, moved unchanged), with SDK `max_retries=3` and
-Instructor `max_retries=2`, uniform across the wired roles `search`,
+Instructor `max_retries=2` (set once on the returned client, so call sites pass no
+retry count), uniform across the wired roles `search`,
 `screening`, `extraction` (unknown roles raise). `get_embedder()` is separate.
 v1's three scattered clients — including extraction's module-import-time client —
 are replaced by call-time `get_llm` lookups. Prompts move byte-identical into
 `src/llm/prompts/` with `PROMPT_VERSION = "v1"` per role. Settings
 (pydantic-settings, validated at startup) hold the profile (`local`/`test`),
-Ollama URL, model per role, embedding model, database URL, required OpenAlex
-contact email, LangSmith switch, and PDF directory — removing the hardcoded
-model in `Orchestration/nodes.py:62` and email in `search_agent/new_main.py:16`.
+Ollama URL, model per role, embedding model, repository backend
+(`REPOSITORY_BACKEND`: `postgres` or `memory`), database URL (required only with
+the `postgres` backend), required OpenAlex contact email, optional OpenAlex API
+key, LangSmith switch, and PDF directory — removing the hardcoded model in
+`Orchestration/nodes.py:62` and email in `search_agent/new_main.py:16`.
 
-The `test` profile swaps in the **fake surface** at the same seams:
+The `test` profile swaps in the **fake surface**. Only the LLM and embedder seams
+check the profile; the OpenAlex and PDF replacements are installed by the test
+side (the pytest `fake_surface` fixture and `scripts/fake_run.py`), and the
+repository is chosen by `REPOSITORY_BACKEND`, not by the profile. A process
+started with `PROFILE=test` alone (for example the compose backend) therefore
+still calls live OpenAlex and live PDF URLs and needs Postgres:
 
 | Seam | `local` profile | `test` profile |
 | --- | --- | --- |
-| `get_llm(role)` | Instructor + Ollama | Fake LLM: registry keyed by `response_model` type; values are a canned instance or `Callable[[messages], instance]`; canned screening decision is `include`; mixed buckets via `[FAKE:EXCLUDE]`, `[FAKE:UNCERTAIN]` and `[FAKE:FAIL]` (raises, producing a `failed` paper) sentinels in fixture abstracts |
+| `get_llm(role)` | Instructor + Ollama | Fake LLM: registry keyed by `response_model` type, filled by the tests through `set_fake_answers` (`tests/fakes.py`); values are a canned instance or `Callable[[messages], instance]`; canned screening decision is `include`; mixed buckets via `[FAKE:EXCLUDE]`, `[FAKE:UNCERTAIN]` and `[FAKE:FAIL]` (raises, producing a `failed` paper) sentinels in fixture abstracts, handled in `tests/fakes.py` |
 | `get_embedder()` | MiniLM in-process | Deterministic 384-dim fake (no HuggingFace download) |
-| OpenAlex client | Live API | Stub replacing `OpenAlexClient.execute_retrieval`, returning raw work dicts from `tests/fixtures/openalex_works.json` (5 papers incl. the two-IDs-one-DOI pair) |
-| PDF download | HTTP | Two committed 2–3-page fixture PDFs from a local path |
-| `get_repository()` (from 2a/2b) | Postgres + pgvector | In-memory fake repository: same functions, brute-force cosine retrieval over the fake embedder's vectors |
+| OpenAlex client | Live API | Stub (monkeypatched by the test side) replacing `OpenAlexClient.execute_retrieval`, returning raw work dicts from `tests/fixtures/openalex_works.json` (5 papers incl. the two-IDs-one-DOI pair) |
+| PDF download | HTTP | Two committed 2–3-page fixture PDFs from a local path (monkeypatched by the test side) |
+| `get_repository()` (from 2a/2b) | `REPOSITORY_BACKEND=postgres`: Postgres + pgvector | `REPOSITORY_BACKEND=memory`: [`memory_repository.py`](../../src/db/memory_repository.py), same functions, brute-force cosine retrieval over the fake embedder's vectors |
 
 ### Data model
 
@@ -226,7 +240,9 @@ row to `running` and then — after **every** `astream` step, exactly as v1 upda
 `result`. On process start, the FastAPI lifespan runs one statement:
 `UPDATE runs SET status='interrupted' WHERE status IN ('pending','running')`.
 
-`GET /status/{job_id}` composes v1's `ResearchResponse` (no `status` field):
+`GET /status/{job_id}` composes v1's `ResearchResponse` (no `status` field) plus
+a `provenance` field carrying the run's provenance envelope, so the response
+carries what `runs.result` stores:
 
 | `runs.status` | Response |
 | --- | --- |
@@ -513,15 +529,18 @@ signatures and schemas only.
 *   **Type / Scope**: Configuration module
 *   **Proposed Changes**: Pydantic Settings: `profile` (`local`/`test`),
     `ollama_base_url`, model per wired role, `embedding_model`, `database_url`
-    (optional until 2a — no Postgres exists before it; required from 2a),
-    `openalex_email` (required, no default — closes backlog #5), LangSmith
-    switch, PDF directory. Validated at startup.
+    (optional until 2a — no Postgres exists before it; from 2a required whenever
+    `repository_backend` is `postgres`), `repository_backend` (`postgres`
+    default, or `memory`; added in 2b), `openalex_email` (required, no default —
+    closes backlog #5), `openalex_api_key` (optional), `langsmith_tracing`
+    (the switch `tracing.py` reads), PDF directory. Validated at startup.
 
 #### 1a.2 `./src/llm/client.py` (Create)
 
 *   **Type / Scope**: LLM seam
 *   **Proposed Changes**: `get_llm(role) -> AsyncInstructor` (Instructor-patched
-    `AsyncOpenAI`, `max_retries=3`, tracing-wrapped, Instructor `max_retries=2`;
+    `AsyncOpenAI`, `max_retries=3`, tracing-wrapped, Instructor `max_retries=2`
+    bound as the default of the client's `create`;
     raises on roles other than `search`/`screening`/`extraction`);
     `get_embedder()`. `test` profile returns the fakes from 1a.4.
 
@@ -542,16 +561,20 @@ signatures and schemas only.
 #### 1a.4 `./src/llm/fake.py` (Create)
 
 *   **Type / Scope**: Test-profile fake surface
-*   **Proposed Changes**: Fake LLM (registry keyed by `response_model` type;
-    values: canned instance or `Callable[[messages], instance]`; canned screening
-    decision `include`; `[FAKE:EXCLUDE]`/`[FAKE:UNCERTAIN]` sentinel handling;
-    `[FAKE:FAIL]`, whose registry callable raises a simulated API error so the
-    paper lands in `failed_papers` exactly as a v1 LLM failure did);
-    deterministic 384-dim fake embedder (vector seeded from the SHA-256 of the
+*   **Proposed Changes**: Fake LLM: an empty registry keyed by `response_model` type
+    (values: canned instance or `Callable[[messages], instance]`) that the tests
+    fill through `set_fake_answers`. The canned screening decision `include`, the
+    `[FAKE:EXCLUDE]`/`[FAKE:UNCERTAIN]` sentinel handling and `[FAKE:FAIL]`
+    (whose callable raises a simulated API error so the paper lands in
+    `failed_papers` exactly as a v1 LLM failure did) live in `tests/fakes.py`,
+    keeping `src/llm` free of test-tree imports. Deterministic 384-dim fake embedder (vector seeded from the SHA-256 of the
     input text, L2-normalized); stub OpenAlex client replacing
     `OpenAlexClient.execute_retrieval`, returning raw work dicts from
     `tests/fixtures/openalex_works.json` so the agent's formatting loop runs
-    unmodified; fixture-PDF provider.
+    unmodified; fixture-PDF provider. The stub and PDF replacements are plain
+    functions; the test side installs them by monkeypatching (the `fake_surface`
+    fixture, `scripts/fake_run.py`). `fake.py` reads `tests/fixtures`, so it
+    cannot run inside the backend image, which ignores `tests/`.
 
 #### 1a.5 `./src/llm/prompts/` (Create: `__init__.py`, `search.py`, `screening.py`, `extraction.py`)
 
@@ -742,7 +765,10 @@ signatures and schemas only.
 *   **Type / Scope**: Local stack
 *   **Proposed Changes**: `pgvector/pgvector:pg17` service with named volume
     `pgdata`, published on host port 5432; backend gets `DATABASE_URL` plus
-    `OPENALEX_EMAIL` and `PROFILE` passthrough; `pdfs_auto` volume name kept.
+    `OPENALEX_EMAIL` and `PROFILE` passthrough; `pdfs_auto` volume name kept. A
+    one-shot `migrate` service runs `alembic upgrade head` and the backend starts
+    only after it succeeds (added after 2b; CI's `stack` job and
+    `scripts/restart_check.sh` rely on it).
 
 #### 2a.2 `./src/db/models.py`, `./src/db/session.py` (Create)
 
@@ -766,17 +792,22 @@ signatures and schemas only.
     migration seeding `local@localhost`. Runner: `make migrate` and the
     integration-test session fixture; the API never auto-migrates (Non-Goal).
 
-#### 2a.4 `./src/db/repository.py` (Create)
+#### 2a.4 `./src/db/repository.py`, `./src/db/memory_repository.py`, `./src/db/records.py` (Create)
 
 *   **Type / Scope**: Data access
-*   **Proposed Changes**: Functions for run lifecycle (`create_run`,
-    `update_run_step`, `finish_run`, `mark_unfinished_interrupted`), review
-    insertion, paper upsert (the Technical Plan's "Ingestion and retrieval"
+*   **Proposed Changes**: [`repository.py`](../../src/db/repository.py): functions
+    for run lifecycle (`create_run`, which inserts the review and the run
+    together, plus `start_run`, `get_run`, `update_run_step`, `finish_run`,
+    `mark_unfinished_interrupted`), paper upsert (the Technical Plan's "Ingestion and retrieval"
     step 1; `concepts_brief.md` decision 3.1 — used from 2b), chunk replace +
-    retrieval queries (used from 2b). Keeps SQL out of nodes and API. Also
-    defines the repository seam: `get_repository()` returns the Postgres
-    implementation on the `local` profile and an in-memory fake on `test`
-    (built in 2b.1); nodes and API call only this seam.
+    retrieval queries (used from 2b). plus the paper and chunk helpers it
+    needs (`get_paper`, `set_paper_status`, `is_chunked`). Keeps SQL out of nodes
+    and API. Also defines the repository seam: `get_repository()` returns the
+    Postgres implementation when `REPOSITORY_BACKEND` is `postgres` (the default)
+    and the in-memory fake when it is `memory`, independent of the profile; nodes
+    and API call only this seam. [`memory_repository.py`](../../src/db/memory_repository.py)
+    is that in-memory fake (built in 2b.1). [`records.py`](../../src/db/records.py)
+    holds what both share: constants, the `NewChunk` record and `normalize_doi`.
 
 #### 2a.5 `./src/api/main.py` (Modify)
 
@@ -808,8 +839,13 @@ signatures and schemas only.
 
 *   **Type / Scope**: Phase-exit script (local)
 *   **Proposed Changes**: Literal `docker compose restart` of API + Postgres
-    around a fake run; asserts the completed run's status survives. Referenced in
-    the exit checklist; not in CI (R2).
+    around a fake run; asserts the completed run's status survives. The compose
+    API cannot produce a fake run itself (see the fake-surface table), so the
+    script creates the run from the host with
+    [`scripts/fake_run.py`](../../scripts/fake_run.py), which runs the whole app
+    in-process through `TestClient` against the compose Postgres using the test
+    fakes; the compose API only reads the run back. Referenced in the exit
+    checklist; not in CI (R2).
 
 ### Commit 2b — Postgres: ingestion, retrieval, exit tests
 

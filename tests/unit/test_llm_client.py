@@ -27,7 +27,6 @@ def test_test_profile_returns_the_fake_llm():
             model="any",
             response_model=PaperScreeningResult,
             messages=messages,
-            max_retries=INSTRUCTOR_MAX_RETRIES,
         )
     )
 
@@ -43,6 +42,25 @@ def test_local_profile_builds_an_ollama_client_with_sdk_retries(monkeypatch: pyt
 
     assert llm.client.max_retries == SDK_MAX_RETRIES
     assert str(llm.client.base_url).startswith("http://ollama.invalid:11434/v1")
+
+
+def test_local_client_applies_the_instructor_retry_count_to_every_call(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    monkeypatch.setenv("PROFILE", "local")
+    get_settings.cache_clear()
+    llm = get_llm("search")
+    seen: dict = {}
+
+    async def capture(**kwargs):
+        seen.update(kwargs)
+
+    llm.create_fn = capture
+    asyncio.run(
+        llm.chat.completions.create(model="any", response_model=PaperScreeningResult, messages=[])
+    )
+
+    assert seen["max_retries"] == INSTRUCTOR_MAX_RETRIES
 
 
 def test_fake_embedder_is_deterministic_and_normalized():

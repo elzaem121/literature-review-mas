@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     repository_backend: Literal["memory", "postgres"] = "postgres"
     database_url: str | None = None
     openalex_email: str
+    openalex_api_key: str | None = None
     langsmith_tracing: bool = False
     pdf_dir: Path = Path("pdfs_auto")
 

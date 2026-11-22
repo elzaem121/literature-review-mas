@@ -1,6 +1,6 @@
 """Optional LangSmith tracing helpers.
 
-Tracing is enabled only when LANGSMITH_API_KEY is set in the environment.
+Tracing is enabled only when the `langsmith_tracing` setting is on (LANGSMITH_TRACING).
 When it is absent (or the langsmith package is unavailable), every helper
 here is a no-op / passthrough, so the pipeline behaves exactly as it does
 without this module: same call sites, same return values, no added latency,
@@ -9,6 +9,8 @@ no import failures.
 
 import os
 from contextlib import nullcontext
+
+from src.llm.settings import get_settings
 
 try:
     from langsmith import traceable as _traceable
@@ -21,8 +23,8 @@ except ImportError:
 
 
 def tracing_enabled() -> bool:
-    """True only when langsmith is importable and LANGSMITH_API_KEY is set."""
-    return _LANGSMITH_AVAILABLE and bool(os.getenv("LANGSMITH_API_KEY"))
+    """True only when langsmith is importable and the `langsmith_tracing` setting is on."""
+    return _LANGSMITH_AVAILABLE and get_settings().langsmith_tracing
 
 
 def maybe_wrap_openai(client):

@@ -133,6 +133,7 @@ def compose_status(run: Run) -> ResearchResponse:
         raw_papers_count=run.result.get("raw_papers_count", 0),
         screening_results=screening_obj,
         extracted_papers=run.result.get("extracted_papers"),
+        provenance=run.result.get("provenance"),
         final_analysis=run.result.get("final_analysis"),
     )
 

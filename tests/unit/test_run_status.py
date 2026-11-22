@@ -33,6 +33,13 @@ def test_unfinished_runs_report_their_stored_step_and_partial_payload(api, statu
     assert response.screening_results is None
 
 
+def test_status_returns_the_provenance_stored_on_the_run(api):
+    run = _run("running")
+    run.result["provenance"] = {"profile": "test"}
+
+    assert api.compose_status(run).provenance == {"profile": "test"}
+
+
 def test_completed_run_returns_the_full_payload(api):
     run = _run(
         "completed",

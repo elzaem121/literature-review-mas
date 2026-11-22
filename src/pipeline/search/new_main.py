@@ -2,13 +2,10 @@ from __future__ import annotations
 
 import asyncio
 import json
-import os
 from pathlib import Path
 
 from src.llm.settings import get_settings
 from src.pipeline.search.agent import UniversalAcademicSearchAgent
-
-OPENALEX_API_KEY = os.getenv("OPENALEX_API_KEY") or None
 
 
 async def main(
@@ -57,7 +54,7 @@ async def main(
     settings = get_settings()
     search_agent = UniversalAcademicSearchAgent(
         openalex_email=settings.openalex_email,
-        openalex_api_key=OPENALEX_API_KEY,
+        openalex_api_key=settings.openalex_api_key,
         model_name=settings.search_model,
     )
     if progress_callback:

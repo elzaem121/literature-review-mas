@@ -157,9 +157,9 @@ environment and `.env`): `PROFILE`, `OLLAMA_BASE_URL`, `SEARCH_MODEL` / `SCREENI
 `EXTRACTION_MODEL` (default `qwen2.5-coder:7b`), `EMBEDDING_MODEL` (default
 `sentence-transformers/all-MiniLM-L6-v2`), `REPOSITORY_BACKEND` (`postgres` default, or `memory` for tests),
 `DATABASE_URL` (required with the postgres backend), `OPENALEX_EMAIL`
-(required), `LANGSMITH_TRACING`, `PDF_DIR`. `.env.example` documents each one. The frontend also reads
-`BACKEND_URL`; `src/pipeline/search/new_main.py` still reads the optional `OPENALEX_API_KEY` and
-`src/llm/tracing.py` the `LANGSMITH_*` variables directly. New configuration goes through settings.
+(required), `OPENALEX_API_KEY` (optional), `LANGSMITH_TRACING`, `PDF_DIR`. `.env.example` documents each
+one. The frontend also reads `BACKEND_URL` directly, and `src/llm/tracing.py` reads `LANGSMITH_PROJECT`
+directly. New configuration goes through settings.
 
 ## Coding standards
 

@@ -12,8 +12,11 @@ from src.llm.fake import (
 from src.llm.settings import Settings, get_settings
 from tests.fakes import default_registry
 
-# Tracing wraps the graph nodes at import time, so a developer's key must never reach tests.
-os.environ.pop("LANGSMITH_API_KEY", None)
+# Tracing wraps the graph nodes at import time, which reads the settings: give that import a
+# valid, tracing-off environment that a developer's shell or `.env` cannot change.
+os.environ["LANGSMITH_TRACING"] = "false"
+os.environ.setdefault("OPENALEX_EMAIL", "tests@example.invalid")
+os.environ.setdefault("REPOSITORY_BACKEND", "memory")
 
 
 @pytest.fixture(autouse=True)
