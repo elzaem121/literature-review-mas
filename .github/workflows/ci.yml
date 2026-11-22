@@ -36,6 +36,6 @@ jobs:
             *.cache-to=type=gha,mode=max
       - run: docker compose up -d db backend
       - name: Wait for GET /health
-        run: curl --fail --silent --retry 30 --retry-delay 2 --retry-connrefused http://localhost:8000/health
+        run: curl --fail --silent --retry 30 --retry-delay 2 --retry-all-errors http://localhost:8000/health
       - if: failure()
         run: docker compose logs backend db
