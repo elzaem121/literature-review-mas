@@ -1,7 +1,7 @@
 # Research Assistant v2 — Project Plan
 
 > Reference plan for v2. Phase-level designs live in `docs/designs/` and must stay consistent with this plan.
-> Status: active · frozen until the end of Phase 1; new ideas go to `docs/backlog.md` · Last updated: 2026-11-13
+> Status: active · new ideas go to `docs/backlog.md` · Last updated: 2026-11-22
 > Versions: "v1" is the legacy system this repository started from. This plan is v2; its release tags run from `v0.1` to `v1.0`, and `v1.0` is the first v2 release.
 
 ## 1. Goal
@@ -211,17 +211,17 @@ Each phase ends with a working system and a git tag. From Phase 2a on, each phas
 
 **Exit (revised 2026-11-11):** v1 codebase documented on branch `v2`. v1 quality is not measured; the baseline is measured in Phase 2a.
 
-### Phase 1 — Foundation · `v0.2`
+### Phase 1 — Foundation · `v0.2` · done
 
 **End state:** the v1 linear pipeline runs from `src/` with unchanged behaviour and unchanged models, behind the v1 endpoints (`POST /start_pipeline`, `GET /status/{job_id}`), and stores papers, chunks and run results in Postgres. v1 modules not used by the graph are deleted, not moved. "The system runs" means: the graph compiles, a fake-LLM end-to-end run passes, and `docker compose up` serves the API.
 
-- [ ] Copy the gitignored eval inputs (`Screening_Agent/search_results.json`, `extract_agent/search_results.json`) to the eval snapshot location and record their retrieval date
-- [ ] Repair the screening tests (backlog #1); add the smoke check; CI with lint + tests
-- [ ] New repository layout: port the v1 linear pipeline into `src/` with unchanged behaviour; delete unused v1 modules (backlog #2, #3); correct `CLAUDE.md` and `README.md` for the new layout (backlog #14)
-- [ ] Settings, `get_llm(role)`, `get_embedder()`, profiles; v1 models as defaults; OpenAlex contact email from settings (backlog #5)
-- [ ] Postgres + pgvector in docker-compose; SQLAlchemy models; Alembic migration creating `users` (one seeded `local` user), `reviews`, `runs`, `papers`, `chunks`
-- [ ] Ingestion: paper upsert, page-aware chunking, embeddings in pgvector (replaces FAISS)
-- [ ] Run status in Postgres instead of the in-memory job dict; unfinished runs are marked interrupted on restart
+- [x] Copy the gitignored eval inputs (`Screening_Agent/search_results.json`, `extract_agent/search_results.json`) to the eval snapshot location and record their retrieval date
+- [x] Repair the screening tests (backlog #1); add the smoke check; CI with lint + tests
+- [x] New repository layout: port the v1 linear pipeline into `src/` with unchanged behaviour; delete unused v1 modules (backlog #2, #3); correct `CLAUDE.md` and `README.md` for the new layout (backlog #14)
+- [x] Settings, `get_llm(role)`, `get_embedder()`, profiles; v1 models as defaults; OpenAlex contact email from settings (backlog #5)
+- [x] Postgres + pgvector in docker-compose; SQLAlchemy models; Alembic migration creating `users` (one seeded `local` user), `reviews`, `runs`, `papers`, `chunks`
+- [x] Ingestion: paper upsert, page-aware chunking, embeddings in pgvector (replaces FAISS)
+- [x] Run status in Postgres instead of the in-memory job dict; unfinished runs are marked interrupted on restart
 
 **Exit:** automated tests show that running the pipeline twice with the same question and criteria leaves one `papers` row and one set of `chunks` per paper, and that after restarting the API and Postgres every completed run's results and all library rows are still present. The existing screening tests pass under the new layout. CI is green.
 
@@ -230,6 +230,7 @@ Input: `docs/eval_notes.md` (draft brainstorm notes).
 - [ ] Resolve the open questions in `docs/eval_notes.md`; write `docs/designs/eval.md`, including the model-selection rule
 - [ ] Gold dataset v0 for three test topics: screening decisions for every topic; field status, evidence page and quote for a few papers
 - [ ] Eval harness; measure the baseline: the Phase 1 system with the v1 models
+- [ ] Error analysis on the baseline: inspect wrong outputs per agent (search, screening, retrieval, extraction), group them by cause, and record the groups with examples
 - [ ] Benchmark candidate local models per role on the target hardware (section 11): search, screening, extraction, embedding (speed, memory, and the quality metrics in `docs/designs/eval.md`). Router models are benchmarked in Phase 3.
 - [ ] Decision record for the model per role; switch the defaults. If the embedding model changes: migrate the vector column, re-embed stored chunks, check that all `chunks` share one `embedding_model`. Update model references in READMEs (backlog #6).
 - [ ] Set the per-run latency budget (section 11) from the measured baseline
@@ -237,6 +238,7 @@ Input: `docs/eval_notes.md` (draft brainstorm notes).
 **Exit:** baseline results file and decision record committed; the chosen models show a delta over the baseline under the model-selection rule, or the record says why the v1 models are kept; latency budget recorded.
 
 ### Phase 2b — Pipeline · `v0.4`
+- [ ] Agent review in the EGM brainstorm: read the agents' code together with the Phase 2a numbers and error analysis, and propose improvements, each with how it is measured; the project owner decides which are adopted, and the tasks below are adjusted to match
 - [ ] Pipeline as subgraph, called by the existing job endpoint, which creates a `reviews` row
 - [ ] Screening stores decision + reason per (review, paper); a store node writes screenings and extractions with `model` and `prompt_version`
 - [ ] Search filter by OpenAlex subfield (`primary_topic.subfield`), taken from the review's criteria when set

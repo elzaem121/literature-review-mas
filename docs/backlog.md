@@ -1,6 +1,6 @@
 # Backlog
 
-Findings from the EGM bootstrap (2026-11-10, items 1-6), deferred ideas (from 2026-11-13, items 7-14), and plan-level candidates from the Phase 1 brainstorm Goldfish review (2026-11-14, `docs/reviews/phase1_brainstorm_goldfish.md`, items 15-31). No code has been changed for these yet.
+Findings from the EGM bootstrap (2026-11-10, items 1-6), deferred ideas (from 2026-11-13, items 7-14), and plan-level candidates from the Phase 1 brainstorm Goldfish review (2026-11-14, `docs/reviews/phase1_brainstorm_goldfish.md`, items 15-31), and Phase 1 follow-ups for the Phase 2b agent review (2026-11-22, items 32-36). No code has been changed for these yet.
 
 > Phases refer to `docs/plan_v2.md` (section 10).
 
@@ -37,3 +37,8 @@ Findings from the EGM bootstrap (2026-11-10, items 1-6), deferred ideas (from 20
 | 29 | Generalize run-level provenance into a queryable `run_configs` table for the eval harness. | data model, eval | Deferred | Phase 2a design input |
 | 30 | A reusable stub OpenAI-compatible server for optional "live-shaped" smoke tests beyond the in-process fake LLM. | tests | Deferred | when needed |
 | 31 | Promote the local compose restart check into a nightly CI job if restart regressions ever appear. | CI | Deferred | when needed |
+| 32 | Chunking improvements to evaluate: recursive splitting, overlap, chunk size measured in tokens of the embedding model's tokenizer, and section-aware splitting (PDF to Markdown, split on headers). | ingestion | Deferred | Phase 2b review |
+| 33 | 1200-character chunks may exceed MiniLM's input limit of about 256 tokens, so the end of a chunk may not be embedded. Check against the real chunk lengths. | ingestion | Open | Phase 2b review |
+| 34 | A screened paper without `openalex_id` fails the whole run. Skip such a paper instead? | ingestion | Open | Phase 2b review |
+| 35 | Upsert edge case: when an OpenAlex id and a DOI match two different existing rows, the upsert keeps both and leaves a duplicate. | `src/db/repository.py` | Open | Phase 2b review (related: #19) |
+| 36 | Later paper sources: arXiv and PubMed (a non-goal until v1.0). Look at LlamaIndex's OpenAlex reader. | search | Deferred | after v1.0 |
