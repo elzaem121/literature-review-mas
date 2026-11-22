@@ -263,7 +263,11 @@ retrieval/ingestion split is Phase 2b):
 1.  **Upsert** (one transaction): normalize the DOI (lowercase; strip
     `https?://doi.org/` and `https?://dx.doi.org/`); SELECT by normalized DOI OR
     `openalex_id`, then INSERT or UPDATE. Merge rule: first-seen `openalex_id`
-    wins, `doi` fills in when it first appears. (Two unique keys — a single
+    wins; `doi`, `year`, `venue` and `pdf_url` fill in when they first appear
+    (an existing non-empty value is never overwritten); `title` and `authors`
+    keep their first-seen values. When the OpenAlex id and the DOI match two
+    different rows, the lowest-id row is used and its `doi` stays unset, because
+    setting it would violate the unique key. (Two unique keys — a single
     `ON CONFLICT` cannot express this.)
 2.  **PDF**: skip if `{paper_id}.pdf` exists in the `pdfs_auto` volume and starts
     with `%PDF`; else download the stored search-time `pdf_url`, falling back to
