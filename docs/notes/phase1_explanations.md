@@ -91,3 +91,14 @@ its "-1 means no result" quirk are gone. The new setting `REPOSITORY_BACKEND` pi
 `postgres` (default) or `memory`, a small in-process copy with the same methods that the unit tests use, so
 `make test` still needs no database. The golden transcript was regenerated once; only the retrieved chunks
 changed, as expected.
+
+## Fresh `docker compose up` — a migrate service
+
+The CI stack check found a real bug: on a brand-new database the backend crashed at startup, because the
+startup step that marks unfinished runs `interrupted` reads the `runs` table, and nobody had created it yet.
+`docker-compose.yml` now has a one-shot `migrate` service (same image as the backend, command
+`alembic upgrade head`). The backend `depends_on` it with `service_completed_successfully`, so Compose starts
+Postgres, waits until it is healthy, runs the migrations, and only then starts the API; if a migration fails,
+the API does not start. The API itself still never migrates (that rule is unchanged), and `make migrate`
+remains for running the backend on the host. This was checked on a throwaway Compose project with its own
+database volume, so the normal development database was not touched.

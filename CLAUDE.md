@@ -43,7 +43,8 @@ streamlit run src/ui/app.py
 docker compose up -d db
 make migrate   # alembic upgrade head; the API never migrates by itself
 
-# Or the whole stack in containers (then `make migrate` once, from the host)
+# Or the whole stack in containers: a one-shot `migrate` service runs `alembic upgrade head`
+# before the backend starts, so a fresh clone needs no manual migration
 make up        # docker compose up -d --build
 ```
 

@@ -38,4 +38,4 @@ jobs:
       - name: Wait for GET /health
         run: curl --fail --silent --retry 30 --retry-delay 2 --retry-all-errors http://localhost:8000/health
       - if: failure()
-        run: docker compose logs backend db
+        run: docker compose logs migrate backend db

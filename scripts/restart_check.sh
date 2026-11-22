@@ -32,10 +32,9 @@ wait_for_health() {
     done
 }
 
-echo "Starting the stack and migrating..."
+echo "Starting the stack (the migrate service runs before the backend)..."
 docker compose up -d --build db backend
 wait_for_health
-docker compose exec -T backend alembic upgrade head
 
 echo "Creating a finished run on the fake surface..."
 job_id=$(PROFILE=test REPOSITORY_BACKEND=postgres DATABASE_URL="$DATABASE_URL_ON_HOST" \

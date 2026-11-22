@@ -152,8 +152,11 @@ Then start both services:
 
 ```bash
 docker compose up -d --build
-make migrate   # once, and after pulling new migrations; needs DATABASE_URL (see .env.example)
 ```
+
+A one-shot `migrate` service applies the database migrations (`alembic upgrade head`) before the
+backend starts, on a fresh database and after pulling new migrations. `OPENALEX_EMAIL` must be set
+in `.env` (see `.env.example`); Compose reads it from there.
 
 The UI is at `http://localhost:8501`.
 
