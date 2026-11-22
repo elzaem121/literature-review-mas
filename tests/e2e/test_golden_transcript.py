@@ -1,8 +1,9 @@
 """Characterization test: the fake end-to-end run must keep producing the captured v1 state.
 
 Differences are allowed only under a JSON-path prefix listed in ALLOWED_PREFIXES (one list per
-behaviour-change register entry that is visible in graph state). Today the list is empty: V6
-predates the capture, V4 is API-layer state, and V1-V3/V5 land in 2b, which regenerates the file.
+behaviour-change register entry that is visible in graph state). The list is empty: V6 predates
+the capture, V4 is API-layer state, and V1-V3/V5 are baked into the file as regenerated in Batch 2b
+(only the retrieved chunks changed: page-aware boundaries, one PDF and chunk set per paper).
 Regenerate deliberately with `UPDATE_GOLDEN=1 pytest tests/e2e/test_golden_transcript.py`.
 """
 

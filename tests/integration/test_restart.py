@@ -7,7 +7,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
-from src.db.models import Review, Run, User
+from src.db.models import Chunk, Paper, Review, Run, User
 from src.db.repository import PostgresRepository, get_repository
 from src.pipeline.search.api_client import OpenAlexClient
 
@@ -44,14 +44,23 @@ def api_app(repository: PostgresRepository, fake_surface):
     return app
 
 
-def test_completed_run_survives_a_restart_and_unfinished_runs_are_interrupted(
-    api_app, repository: PostgresRepository
+def _library_rows(sessions: sessionmaker[Session]) -> tuple[list, list]:
+    with sessions() as session:
+        papers = session.execute(select(Paper.id, Paper.openalex_id, Paper.doi)).all()
+        chunks = session.execute(select(Chunk.id, Chunk.paper_id, Chunk.text)).all()
+    return sorted(papers), sorted(chunks)
+
+
+def test_completed_run_and_library_survive_a_restart_and_unfinished_runs_are_interrupted(
+    api_app, repository: PostgresRepository, sessions: sessionmaker[Session]
 ):
     with TestClient(api_app) as first_instance:
         job_id = _start_and_finish_run(first_instance)
         before_restart = first_instance.get(f"/status/{job_id}").json()
     assert before_restart["current_step"] == "completed"
     assert len(before_restart["extracted_papers"]) == 2
+    library_before_restart = _library_rows(sessions)
+    assert all(library_before_restart), "the run stored no papers or chunks"
     running_id = _new_unfinished_run(repository, started=True)
     pending_id = _new_unfinished_run(repository, started=False)
 
@@ -65,6 +74,7 @@ def test_completed_run_survives_a_restart_and_unfinished_runs_are_interrupted(
         malformed = second_instance.get("/status/not-a-job-id")
 
     assert after_restart == before_restart
+    assert _library_rows(sessions) == library_before_restart
     for response in interrupted:
         assert response["current_step"] == "interrupted"
         assert "start a new run" in response["status_message"]

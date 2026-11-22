@@ -31,9 +31,8 @@ pandas==3.0.3
 # PDF Processing
 pymupdf==1.27.2.3
 
-# Embeddings & Vector Search
+# Embeddings
 sentence-transformers==5.5.1
-faiss-cpu==1.14.3
 
 # Database
 sqlalchemy==2.1.9

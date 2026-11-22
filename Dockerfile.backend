@@ -1,7 +1,8 @@
 FROM python:3.13-slim
 
-# faiss-cpu and torch (pulled in by sentence-transformers) are linked against
-# libgomp at runtime; python:3.13-slim doesn't ship it.
+# torch (pulled in by sentence-transformers) may be linked against libgomp at runtime and
+# python:3.13-slim doesn't ship it. Kept as in v1: no CI step loads torch, so nothing proves it
+# unneeded.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libgomp1 \
     && rm -rf /var/lib/apt/lists/*

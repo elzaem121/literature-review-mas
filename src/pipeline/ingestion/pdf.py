@@ -1,18 +1,24 @@
-import re
 from pathlib import Path
 
 import fitz  # PyMuPDF
 import requests
 
-PDF_DIR = Path("pdfs_auto")
-PDF_DIR.mkdir(exist_ok=True)
+from src.llm.settings import get_settings
+
+PDF_MAGIC = b"%PDF"
 
 
-def safe_filename(title: str) -> str:
-    title = title.lower()
-    title = re.sub(r"[^a-z0-9]+", "_", title)
-    title = title.strip("_")
-    return title[:80] + ".pdf"
+def pdf_path_for(paper_id: int) -> Path:
+    """Return the path of a paper's PDF in the configured PDF directory, keyed by its library id."""
+    return get_settings().pdf_dir / f"{paper_id}.pdf"
+
+
+def is_cached_pdf(path: Path) -> bool:
+    """True if the file exists and starts with the PDF magic bytes."""
+    if not path.is_file():
+        return False
+    with path.open("rb") as file:
+        return file.read(len(PDF_MAGIC)) == PDF_MAGIC
 
 
 def get_openalex_pdf_url(doi: str) -> str | None:
@@ -59,17 +65,16 @@ def download_pdf(url: str, output_path: Path) -> bool:
         if response.status_code != 200:
             return False
         content_type = response.headers.get("Content-Type", "").lower()
-        if "pdf" not in content_type and not response.content.startswith(b"%PDF"):
+        if "pdf" not in content_type and not response.content.startswith(PDF_MAGIC):
             return False
+        output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_bytes(response.content)
         return True
     except Exception:
         return False
 
 
-def extract_text_from_pdf(pdf_path: str) -> str:
-    try:
-        doc = fitz.open(pdf_path)
-        return "".join([page.get_text() for page in doc])
-    except Exception:
-        return ""
+def extract_pages_from_pdf(pdf_path: Path) -> list[str]:
+    """Return the text of each page in order; raises a RuntimeError (PyMuPDF) for a broken PDF."""
+    with fitz.open(pdf_path) as document:
+        return [page.get_text() for page in document]

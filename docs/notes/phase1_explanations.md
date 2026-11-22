@@ -75,3 +75,19 @@ them is gone; the UI now stops polling on 404 and on `completed`, `error` and `i
 endless polling of a dead job. Each run also stores which models and prompt versions it used, so Phase 2a can
 tell a baseline run from a candidate run. The paper upsert, chunk replacement and similarity search are
 already in the repository and tested, but the ingestion node only starts using them in 2b.
+
+## Commit 2b — Postgres: ingestion, retrieval, exit tests
+
+Until 2b every run built throwaway search indexes (FAISS) in memory and re-downloaded every PDF. Now the
+ingestion step stores each included paper once in `papers`: two OpenAlex records that share a DOI become one
+row (the first OpenAlex id stays, the DOI is normalized so `https://doi.org/10.1/ABC` and `10.1/abc` match).
+The PDF is saved as `<paper id>.pdf`, so a title can no longer collide or change the file name. The text is
+cut into 1200-character windows page by page (the page number is kept for later citations; a window never
+crosses a page) and each window is stored with its vector in `chunks`. A paper that is already chunked with the
+same embedding model and the same `CHUNKER_VERSION` is skipped on the next run, which is what makes running
+the same review twice leave one paper and one chunk set; changing the model or bumping the version re-chunks it
+from the saved PDF. Retrieval asks Postgres for the five closest chunks of that paper per field, so FAISS and
+its "-1 means no result" quirk are gone. The new setting `REPOSITORY_BACKEND` picks where all of this lives:
+`postgres` (default) or `memory`, a small in-process copy with the same methods that the unit tests use, so
+`make test` still needs no database. The golden transcript was regenerated once; only the retrieved chunks
+changed, as expected.

@@ -1,6 +1,9 @@
-import faiss
+"""Per-field retrieval of a paper's chunks by embedding similarity (pgvector cosine)."""
 
+from src.db.repository import Repository
 from src.llm.client import get_embedder
+
+RETRIEVAL_TOP_K = 5
 
 FIELD_QUERIES = {
     "method_chunks": [
@@ -23,37 +26,19 @@ FIELD_QUERIES = {
 }
 
 
-def embed_texts(model, texts: list[str]):
-    embeddings = model.encode(texts, convert_to_numpy=True)
-    embeddings = embeddings.astype("float32")
-    faiss.normalize_L2(embeddings)
-    return embeddings
+def embed_texts(texts: list[str]) -> list[list[float]]:
+    """Embed texts with the configured embedder (blocking)."""
+    return get_embedder().encode(texts, convert_to_numpy=True).tolist()
 
 
-def perform_faiss_retrieval(chunks: list[str]) -> dict:
-    """Runs the SentenceTransformer embedding and FAISS search."""
-    if not chunks:
-        return {}
-
-    model = get_embedder()
-    chunk_embeddings = embed_texts(model, chunks)
-
-    dimension = chunk_embeddings.shape[1]
-    index = faiss.IndexFlatIP(dimension)
-    index.add(chunk_embeddings)
-
-    field_chunks = {}
+def retrieve_field_chunks(repository: Repository, paper_id: int) -> dict[str, list[str]]:
+    """Return the closest chunks of one paper per extraction field (blocking)."""
+    field_chunks: dict[str, list[str]] = {}
     for field_name, queries in FIELD_QUERIES.items():
-        selected_chunks = []
-        query_embeddings = embed_texts(model, queries)
-        distances, indices = index.search(query_embeddings, k=5)
-
-        for query_idx, query in enumerate(queries):
-            for chunk_idx in indices[query_idx]:
-                chunk_text = chunks[int(chunk_idx)]
-                if chunk_text not in selected_chunks:
-                    selected_chunks.append(chunk_text)
-
-        field_chunks[field_name] = selected_chunks
-
+        selected: list[str] = []
+        for query_embedding in embed_texts(queries):
+            for text in repository.search_chunks(paper_id, query_embedding, RETRIEVAL_TOP_K):
+                if text not in selected:
+                    selected.append(text)
+        field_chunks[field_name] = selected
     return field_chunks

@@ -11,7 +11,10 @@ target_metadata = Base.metadata
 
 def run_migrations() -> None:
     """Apply migrations to the configured database in one transaction."""
-    engine = create_engine(get_settings().database_url)
+    database_url = get_settings().database_url
+    if not database_url:
+        raise RuntimeError("DATABASE_URL must be set to run the migrations.")
+    engine = create_engine(database_url)
     with engine.connect() as connection:
         context.configure(connection=connection, target_metadata=target_metadata)
         with context.begin_transaction():

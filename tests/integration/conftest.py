@@ -41,6 +41,7 @@ def database_url() -> str:
     """URL of a freshly created and migrated test database."""
     url = _recreate_database(SERVER_DATABASE_URL)
     with pytest.MonkeyPatch.context() as patch:
+        patch.setenv("REPOSITORY_BACKEND", "postgres")
         patch.setenv("DATABASE_URL", url)
         patch.setenv("OPENALEX_EMAIL", "tests@example.invalid")
         get_settings.cache_clear()
@@ -52,6 +53,7 @@ def database_url() -> str:
 @pytest.fixture
 def sessions(database_url: str, monkeypatch: pytest.MonkeyPatch) -> sessionmaker[Session]:
     """Session factory on the test database, emptied of library rows (the seeded user stays)."""
+    monkeypatch.setenv("REPOSITORY_BACKEND", "postgres")
     monkeypatch.setenv("DATABASE_URL", database_url)
     get_settings.cache_clear()
     get_repository.cache_clear()

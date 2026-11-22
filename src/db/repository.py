@@ -1,9 +1,7 @@
 """All database access of the application; SQL lives here and nowhere else."""
 
-import re
 import uuid
 from collections.abc import Sequence
-from dataclasses import dataclass
 from functools import lru_cache
 from typing import Any
 
@@ -11,32 +9,18 @@ from sqlalchemy import cast, delete, func, or_, select, update
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Session, sessionmaker
 
+from src.db.memory_repository import InMemoryRepository
 from src.db.models import Chunk, Paper, Review, Run, User
+from src.db.records import (
+    LOCAL_USER_EMAIL,
+    RUN_INITIAL_MESSAGE,
+    RUN_INITIAL_STEP,
+    UNFINISHED_STATUSES,
+    NewChunk,
+    normalize_doi,
+)
 from src.db.session import create_session_factory
 from src.llm.settings import get_settings
-
-LOCAL_USER_EMAIL = "local@localhost"
-RUN_INITIAL_STEP = "initialized"
-RUN_INITIAL_MESSAGE = "Pipeline initialized, adding to background tasks..."
-UNFINISHED_STATUSES = ("pending", "running")
-DOI_PREFIX = re.compile(r"^https?://(dx\.)?doi\.org/")
-
-
-@dataclass(frozen=True)
-class NewChunk:
-    """A chunk to store: one text window of a page with its embedding."""
-
-    page: int
-    ordinal: int
-    text: str
-    embedding: list[float]
-
-
-def normalize_doi(doi: str | None) -> str | None:
-    """Lowercase a DOI and strip its resolver URL prefix; empty values become None."""
-    if not doi:
-        return None
-    return DOI_PREFIX.sub("", doi.strip().lower()) or None
 
 
 class PostgresRepository:
@@ -153,6 +137,41 @@ class PostgresRepository:
             paper.pdf_url = paper.pdf_url or pdf_url
             return paper.id
 
+    def get_paper(self, paper_id: int) -> Paper | None:
+        """Return a paper by id, or None if it does not exist."""
+        with self._sessions() as session:
+            return session.get(Paper, paper_id)
+
+    def set_paper_status(self, paper_id: int, status: str, last_error: str | None = None) -> None:
+        """Set a paper's ingestion status and the error that explains it (None clears it)."""
+        with self._sessions.begin() as session:
+            session.execute(
+                update(Paper)
+                .where(Paper.id == paper_id)
+                .values(ingestion_status=status, last_error=last_error)
+            )
+
+    def is_chunked(self, paper_id: int, embedding_model: str, chunker_version: str) -> bool:
+        """True if the paper is `chunked` with chunks of this embedding model and chunker version.
+
+        Chunks are replaced as a set, so one chunk row speaks for all of them.
+        """
+        with self._sessions() as session:
+            return (
+                session.scalar(
+                    select(Chunk.id)
+                    .join(Paper, Paper.id == Chunk.paper_id)
+                    .where(
+                        Chunk.paper_id == paper_id,
+                        Paper.ingestion_status == "chunked",
+                        Chunk.embedding_model == embedding_model,
+                        Chunk.chunker_version == chunker_version,
+                    )
+                    .limit(1)
+                )
+                is not None
+            )
+
     def replace_chunks(
         self,
         paper_id: int,
@@ -194,7 +213,13 @@ class PostgresRepository:
             )
 
 
+Repository = PostgresRepository | InMemoryRepository
+
+
 @lru_cache
-def get_repository() -> PostgresRepository:
-    """Return the repository on the database from settings (the single data-access seam)."""
-    return PostgresRepository(create_session_factory(get_settings().database_url))
+def get_repository() -> Repository:
+    """Return the repository chosen by `REPOSITORY_BACKEND` (the single data-access seam)."""
+    settings = get_settings()
+    if settings.repository_backend == "memory":
+        return InMemoryRepository()
+    return PostgresRepository(create_session_factory(settings.database_url))

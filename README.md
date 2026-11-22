@@ -45,8 +45,9 @@ the reviewer's criteria. Runs three papers concurrently.
 
 **Document processing** — resolves and downloads each included paper's PDF, extracts and
 chunks the text, embeds it with `all-MiniLM-L6-v2`, and retrieves the most relevant
-chunks per extraction field via FAISS. Papers whose PDFs cannot be retrieved are flagged
-rather than dropped.
+chunks per extraction field with pgvector. Papers are stored once in a shared Postgres library,
+so a repeated run does not download or chunk them again. Papers whose PDFs cannot be retrieved are
+flagged rather than dropped.
 
 **Extraction agent** — produces one structured record per paper from the retrieved
 chunks, using RAG over the chunks rather than the full text.
@@ -172,7 +173,8 @@ backend refuses to start if `OPENALEX_EMAIL` is missing.
 | `SEARCH_MODEL`, `SCREENING_MODEL`, `EXTRACTION_MODEL` | `qwen2.5-coder:7b` | backend (model per role) |
 | `EMBEDDING_MODEL` | `sentence-transformers/all-MiniLM-L6-v2` | backend |
 | `PDF_DIR` | `pdfs_auto` | backend |
-| `DATABASE_URL` | required | backend, Alembic (set by Compose for the backend) |
+| `REPOSITORY_BACKEND` | `postgres` | backend (`memory` keeps runs and papers in process memory; used by `make test`) |
+| `DATABASE_URL` | required with `postgres` | backend, Alembic (set by Compose for the backend) |
 | `OPENALEX_API_KEY` | unset | backend |
 | `LANGSMITH_TRACING` | unset (tracing off) | backend |
 | `LANGSMITH_API_KEY`, `LANGSMITH_ENDPOINT`, `LANGSMITH_PROJECT` | unset | backend |
@@ -262,4 +264,4 @@ reviewer input, then resuming — a natural fit for a systematic review workflow
 ## Stack
 
 Python · LangGraph · FastAPI · Streamlit · Ollama · Kubernetes · Docker · LangSmith ·
-OpenAlex API · FAISS · sentence-transformers · PyMuPDF
+OpenAlex API · Postgres + pgvector · sentence-transformers · PyMuPDF

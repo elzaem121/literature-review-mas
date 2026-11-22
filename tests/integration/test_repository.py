@@ -141,3 +141,44 @@ def test_search_chunks_returns_the_closest_chunks_of_that_paper_only(
 
     assert repository.search_chunks(paper_id, _unit_vector(5), 2) == ["near", "middle"]
     assert repository.search_chunks(paper_id, _unit_vector(5), 10) == ["near", "middle", "far"]
+
+
+def test_get_paper_returns_none_for_an_unknown_id(repository: PostgresRepository):
+    paper_id = _paper(repository, pdf_url="https://x.invalid/a.pdf")
+
+    assert repository.get_paper(paper_id).pdf_url == "https://x.invalid/a.pdf"
+    assert repository.get_paper(paper_id + 1) is None
+
+
+def test_set_paper_status_stores_the_error_and_rejects_unknown_statuses(
+    repository: PostgresRepository,
+):
+    paper_id = _paper(repository)
+
+    repository.set_paper_status(paper_id, "failed", "boom")
+    assert (
+        repository.get_paper(paper_id).ingestion_status,
+        repository.get_paper(paper_id).last_error,
+    ) == (
+        "failed",
+        "boom",
+    )
+    repository.set_paper_status(paper_id, "downloaded")
+    assert repository.get_paper(paper_id).last_error is None
+    with pytest.raises(IntegrityError):
+        repository.set_paper_status(paper_id, "broken")
+
+
+def test_is_chunked_needs_the_status_the_embedding_model_and_the_chunker_version(
+    repository: PostgresRepository,
+):
+    paper_id = _paper(repository)
+    assert not repository.is_chunked(paper_id, "m", "v1")
+
+    repository.replace_chunks(paper_id, [NewChunk(1, 0, "t", _unit_vector(0))], "m", "v1")
+    assert repository.is_chunked(paper_id, "m", "v1")
+    assert not repository.is_chunked(paper_id, "other", "v1")
+    assert not repository.is_chunked(paper_id, "m", "v2")
+
+    repository.set_paper_status(paper_id, "failed", "boom")
+    assert not repository.is_chunked(paper_id, "m", "v1")
