@@ -3,6 +3,7 @@
 This is the only harness module that imports the pipeline from `src`.
 """
 
+import string
 from typing import Any
 
 import openai
@@ -34,6 +35,8 @@ from src.pipeline.ingestion.retrieval import RETRIEVAL_TOP_K, embed_texts, retri
 from src.pipeline.search.new_main import main as run_search
 
 SEARCH_TARGET_OUTPUT_COUNT = 25
+# The search node passes no minimum, so `new_main.main` uses its default of 0.
+SEARCH_MIN_CITATIONS = 0
 # `screening_node` builds its agent with this limit; the provenance reports it.
 SCREENING_CONCURRENCY = 3
 RETRIEVAL_FIELDS: dict[str, ScoredField] = {
@@ -55,7 +58,7 @@ EXTRACTION_ERRORS = (openai.OpenAIError, InstructorError)
 
 def v1_status(value: str) -> FieldStatus:
     """Read a status out of v1's free text: absence phrases and an empty value are `not_found`."""
-    text = value.strip().lower()
+    text = value.strip().lower().rstrip(string.punctuation + string.whitespace)
     if not text or text.startswith(NOT_FOUND_PREFIXES) or text in NOT_FOUND_VALUES:
         return "not_found"
     return "found"
@@ -105,7 +108,9 @@ class Phase1Adapter:
     async def search(self, topic: Topic) -> SearchRecord:
         """Run the graph's search entry point with the topic's rendered criteria."""
         result = await run_search(
-            **render_screener_input(topic), target_output_count=SEARCH_TARGET_OUTPUT_COUNT
+            **render_screener_input(topic),
+            target_output_count=SEARCH_TARGET_OUTPUT_COUNT,
+            min_citations=SEARCH_MIN_CITATIONS,
         )
         return SearchRecord(
             papers=result["papers"],

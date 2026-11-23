@@ -29,7 +29,12 @@ from eval.harness.gold import (
     load_screening_gold,
     load_search_snapshot,
 )
-from eval.harness.ollama_check import OllamaCheckError, check_models, is_infrastructure_error
+from eval.harness.ollama_check import (
+    OllamaCheckError,
+    check_models,
+    is_infrastructure_error,
+    precheck_models,
+)
 from eval.harness.records import (
     ExtractionOutput,
     RetrievedChunk,
@@ -201,7 +206,7 @@ async def run_eval(
     adapter = get_adapter(adapter_name)
     system = adapter.provenance()
     models = sorted(set(system["models"].values()))
-    digests = check_models(models, settings.ollama_base_url)
+    digests = precheck_models(models, settings.ollama_base_url)
     started_at = datetime.now(UTC)
     git_commit = _git_commit()
 

@@ -9,6 +9,7 @@ from eval.harness.ollama_check import (
     check_models,
     is_infrastructure_error,
     native_root,
+    precheck_models,
 )
 
 BASE_URL = "http://localhost:11434/v1"
@@ -91,6 +92,88 @@ def test_an_error_status_counts_as_unreachable(monkeypatch: pytest.MonkeyPatch):
 
     with pytest.raises(OllamaCheckError, match="not reachable"):
         check_models(["qwen2.5-coder:7b"], BASE_URL)
+
+
+@pytest.fixture
+def posted(monkeypatch: pytest.MonkeyPatch) -> list[dict[str, Any]]:
+    """Answer every generate request with a token and record what was posted."""
+    requests_made: list[dict[str, Any]] = []
+
+    def fake_post(url: str, json: dict[str, Any], timeout: float) -> FakeResponse:
+        requests_made.append({"url": url, "json": json, "timeout": timeout})
+        return FakeResponse({"response": "Hi"})
+
+    monkeypatch.setattr(ollama_check.requests, "post", fake_post)
+    return requests_made
+
+
+def test_the_precheck_sends_each_model_a_one_token_request_and_returns_the_digests(
+    requested: list[str], posted: list[dict[str, Any]]
+):
+    digests = precheck_models(["qwen2.5-coder:7b", "llama3"], BASE_URL)
+
+    assert digests == {"qwen2.5-coder:7b": "aaa111", "llama3": "bbb222"}
+    assert [request["url"] for request in posted] == ["http://localhost:11434/api/generate"] * 2
+    assert [request["json"]["model"] for request in posted] == ["qwen2.5-coder:7b", "llama3"]
+    for request in posted:
+        assert request["json"]["stream"] is False
+        assert request["json"]["options"] == {"num_predict": 1}
+        assert request["timeout"] == ollama_check.LOAD_TIMEOUT_S
+
+
+def test_the_precheck_stops_at_a_model_that_is_not_pulled_before_generating_anything(
+    requested: list[str], posted: list[dict[str, Any]]
+):
+    with pytest.raises(OllamaCheckError, match="'mistral:7b' is not pulled"):
+        precheck_models(["qwen2.5-coder:7b", "mistral:7b"], BASE_URL)
+
+    assert posted == []
+
+
+def test_a_model_that_cannot_load_is_named_with_ollamas_own_message(
+    requested: list[str], monkeypatch: pytest.MonkeyPatch
+):
+    def fake_post(url: str, json: dict[str, Any], timeout: float) -> FakeResponse:
+        if json["model"] == "llama3":
+            return FakeResponse({"error": "model requires more system memory"}, status_code=500)
+        return FakeResponse({"response": "Hi"})
+
+    monkeypatch.setattr(ollama_check.requests, "post", fake_post)
+
+    with pytest.raises(OllamaCheckError) as error:
+        precheck_models(["qwen2.5-coder:7b", "llama3"], BASE_URL)
+
+    assert str(error.value) == (
+        "Ollama model 'llama3' did not answer a one-token request: "
+        "model requires more system memory"
+    )
+
+
+def test_an_error_response_without_a_message_is_reported_by_its_status(
+    requested: list[str], monkeypatch: pytest.MonkeyPatch
+):
+    class NotJson(FakeResponse):
+        def json(self) -> Any:
+            raise ValueError("not json")
+
+    monkeypatch.setattr(
+        ollama_check.requests, "post", lambda url, json, timeout: NotJson({}, status_code=502)
+    )
+
+    with pytest.raises(OllamaCheckError, match="'qwen2.5-coder:7b' did not answer.*HTTP 502"):
+        precheck_models(["qwen2.5-coder:7b"], BASE_URL)
+
+
+def test_a_model_that_times_out_while_loading_is_named(
+    requested: list[str], monkeypatch: pytest.MonkeyPatch
+):
+    def fake_post(url: str, json: dict[str, Any], timeout: float) -> FakeResponse:
+        raise requests.Timeout("read timed out")
+
+    monkeypatch.setattr(ollama_check.requests, "post", fake_post)
+
+    with pytest.raises(OllamaCheckError, match="'qwen2.5-coder:7b' did not answer.*timed out"):
+        precheck_models(["qwen2.5-coder:7b"], BASE_URL)
 
 
 @pytest.mark.parametrize(

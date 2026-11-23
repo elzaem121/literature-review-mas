@@ -1,17 +1,20 @@
-"""Checks against Ollama's native API; this is not an LLM client and generates no text."""
+"""Checks against Ollama's native API; this is not an LLM client, it only asks for one token."""
 
 from collections.abc import Iterable
 
 import requests
 
 REQUEST_TIMEOUT_S = 10
+# The first request to a model has to load it into memory, which takes much longer than a listing.
+LOAD_TIMEOUT_S = 300
+PROBE_PROMPT = "Hello"
 OPENAI_SUFFIX = "/v1"
 LATEST_TAG = ":latest"
 INFRASTRUCTURE_ERROR_MARKERS = ("connection error", "timed out", "connection refused")
 
 
 class OllamaCheckError(RuntimeError):
-    """Ollama is unreachable or a configured model is not pulled."""
+    """Ollama is unreachable, or a configured model is not pulled or cannot answer."""
 
 
 def native_root(base_url: str) -> str:
@@ -35,6 +38,46 @@ def check_models(models: Iterable[str], base_url: str) -> dict[str, str]:
             raise OllamaCheckError(f"Ollama model '{tag}' is not pulled (ollama pull {tag})")
         digests[tag] = pulled[name]
     return digests
+
+
+def precheck_models(models: Iterable[str], base_url: str) -> dict[str, str]:
+    """Check the models are pulled, then make each answer a one-token request; return digests."""
+    digests = check_models(models, base_url)
+    root = native_root(base_url)
+    for tag in digests:
+        _answer_one_token(root, tag)
+    return digests
+
+
+def _answer_one_token(root: str, tag: str) -> None:
+    """Make one model load and generate a single token, so a model that cannot load is caught."""
+    try:
+        response = requests.post(
+            f"{root}/api/generate",
+            json={
+                "model": tag,
+                "prompt": PROBE_PROMPT,
+                "stream": False,
+                "options": {"num_predict": 1},
+            },
+            timeout=LOAD_TIMEOUT_S,
+        )
+    except requests.RequestException as exc:
+        raise OllamaCheckError(
+            f"Ollama model '{tag}' did not answer a one-token request: {exc}"
+        ) from exc
+    if response.status_code >= 400:
+        raise OllamaCheckError(
+            f"Ollama model '{tag}' did not answer a one-token request: {_error_detail(response)}"
+        )
+
+
+def _error_detail(response: requests.Response) -> str:
+    """Ollama's own error message from an error response, else the status code."""
+    try:
+        return str(response.json()["error"])
+    except (ValueError, KeyError, TypeError):
+        return f"HTTP {response.status_code}"
 
 
 def is_infrastructure_error(error_text: str) -> bool:

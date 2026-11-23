@@ -66,6 +66,21 @@ def test_v1_absence_phrases_and_an_empty_value_are_not_found(value: str):
 @pytest.mark.parametrize(
     "value",
     [
+        "No empirical dataset.",
+        "no empirical dataset!",
+        "No empirical dataset .",
+        "Not specified.",
+        "Not stated;",
+        "...",
+    ],
+)
+def test_trailing_punctuation_does_not_hide_an_absence_phrase(value: str):
+    assert v1_status(value) == "not_found"
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
         "semi-structured interviews",
         "Interviews with twenty adolescents",
         "No empirical dataset was collected, but a corpus of 40 papers was read",

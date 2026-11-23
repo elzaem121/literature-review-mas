@@ -123,3 +123,58 @@ errors, the two flips, precision, retrieval recall, field status) is worked out 
 cover the adapter's mapping and status phrases, the Ollama messages, the incomplete-run paths, the error list, the
 truncation arithmetic and the sync. Changing the "first chunk wins" rule, the infrastructure-error check or the
 set of caught extraction errors makes a test fail.
+
+## Step 4 — Gold-build commands
+
+Two small fixes from step 3 first. **`v1_status`** now strips trailing punctuation before it matches, so "No empirical
+dataset." counts as `not_found` like "No empirical dataset". **The precheck** now does what the design overview says:
+after the list of pulled models, every model gets a one-token request (Ollama's own `/api/generate` with
+`num_predict: 1`), so a model that is pulled but cannot load (for example not enough memory) stops the run before it
+starts, with Ollama's own message and the model's name. The check after the run is still only the cheap model list.
+
+**The commands.** The gold set is built by one command with a step name: `python -m eval.gold_build <step>`. Nothing in
+`src/` changed. The steps are meant to run in this order, and each one only writes its own files:
+
+1.  `freeze_search --topic <id>` runs the Phase 1 search once and writes `search.json`. If the query expansion fell back
+    to the raw question, it writes nothing and says to run it again. It never overwrites a frozen search: delete the
+    file on purpose to freeze again.
+2.  `build_pool` writes `pool.json` for every topic that has none. It takes the whole search output and, for topic 1,
+    the v1 link list (read from git history by the command). A link is resolved by the DOI inside it (a doi.org link
+    or a publisher path such as Springer's), or by hand through `link_list_manual.json` (URL to OpenAlex id); a manual
+    entry wins. Papers before 2020 or without an abstract are dropped, except in the first ten search results.
+    Duplicates are found by title; the journal version is kept (a venue that is not a preprint server), otherwise the
+    first seen, and the dropped id becomes an alias. `build_pool --extend <topic>` appends the next results of the
+    same query as `search_extended`.
+3.  `label_prepare` writes, per paper, a file with only the title and abstract, plus the topic's prompt and schema, in
+    the data folder. It also writes `eval/gold/v0/labeling_prompt.md` (all topic prompts, committed so it can be hashed).
+4.  `label_run --model <id>` calls `claude -p` once per paper from inside the inputs folder (so this repository's
+    `CLAUDE.md` is not loaded), with the pinned model, no tools and the JSON schema. It stops if a model other than the
+    pinned one answered. Answers already saved are skipped, so a stopped run continues. It records the model, the
+    Claude Code version and the prompt hash.
+5.  `label_import` turns the answers into gold records (source `model`, derived decision). It only adds papers that
+    have no record yet, so it can run again after `build_pool --extend` without touching earlier labels.
+6.  `select_sets` picks the 20-paper screening set per topic from a seed: search-set papers first (gold-uncertain ones
+    beyond the cap of four are skipped and logged), then random includes and others so that the include count lands in
+    8–12. A topic that cannot do it stops the command and nothing is written; `--needs-extension` lists the topics
+    below 8 includes.
+7.  `blind_sample` writes the sheet the human labels: 7 papers per topic (up to 3 borderline, the rest from the search
+    set), shuffled, with empty answer columns and no model answers.
+8.  `compare` reads the filled sheet, records agreement per topic and check, and for every check with two or more
+    disagreements writes `escalation_sheet.csv` with the papers whose decision hangs on that check.
+9.  `escalation_import` applies the answers (confirmed becomes `model_verified`, changed becomes `human`), derives the
+    decisions again and logs scope, reviewed and changed counts. Rows left empty are "not reached". Importing the same
+    sheet twice changes nothing.
+10. `extraction_prepare --model <id> --paper <key> ...` downloads the chosen PDFs, hashes them, stores the page text and
+    asks Claude to pre-fill the fields with a page and a quote (`eval/gold/v0/prefill_prompt.md`). It checks that every
+    quote is on its page; failures are listed and the next run asks again with the problems attached.
+11. `extraction_verify` writes the sheet for the human (`ok` or `wrong` per field); `extraction_verify --import` writes
+    `extraction.json` from it.
+12. `validate` runs the validator from step 2 on the whole gold set.
+
+The sheets are the human's work, so a command that would write one refuses to overwrite an existing file.
+
+**Tests.** Four new test files and a shared fixture build small gold sets from lists of decisions, with the fake
+surface for the search and a recorded `claude` process. They cover the fallback refusal, the link and duplicate rules,
+the exact `claude` flags and the model check, the selection mix, cap and seed, the sheets (including that the model's
+answers never appear), the escalation scope from `decided_by`, the import rules, and the extraction quote check and
+import. I broke each of eleven key rules once and every break failed a test.

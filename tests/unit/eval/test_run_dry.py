@@ -78,6 +78,7 @@ def ollama(monkeypatch: pytest.MonkeyPatch) -> list[list[str]]:
         asked.append(list(models))
         return {model: "sha256:fixture" for model in models}
 
+    monkeypatch.setattr(run_module, "precheck_models", check_models)
     monkeypatch.setattr(run_module, "check_models", check_models)
     return asked
 
@@ -296,14 +297,13 @@ def test_a_connection_error_during_the_run_makes_it_incomplete_and_unscored(
 def test_ollama_failing_after_the_run_makes_it_incomplete(
     workspace: Path, monkeypatch: pytest.MonkeyPatch
 ):
-    checks = []
-
-    def check_models(models: list[str], base_url: str) -> dict[str, str]:
-        checks.append(models)
-        if len(checks) == 2:
-            raise OllamaCheckError("Ollama is not reachable at http://localhost:11434")
+    def precheck_models(models: list[str], base_url: str) -> dict[str, str]:
         return dict.fromkeys(models, "sha256:fixture")
 
+    def check_models(models: list[str], base_url: str) -> dict[str, str]:
+        raise OllamaCheckError("Ollama is not reachable at http://localhost:11434")
+
+    monkeypatch.setattr(run_module, "precheck_models", precheck_models)
     monkeypatch.setattr(run_module, "check_models", check_models)
 
     summary = run(workspace)
@@ -318,10 +318,10 @@ def test_ollama_failing_after_the_run_makes_it_incomplete(
 def test_an_unreachable_model_before_the_run_stops_it_without_saving_anything(
     workspace: Path, monkeypatch: pytest.MonkeyPatch
 ):
-    def check_models(models: list[str], base_url: str) -> dict[str, str]:
+    def precheck_models(models: list[str], base_url: str) -> dict[str, str]:
         raise OllamaCheckError("Ollama model 'qwen2.5-coder:7b' is not pulled")
 
-    monkeypatch.setattr(run_module, "check_models", check_models)
+    monkeypatch.setattr(run_module, "precheck_models", precheck_models)
 
     with pytest.raises(OllamaCheckError, match="not pulled"):
         run(workspace)
