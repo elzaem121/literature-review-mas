@@ -3,10 +3,11 @@
 from collections import defaultdict
 from collections.abc import Callable
 from dataclasses import dataclass
+from dataclasses import field as dataclass_field
 from pathlib import Path
-from typing import Any, Literal
+from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, Field, TypeAdapter, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, ValidationError
 
 from eval.harness.records import CheckAnswer, GoldDecision, LabelSource, ScoredField
 from eval.harness.text import normalize_title, quote_on_page
@@ -91,6 +92,14 @@ class SearchSnapshot(BaseModel):
     papers: list[dict[str, Any]]
 
 
+class GoldProvenance(BaseModel):
+    """`provenance.json`; here only `mix_exceptions` is read: topic id -> why it misses the mix."""
+
+    model_config = ConfigDict(extra="allow")
+
+    mix_exceptions: dict[str, Annotated[str, Field(min_length=1)]] = Field(default_factory=dict)
+
+
 class PageText(BaseModel):
     """PyMuPDF text of one PDF; page n (1-based) is `pages[n - 1]`."""
 
@@ -128,6 +137,14 @@ def load_extraction_gold(gold_dir: Path = DEFAULT_GOLD_DIR) -> list[ExtractionGo
     return adapter.validate_json(_read_json(gold_dir / "extraction.json"))
 
 
+def load_mix_exceptions(gold_dir: Path = DEFAULT_GOLD_DIR) -> dict[str, str]:
+    """The reasons `provenance.json` records for topics that miss the mix; {} without the file."""
+    path = gold_dir / "provenance.json"
+    if not path.is_file():
+        return {}
+    return GoldProvenance.model_validate_json(_read_json(path)).mix_exceptions
+
+
 def load_pool(gold_dir: Path, topic_id: str) -> list[PoolPaper]:
     """Load one topic's `pool.json`."""
     adapter = TypeAdapter(list[PoolPaper])
@@ -157,28 +174,52 @@ def resolve_search_set(
     return [key_by_id.get(paper.get("openalex_id")) for paper in snapshot.papers[:size]]
 
 
+@dataclass
+class GoldReport:
+    """What `validate` found: errors make the gold set invalid, warnings are recorded exceptions."""
+
+    errors: list[str] = dataclass_field(default_factory=list)
+    warnings: list[str] = dataclass_field(default_factory=list)
+
+    def extend(self, other: "GoldReport") -> None:
+        """Add another report's errors and warnings to this one."""
+        self.errors += other.errors
+        self.warnings += other.warnings
+
+
 def validate(
     gold_dir: Path,
     data_dir: Path | None = None,
     *,
     limits: GoldLimits = GoldLimits(),
     topics_dir: Path = TOPICS_DIR,
-) -> list[str]:
-    """Return every problem found in the gold set; an empty list means it is valid.
+) -> GoldReport:
+    """Check the whole gold set; no errors means it is valid.
 
-    With `data_dir`, the extraction quotes are also checked against the frozen page text.
+    A topic that misses the include/uncertain mix is only a warning when `provenance.json` records
+    why in `mix_exceptions`. With `data_dir`, the extraction quotes are also checked against the
+    frozen page text.
     """
-    problems: list[str] = []
-    screening = _load_or_report(problems, "screening.json", load_screening_gold, gold_dir)
-    extraction = _load_or_report(problems, "extraction.json", load_extraction_gold, gold_dir)
+    report = GoldReport()
+    screening = _load_or_report(report.errors, "screening.json", load_screening_gold, gold_dir)
+    extraction = _load_or_report(report.errors, "extraction.json", load_extraction_gold, gold_dir)
+    exceptions = _load_or_report(report.errors, "provenance.json", load_mix_exceptions, gold_dir)
     if screening is not None:
-        problems += _check_unique_keys(screening)
-        for topic_id in sorted({record.topic_id for record in screening}):
+        report.errors += _check_unique_keys(screening)
+        topic_ids = sorted({record.topic_id for record in screening})
+        report.errors += [
+            f"provenance.json: mix exception for {topic_id}, which has no gold labels"
+            for topic_id in sorted(set(exceptions or {}) - set(topic_ids))
+        ]
+        for topic_id in topic_ids:
             topic_records = [record for record in screening if record.topic_id == topic_id]
-            problems += _validate_topic(topic_id, topic_records, gold_dir, limits, topics_dir)
+            exception = (exceptions or {}).get(topic_id)
+            report.extend(
+                _validate_topic(topic_id, topic_records, gold_dir, limits, topics_dir, exception)
+            )
     if extraction is not None:
-        problems += _validate_extraction(extraction, screening, data_dir)
-    return problems
+        report.errors += _validate_extraction(extraction, screening, data_dir)
+    return report
 
 
 def _load_or_report[**P, T](
@@ -222,7 +263,8 @@ def _validate_topic(
     gold_dir: Path,
     limits: GoldLimits,
     topics_dir: Path,
-) -> list[str]:
+    mix_exception: str | None,
+) -> GoldReport:
     problems: list[str] = []
     topic = _load_or_report(problems, f"{topic_id} config", load_topic, topic_id, topics_dir)
     pool = _load_or_report(problems, f"{topic_id}/pool.json", load_pool, gold_dir, topic_id)
@@ -231,12 +273,18 @@ def _validate_topic(
     )
     if topic is not None:
         problems += _check_answers(topic, records)
-    problems += _check_mix(topic_id, records, limits)
+    problems += _check_size(topic_id, records, limits)
     if pool is not None:
         problems += _check_pool(topic_id, records, pool)
     if pool is not None and snapshot is not None:
         problems += _check_search_set(topic_id, records, pool, snapshot, limits.search_size)
-    return problems
+    report = GoldReport(errors=problems)
+    misses = _check_mix(topic_id, records, limits)
+    if mix_exception is None:
+        report.errors += misses
+    else:
+        report.warnings += [f"{miss} (recorded exception: {mix_exception})" for miss in misses]
+    return report
 
 
 def _check_answers(topic: Topic, records: list[ScreeningGold]) -> list[str]:
@@ -258,17 +306,21 @@ def _check_answers(topic: Topic, records: list[ScreeningGold]) -> list[str]:
     return problems
 
 
+def _check_size(topic_id: str, records: list[ScreeningGold], limits: GoldLimits) -> list[str]:
+    in_set = [record for record in records if record.in_screening_set]
+    if len(in_set) == limits.screening_size:
+        return []
+    return [f"{topic_id}: screening set has {len(in_set)} papers, expected {limits.screening_size}"]
+
+
 def _check_mix(topic_id: str, records: list[ScreeningGold], limits: GoldLimits) -> list[str]:
+    """The ways a topic's screening set misses the include and uncertain counts."""
     in_set = [record for record in records if record.in_screening_set]
     counts = {
         decision: sum(record.decision == decision for record in in_set)
         for decision in ("include", "exclude", "uncertain")
     }
     problems = []
-    if len(in_set) != limits.screening_size:
-        problems.append(
-            f"{topic_id}: screening set has {len(in_set)} papers, expected {limits.screening_size}"
-        )
     if not limits.min_includes <= counts["include"] <= limits.max_includes:
         problems.append(
             f"{topic_id}: screening set has {counts['include']} gold includes, "

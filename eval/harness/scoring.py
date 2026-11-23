@@ -1,5 +1,6 @@
 """Metrics: reads the saved outputs of one run and the gold set. Never calls a model or `src`."""
 
+import json
 from collections import defaultdict
 from collections.abc import Callable
 from pathlib import Path
@@ -33,6 +34,7 @@ from eval.harness.records import (
 )
 from eval.harness.text import joined_runs, quote_on_page
 
+RESULTS_DIR = Path(__file__).resolve().parents[1] / "results"
 RECALL_K = 5
 BUDGET_SCREENING_PAPERS = 25
 BUDGET_EXTRACTION_PAPERS = 10
@@ -87,6 +89,25 @@ def score(
 def ratio(k: int, n: int) -> dict[str, Any]:
     """A count out of a total, with its rate; the rate is None when the total is zero."""
     return {"k": k, "n": n, "rate": k / n if n else None}
+
+
+def write_results(results: dict[str, Any], results_dir: Path = RESULTS_DIR) -> Path:
+    """Write a results structure to `<results_dir>/<run_id>.json` and return the path."""
+    path = results_dir / f"{results['run_id']}.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(results, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    return path
+
+
+def retrieval_hit(chunks: list[RetrievedChunk], field: ExtractionFieldGold) -> bool:
+    """Whether the gold quote is in the field's top-`RECALL_K` chunks, neighbours joined."""
+    top = [chunk for chunk in chunks if chunk.field == field.field and chunk.rank <= RECALL_K]
+    return any(quote_on_page(field.quote, text) for text in joined_runs(top))
+
+
+def field_found(output: ExtractionOutput, field: ExtractionFieldGold) -> bool:
+    """Whether the extractor reported the gold field as found."""
+    return any(r.field == field.field and r.status == "found" for r in output.fields)
 
 
 def _read(path: Path) -> str:
@@ -199,12 +220,7 @@ def _retrieval_section(
     gold: list[ExtractionGold], retrieval: dict[str, list[RetrievedChunk]]
 ) -> dict[str, Any]:
     def hit(paper: ExtractionGold, field: ExtractionFieldGold) -> bool:
-        chunks = [
-            chunk
-            for chunk in _for_paper(retrieval, paper.paper_key, "retrieval.json")
-            if chunk.field == field.field and chunk.rank <= RECALL_K
-        ]
-        return any(quote_on_page(field.quote, text) for text in joined_runs(chunks))
+        return retrieval_hit(_for_paper(retrieval, paper.paper_key, "retrieval.json"), field)
 
     return {"recall_at_5": _field_ratios(gold, hit)}
 
@@ -213,8 +229,7 @@ def _extraction_section(
     gold: list[ExtractionGold], extraction: dict[str, ExtractionOutput]
 ) -> dict[str, Any]:
     def found(paper: ExtractionGold, field: ExtractionFieldGold) -> bool:
-        output = _for_paper(extraction, paper.paper_key, "extraction.json")
-        return any(r.field == field.field and r.status == "found" for r in output.fields)
+        return field_found(_for_paper(extraction, paper.paper_key, "extraction.json"), field)
 
     return {"found": _field_ratios(gold, found)}
 

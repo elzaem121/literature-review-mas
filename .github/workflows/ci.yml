@@ -14,8 +14,8 @@ jobs:
           python-version: "3.13"
           cache: pip
       - run: pip install -r requirements.txt
-      - run: ruff check src tests
-      - run: ruff format --check src tests
+      - run: ruff check src tests eval
+      - run: ruff format --check src tests eval
       - run: pytest
 
   stack:

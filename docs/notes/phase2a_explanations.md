@@ -66,3 +66,60 @@ incomplete one. Every expected number in the scoring tests was worked out by han
 the awkward cases (a duplicate in the top results, a quote split over two chunks, a failed call, a hard error).
 Mutating the code (a different recall cutoff, a space between joined chunks, a changed decision rule) makes the
 tests fail.
+
+## Step 3 — Phase 1 adapter, run, score, checks and sync
+
+Step 2 could score saved outputs; this step makes the outputs. Nothing in `src/` changed. Everything new is under
+`eval/harness/`, plus two Makefile lines of targets and `eval` added to the lint step in CI.
+
+**The adapter.** `adapters/phase1.py` is the only harness file that imports the pipeline. It wraps the Phase 1
+code in the four harness calls and returns only harness record types. `search` calls the same function the graph's
+search node calls. `screen` calls the graph's own `screening_node` with a state built from the topic, so the
+criteria formatting is the node's, and it maps the node's four buckets back to one record per paper, in input order
+(it stops if the node returns a different set of papers). `retrieve` does what the document-processing node does,
+but in memory: chunk the frozen page text, embed it, store it in an in-memory repository, and run the same
+per-field retrieval. The pipeline's retrieval returns only text, so the adapter looks each text up in the chunk
+list to find its page and position; when the same text occurs twice it takes the first. `extract` calls the
+pipeline's extraction function and reads a status out of v1's free text: an empty value, or one that starts with
+"not specified", "not explicitly specified", "not mentioned" or "not stated", or is exactly "no empirical dataset",
+is `not_found`; anything else is `found`. A failed extraction call (an OpenAI or Instructor error) is saved as an
+error on that paper. Any other exception is a bug and stops the run.
+
+**The run.** `python -m eval.harness.run` (or `make eval-run`) does these things in order. It refuses to start unless
+`REPOSITORY_BACKEND=memory`, so it can never touch the paper library. It asks Ollama which models it has and stops
+by naming the missing one. It screens the 60 screening-set papers twice and times each pass, then retrieves and
+extracts the six extraction-gold papers whatever the screener decided about them. The page text is checked against
+the PDF hash in the gold file first. It then asks Ollama again. If that fails, or a failed call's error text says
+"connection error", "timed out" or "connection refused", the run is marked `incomplete`: its outputs are saved
+with the reason, but it is not scored, because an Ollama outage must not look like a wrong answer. A complete run
+is scored at once and writes `eval/results/<run_id>.json`. The outputs go to `<EVAL_DATA_DIR>/outputs/<run_id>/`,
+together with a provenance file (models, Ollama digests, prompt versions, chunker, top-k, concurrency, git commit,
+snapshot dates). The run ends by reminding you to run `make eval-sync`.
+
+**Scoring on its own, and the error list.** `python -m eval.harness.score <run_id>` re-scores a saved run, so a
+corrected gold label needs no model call. It writes the results file again and also `errors.md` next to the saved
+outputs, a list of every wrong output: gold includes the model missed (with the count of those it called
+`uncertain`, which is backlog #37), gold excludes it did not exclude, top-10 search results that are not gold
+includes, gold quotes that were not in the top five chunks (with the pages that were retrieved), and gold `found`
+fields the model reported as not found. The test checks that scoring twice gives the identical results file.
+
+**The other commands.** `ollama_check.py` talks to Ollama's own API, not the OpenAI one: it lists the pulled models
+and returns their digests for the provenance. `truncation_check.py` picks the extraction-gold paper with the most
+retrieved text, sends its real extraction prompt to Ollama, and compares the prompt token count Ollama reports with
+the count from the model family's own tokenizer. If Ollama's count is more than 5% lower, it reports truncation.
+`sync.py` commits everything in the data folder and pushes it to the private backup repository; the test uses a
+local bare repository as the backup.
+
+**The mix exception.** The design says a topic that cannot reach 8–12 gold includes and at most 4 uncertain papers
+may record why in the gold file. `validate` now reads an optional `mix_exceptions` entry in
+`eval/gold/v0/provenance.json` (topic id to reason). A topic that misses the mix but has a reason gives a warning
+that quotes the reason; without one it is still an error. The exception covers only the include and uncertain
+counts, not the set size of 20, and an exception for a topic that has no gold, or with an empty reason, is itself an
+error. `validate` therefore now returns both lists, errors and warnings, instead of one list.
+
+**Tests.** A dry run on the fixture gold set uses the fake LLM, the fake embedder and a temporary data folder. The
+fake screener is scripted per paper and per pass, so every expected number (the gold-by-model table, recalls, hard
+errors, the two flips, precision, retrieval recall, field status) is worked out by hand in the test. Other tests
+cover the adapter's mapping and status phrases, the Ollama messages, the incomplete-run paths, the error list, the
+truncation arithmetic and the sync. Changing the "first chunk wins" rule, the infrastructure-error check or the
+set of caught extraction errors makes a test fail.

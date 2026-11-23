@@ -8,6 +8,7 @@ import pytest
 
 from eval.harness.gold import (
     GoldLimits,
+    GoldReport,
     load_extraction_gold,
     load_pool,
     load_screening_gold,
@@ -29,13 +30,17 @@ def workspace(tmp_path: Path) -> Path:
     return tmp_path / "fx"
 
 
-def check(workspace: Path, with_data: bool = True) -> list[str]:
+def report(workspace: Path, with_data: bool = True) -> GoldReport:
     return validate(
         workspace / "gold",
         workspace / "data" if with_data else None,
         limits=MINI_LIMITS,
         topics_dir=workspace / "topics",
     )
+
+
+def check(workspace: Path, with_data: bool = True) -> list[str]:
+    return report(workspace, with_data).errors
 
 
 def edit(path: Path, change: Callable[[Any], None]) -> None:
@@ -64,7 +69,7 @@ def test_loaders_return_typed_records():
 
 
 def test_the_default_limits_report_the_real_set_sizes(workspace: Path):
-    problems = validate(workspace / "gold", None, topics_dir=workspace / "topics")
+    problems = validate(workspace / "gold", None, topics_dir=workspace / "topics").errors
 
     assert "ta_mini: screening set has 5 papers, expected 20" in problems
     assert "ta_mini: screening set has 3 gold includes, expected 8 to 12" in problems
@@ -84,6 +89,71 @@ def test_the_mix_limits_report_too_many_uncertain_papers(workspace: Path):
 
     assert "ta_mini: screening set has 3 gold uncertain papers, at most 1 allowed" in problems
     assert "ta_mini: screening set has 1 gold includes, expected 2 to 3" in problems
+
+
+def make_two_uncertain(screening: list[dict]) -> None:
+    for key in ("WA2", "WA6"):
+        item = record(screening, key)
+        item["answers"]["c2"]["answer"] = "not_stated"
+        item["decision"] = "uncertain"
+
+
+def write_provenance(workspace: Path, mix_exceptions: dict[str, str]) -> None:
+    (workspace / "gold/provenance.json").write_text(
+        json.dumps({"labeling_model": "m", "mix_exceptions": mix_exceptions}), encoding="utf-8"
+    )
+
+
+def test_a_recorded_mix_exception_turns_the_mix_errors_into_warnings(workspace: Path):
+    edit(workspace / "gold/screening.json", make_two_uncertain)
+    write_provenance(workspace, {"ta_mini": "only 4 of its papers are about teenagers"})
+
+    result = report(workspace)
+
+    assert result.errors == []
+    assert result.warnings == [
+        "ta_mini: screening set has 1 gold includes, expected 2 to 3 "
+        "(recorded exception: only 4 of its papers are about teenagers)",
+        "ta_mini: screening set has 3 gold uncertain papers, at most 1 allowed "
+        "(recorded exception: only 4 of its papers are about teenagers)",
+    ]
+
+
+def test_a_mix_exception_for_another_topic_does_not_excuse_a_topic(workspace: Path):
+    edit(workspace / "gold/screening.json", make_two_uncertain)
+    write_provenance(workspace, {"tb_mini": "a reason for the wrong topic"})
+
+    result = report(workspace)
+
+    assert "ta_mini: screening set has 1 gold includes, expected 2 to 3" in result.errors
+    assert result.warnings == []
+
+
+def test_a_mix_exception_does_not_excuse_a_wrong_set_size(workspace: Path):
+    edit(
+        workspace / "gold/screening.json",
+        lambda screening: record(screening, "WA6").update(in_screening_set=False),
+    )
+    write_provenance(workspace, {"ta_mini": "a reason"})
+
+    assert "ta_mini: screening set has 4 papers, expected 5" in report(workspace).errors
+
+
+def test_a_mix_exception_without_a_reason_or_for_an_unknown_topic_is_an_error(workspace: Path):
+    write_provenance(workspace, {"ta_mini": "", "tx_unknown": "typo"})
+
+    errors = check(workspace)
+
+    assert any(p.startswith("provenance.json:") and "ta_mini" in p for p in errors)
+    write_provenance(workspace, {"tx_unknown": "typo"})
+    assert "provenance.json: mix exception for tx_unknown, which has no gold labels" in check(
+        workspace
+    )
+
+
+def test_a_gold_set_without_provenance_has_no_mix_exceptions(workspace: Path):
+    assert not (workspace / "gold/provenance.json").exists()
+    assert report(workspace).warnings == []
 
 
 def test_a_decision_that_does_not_follow_from_its_answers_is_reported(workspace: Path):

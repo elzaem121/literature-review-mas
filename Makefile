@@ -1,4 +1,6 @@
-.PHONY: up migrate test integration
+.PHONY: up migrate test integration eval-run eval-score eval-sync
+
+ADAPTER ?= phase1
 
 up:
 	docker compose up -d --build
@@ -11,3 +13,12 @@ test:
 
 integration:
 	pytest -m integration
+
+eval-run:
+	REPOSITORY_BACKEND=memory python -m eval.harness.run --adapter $(ADAPTER)
+
+eval-score:
+	python -m eval.harness.score $(RUN)
+
+eval-sync:
+	python -m eval.harness.sync
