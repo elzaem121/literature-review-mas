@@ -314,9 +314,9 @@ Pre-labeling is done by Claude in a Claude Code session, as a one-time task outs
 v0 is the simplest eval that gives baseline numbers the author can trust. Refinements go to "Later" below.
 
 - **One labeling pass.** Claude labels every paper once (per-paper fresh context, as in "Labeling model").
-- **Blind sample of about 20 papers that includes some borderline cases.** Borderline means the labeling pass answered some check "not stated", or, for topic 2, the label is decided by check 3. The rest of the sample is random. For topic 2, the random part is drawn from the baseline top-10 papers, so some of them carry human labels for the Phase 2b judge calibration. The human labels in shuffled order without seeing model labels.
+- **Blind sample of about 20 papers that includes some borderline cases.** *(Refined in `docs/designs/eval.md`, 2026-11-23: 7 papers per topic. Borderline means a "not stated" answer, an exclude with exactly one "no", or, for topic 2, a decision that changes if check 3 changes. The random part is drawn from every topic's search set, not only topic 2's.)* The human labels in shuffled order without seeing model labels.
 - **Agreement** is reported as counts per check (for example "check 3: 2 of 5 disagree"), not as weighted percentages.
-- **Escalation rule:** if the human disagrees with the model on 2 or more papers for the same check, the human reviews all papers decided by that check; those labels become `model_verified`.
+- **Escalation rule:** if the human disagrees with the model on 2 or more papers for the same check within one topic, the human re-answers that check on every paper of the topic whose decision depends on it. A confirmed answer becomes `model_verified`, a changed one `human`. The time limit is about 20 minutes; papers not reached keep source `model`. *(Refined in `docs/designs/eval.md`, 2026-11-23.)*
 
 ## Search precision@10 (author decision, 2026-11-22)
 
