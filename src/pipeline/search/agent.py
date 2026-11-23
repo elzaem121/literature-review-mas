@@ -18,6 +18,33 @@ def _emit(self, message: str, progress_callback=None) -> None:
         progress_callback(message)
 
 
+def format_openalex_work(work: Dict[str, Any], client: OpenAlexClient) -> Dict[str, Any]:
+    """Turn one raw OpenAlex work into the paper dict the search node returns."""
+    inverted_abstract = work.get("abstract_inverted_index", {})
+    authors = []
+    for authorship in work.get("authorships", []):
+        author_name = authorship.get("author", {}).get("display_name")
+        if author_name:
+            authors.append(author_name)
+
+    primary_loc = work.get("primary_location") or {}
+    best_oa = work.get("best_oa_location") or {}
+    openalex_id = work.get("id")
+
+    return {
+        "title": work.get("title", "") or "",
+        "abstract": client.reconstruct_inverted_abstract(inverted_abstract),
+        "year": work.get("publication_year"),
+        "authors": authors,
+        "doi": work.get("doi"),
+        "url": work.get("id") or work.get("doi"),
+        "relevance_score": 0,
+        "openalex_id": openalex_id.removeprefix(OPENALEX_ID_PREFIX) if openalex_id else None,
+        "pdf_url": primary_loc.get("pdf_url") or best_oa.get("pdf_url"),
+        "venue": (primary_loc.get("source") or {}).get("display_name"),
+    }
+
+
 class UniversalAcademicSearchAgent:
     """
     High-Precision Academic Retrieval Agent designed strictly for first-stage retrieval.
@@ -54,13 +81,17 @@ class UniversalAcademicSearchAgent:
                 temperature=0.1,
             )
             # Response is already parsed as AcademicQueryExpansionSchema
-            return response.model_dump()
+            return {**response.model_dump(), "fallback_used": False}
 
         except Exception as e:
             # Safe programmatic fallback in case of local LLM timeout/failure
             print(f" [!] Query expansion failed: {e}. Falling back to tokenized query.")
             fallback_terms = [word for word in raw_user_query.split() if len(word) > 4]
-            return {"synthetic_abstract": raw_user_query, "mandatory_entities": fallback_terms}
+            return {
+                "synthetic_abstract": raw_user_query,
+                "mandatory_entities": fallback_terms,
+                "fallback_used": True,
+            }
 
     # The gatekeeper function is kept in the code for future use, but bypassed in the run cycle
     def _apply_programmatic_gatekeeping_firewall(
@@ -141,47 +172,11 @@ class UniversalAcademicSearchAgent:
         # Step 3: BYPASS GATEKEEPER
         print("[INFO] Gatekeeper is DISABLED. Formatting raw results directly...")
 
-        # 1. Initialize the new base structure with "papers" key
-        formatted_output = {"papers": []}
+        papers = [format_openalex_work(work, self.openalex_client) for work in candidate_pool]
 
-        for paper in candidate_pool:
-            title = paper.get("title", "") or ""
-            inverted_abstract = paper.get("abstract_inverted_index", {})
-            reconstructed_abstract = self.openalex_client.reconstruct_inverted_abstract(
-                inverted_abstract
-            )
-
-            # 2. Extract author names
-            authors_list = []
-            for auth in paper.get("authorships", []):
-                author_name = auth.get("author", {}).get("display_name")
-                if author_name:
-                    authors_list.append(author_name)
-
-            primary_loc = paper.get("primary_location") or {}
-            best_oa = paper.get("best_oa_location") or {}
-            openalex_id = paper.get("id")
-
-            # 3. Build the paper object
-            paper_obj = {
-                "title": title,
-                "abstract": reconstructed_abstract,
-                "year": paper.get("publication_year"),
-                "authors": authors_list,
-                "doi": paper.get("doi"),
-                "url": paper.get("id") or paper.get("doi"),
-                "relevance_score": 0,
-                "openalex_id": openalex_id.removeprefix(OPENALEX_ID_PREFIX)
-                if openalex_id
-                else None,
-                "pdf_url": primary_loc.get("pdf_url") or best_oa.get("pdf_url"),
-                "venue": (primary_loc.get("source") or {}).get("display_name"),
-            }
-
-            # 4. Append DIRECTLY to the 'papers' list (No nested 'paper' key anymore)
-            formatted_output["papers"].append(paper_obj)
-
-        # 5. Prune the results to match the exact target output count
-        formatted_output["papers"] = formatted_output["papers"][:target_output_count]
-
-        return formatted_output
+        # Prune the results to match the exact target output count
+        return {
+            "papers": papers[:target_output_count],
+            "synthetic_abstract": strategy["synthetic_abstract"],
+            "fallback_used": strategy["fallback_used"],
+        }

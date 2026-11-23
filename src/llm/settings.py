@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     openalex_api_key: str | None = None
     langsmith_tracing: bool = False
     pdf_dir: Path = Path("pdfs_auto")
+    eval_data_dir: Path | None = None  # local eval data folder; only eval commands need it
 
     @model_validator(mode="after")
     def _require_database_url_for_postgres(self) -> Self:

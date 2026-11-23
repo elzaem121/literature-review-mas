@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 from pydantic import ValidationError
 
@@ -59,3 +61,13 @@ def test_openalex_api_key_is_optional_and_read_from_the_environment(
     monkeypatch.setenv("OPENALEX_API_KEY", "secret")
 
     assert Settings(_env_file=None).openalex_api_key == "secret"
+
+
+def test_eval_data_dir_is_optional_and_read_from_the_environment(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    assert Settings(_env_file=None).eval_data_dir is None
+
+    monkeypatch.setenv("EVAL_DATA_DIR", "/data/eval")
+
+    assert Settings(_env_file=None).eval_data_dir == Path("/data/eval")
