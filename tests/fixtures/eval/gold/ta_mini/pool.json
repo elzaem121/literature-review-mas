@@ -1,0 +1,106 @@
+[
+  {
+    "paper_key": "WA1",
+    "title": "Social Media Use and Everyday Identity Work Among Teenagers",
+    "abstract": "Abstract of Social Media Use and Everyday Identity Work Among Teenagers.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wa1",
+    "url": "https://openalex.org/WA1",
+    "openalex_id": "WA1",
+    "pdf_url": "https://fixtures.invalid/WA1.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search",
+    "search_rank": 1,
+    "aliases": []
+  },
+  {
+    "paper_key": "WA2",
+    "title": "Study Two on Group Chats",
+    "abstract": "Abstract of Study Two on Group Chats.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wa2",
+    "url": "https://openalex.org/WA2",
+    "openalex_id": "WA2",
+    "pdf_url": "https://fixtures.invalid/WA2.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search",
+    "search_rank": 2,
+    "aliases": [
+      "WA2D"
+    ]
+  },
+  {
+    "paper_key": "WA4",
+    "title": "Study Four on Gaming",
+    "abstract": "Abstract of Study Four on Gaming.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wa4",
+    "url": "https://openalex.org/WA4",
+    "openalex_id": "WA4",
+    "pdf_url": "https://fixtures.invalid/WA4.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "WA5",
+    "title": "Study Five on Streaming",
+    "abstract": "Abstract of Study Five on Streaming.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wa5",
+    "url": "https://openalex.org/WA5",
+    "openalex_id": "WA5",
+    "pdf_url": "https://fixtures.invalid/WA5.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "WA6",
+    "title": "Study Six on Messaging",
+    "abstract": "Abstract of Study Six on Messaging.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wa6",
+    "url": "https://openalex.org/WA6",
+    "openalex_id": "WA6",
+    "pdf_url": "https://fixtures.invalid/WA6.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "WA7",
+    "title": "Study Seven on Forums",
+    "abstract": "Abstract of Study Seven on Forums.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wa7",
+    "url": "https://openalex.org/WA7",
+    "openalex_id": "WA7",
+    "pdf_url": "https://fixtures.invalid/WA7.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  }
+]

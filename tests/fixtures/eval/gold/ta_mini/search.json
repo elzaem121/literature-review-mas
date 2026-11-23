@@ -1,0 +1,32 @@
+{
+  "topic_id": "ta_mini",
+  "retrieved_at": "2026-11-23T10:00:00Z",
+  "duration_s": 20.0,
+  "search_model": "qwen2.5-coder:7b",
+  "search_prompt_version": "v1",
+  "synthetic_abstract": "Synthetic abstract for ta_mini.",
+  "fallback_used": false,
+  "openalex_params": {
+    "target_output_count": 25,
+    "min_citations": 0,
+    "start_year": 2020
+  },
+  "papers": [
+    {
+      "title": "Social Media Use and Everyday Identity Work Among Teenagers",
+      "openalex_id": "WA1"
+    },
+    {
+      "title": "Study Two on Group Chats",
+      "openalex_id": "WA2"
+    },
+    {
+      "title": "study two on group chats!",
+      "openalex_id": "WA2D"
+    },
+    {
+      "title": "Unlabeled fourth result",
+      "openalex_id": "WX9"
+    }
+  ]
+}

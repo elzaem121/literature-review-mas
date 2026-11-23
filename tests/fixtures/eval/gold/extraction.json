@@ -1,0 +1,67 @@
+[
+  {
+    "paper_key": "WA1",
+    "topic_id": "ta_mini",
+    "pdf_url": "https://fixtures.invalid/WA1.pdf",
+    "pdf_sha256": "d4b9454a0b9c6fc6aed9f1eccc225d60c96f29141f07749d3cb0f21f103b4cb0",
+    "fields": [
+      {
+        "field": "method",
+        "value": "Qualitative semi-structured interviews",
+        "page": 2,
+        "quote": "We used a qualitative study design based on semi-structured interviews.",
+        "source": "model_verified"
+      },
+      {
+        "field": "dataset",
+        "value": "Interview recordings of twenty adolescents",
+        "page": 2,
+        "quote": "Data source: interview recordings, transcribed and analysed with thematic coding.",
+        "source": "model_verified"
+      },
+      {
+        "field": "main_findings",
+        "value": "Teenagers use social media to keep friendships and try out self-presentation",
+        "page": 3,
+        "quote": "The main findings show that adolescents use social media mostly to maintain existing friendships and to experiment with self-presentation.",
+        "source": "model_verified"
+      },
+      {
+        "field": "limitations",
+        "value": "Two schools, self-reported accounts",
+        "page": 3,
+        "quote": "The study is limited to two schools and relies on self-reported accounts, so conclusions about other settings are tentative.",
+        "source": "human"
+      }
+    ]
+  },
+  {
+    "paper_key": "WB1",
+    "topic_id": "tb_mini",
+    "pdf_url": "https://fixtures.invalid/WB1.pdf",
+    "pdf_sha256": "f2ca13d1c3d40b96630b1710f734c468f685a8dac3ea4b1a29ebc849ab966707",
+    "fields": [
+      {
+        "field": "task",
+        "value": "Propose a framework linking participation, trust and wellbeing",
+        "page": 1,
+        "quote": "The aim is theoretical: we review prior literature and propose a framework linking participation, trust and wellbeing.",
+        "source": "model_verified"
+      },
+      {
+        "field": "main_findings",
+        "value": "Moderation practices shape wellbeing outcomes",
+        "page": 2,
+        "quote": "The framework implies that moderation practices shape wellbeing outcomes.",
+        "source": "model_verified"
+      },
+      {
+        "field": "limitations",
+        "value": "The framework is untested",
+        "page": 2,
+        "quote": "The framework is untested and needs empirical validation in future work.",
+        "source": "model_verified"
+      }
+    ]
+  }
+]

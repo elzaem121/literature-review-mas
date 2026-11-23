@@ -1,0 +1,19 @@
+{
+  "topic_id": "ta_mini",
+  "research_question": "How do teenagers use social media?",
+  "min_year": 2020,
+  "checks": [
+    {
+      "id": "c1",
+      "question": "Is the study about young people?",
+      "yes": "The study is about young people.",
+      "no": "The study is not about young people."
+    },
+    {
+      "id": "c2",
+      "question": "Does the study report empirical or conceptual work?",
+      "yes": "The study reports empirical or conceptual work.",
+      "no": "The study is only an editorial or news item."
+    }
+  ]
+}

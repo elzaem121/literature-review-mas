@@ -1,0 +1,104 @@
+[
+  {
+    "paper_key": "WB1",
+    "title": "Online Communities and Young Adults",
+    "abstract": "Abstract of Online Communities and Young Adults.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wb1",
+    "url": "https://openalex.org/WB1",
+    "openalex_id": "WB1",
+    "pdf_url": "https://fixtures.invalid/WB1.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search",
+    "search_rank": 1,
+    "aliases": []
+  },
+  {
+    "paper_key": "WB2",
+    "title": "Study Two on Moderation",
+    "abstract": "Abstract of Study Two on Moderation.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wb2",
+    "url": "https://openalex.org/WB2",
+    "openalex_id": "WB2",
+    "pdf_url": "https://fixtures.invalid/WB2.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search",
+    "search_rank": 2,
+    "aliases": []
+  },
+  {
+    "paper_key": "WB3",
+    "title": "Study Three on Trust",
+    "abstract": "Abstract of Study Three on Trust.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wb3",
+    "url": "https://openalex.org/WB3",
+    "openalex_id": "WB3",
+    "pdf_url": "https://fixtures.invalid/WB3.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search",
+    "search_rank": 3,
+    "aliases": []
+  },
+  {
+    "paper_key": "WB4",
+    "title": "Study Four on Support",
+    "abstract": "Abstract of Study Four on Support.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wb4",
+    "url": "https://openalex.org/WB4",
+    "openalex_id": "WB4",
+    "pdf_url": "https://fixtures.invalid/WB4.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "WB5",
+    "title": "Study Five on Reputation",
+    "abstract": "Abstract of Study Five on Reputation.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wb5",
+    "url": "https://openalex.org/WB5",
+    "openalex_id": "WB5",
+    "pdf_url": "https://fixtures.invalid/WB5.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "WB6",
+    "title": "Study Six on Servers",
+    "abstract": "Abstract of Study Six on Servers.",
+    "year": 2022,
+    "authors": [
+      "Alice Example"
+    ],
+    "doi": "https://doi.org/10.1000/wb6",
+    "url": "https://openalex.org/WB6",
+    "openalex_id": "WB6",
+    "pdf_url": "https://fixtures.invalid/WB6.pdf",
+    "venue": "Journal of Fixture Studies",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  }
+]

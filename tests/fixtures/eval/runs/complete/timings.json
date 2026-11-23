@@ -1,0 +1,15 @@
+{
+  "screening_pass_s": [
+    30.0,
+    20.0
+  ],
+  "screening_papers": 10,
+  "retrieval_s": {
+    "WA1": 1.0,
+    "WB1": 3.0
+  },
+  "extraction_s": {
+    "WA1": 9.0,
+    "WB1": 7.0
+  }
+}

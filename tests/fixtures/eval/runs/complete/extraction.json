@@ -1,0 +1,78 @@
+{
+  "WA1": {
+    "fields": [
+      {
+        "paper_key": "WA1",
+        "field": "method",
+        "status": "found",
+        "value": "Qualitative interviews"
+      },
+      {
+        "paper_key": "WA1",
+        "field": "dataset",
+        "status": "found",
+        "value": "Interview recordings"
+      },
+      {
+        "paper_key": "WA1",
+        "field": "task",
+        "status": "not_found",
+        "value": "Not specified"
+      },
+      {
+        "paper_key": "WA1",
+        "field": "main_findings",
+        "status": "found",
+        "value": "Friendship maintenance"
+      },
+      {
+        "paper_key": "WA1",
+        "field": "limitations",
+        "status": "not_found",
+        "value": "Not mentioned"
+      }
+    ],
+    "raw": {
+      "paper_type": "empirical"
+    },
+    "error": null
+  },
+  "WB1": {
+    "fields": [
+      {
+        "paper_key": "WB1",
+        "field": "method",
+        "status": "not_found",
+        "value": "Not specified"
+      },
+      {
+        "paper_key": "WB1",
+        "field": "dataset",
+        "status": "not_found",
+        "value": "No empirical dataset"
+      },
+      {
+        "paper_key": "WB1",
+        "field": "task",
+        "status": "found",
+        "value": "Propose a framework"
+      },
+      {
+        "paper_key": "WB1",
+        "field": "main_findings",
+        "status": "found",
+        "value": "Moderation matters"
+      },
+      {
+        "paper_key": "WB1",
+        "field": "limitations",
+        "status": "not_found",
+        "value": "Not stated"
+      }
+    ],
+    "raw": {
+      "paper_type": "conceptual"
+    },
+    "error": null
+  }
+}

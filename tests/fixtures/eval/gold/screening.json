@@ -1,0 +1,230 @@
+[
+  {
+    "topic_id": "ta_mini",
+    "paper_key": "WA1",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model_verified",
+        "reason": "WA1 c1: yes."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "human",
+        "reason": "WA1 c2: yes."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "ta_mini",
+    "paper_key": "WA2",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "human",
+        "reason": "WA2 c1: yes."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "WA2 c2: yes."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "ta_mini",
+    "paper_key": "WA4",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "WA4 c1: no."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model_verified",
+        "reason": "WA4 c2: yes."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "ta_mini",
+    "paper_key": "WA5",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model_verified",
+        "reason": "WA5 c1: yes."
+      },
+      "c2": {
+        "answer": "not_stated",
+        "source": "human",
+        "reason": "WA5 c2: not_stated."
+      }
+    },
+    "decision": "uncertain"
+  },
+  {
+    "topic_id": "ta_mini",
+    "paper_key": "WA6",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "human",
+        "reason": "WA6 c1: yes."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "WA6 c2: yes."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "ta_mini",
+    "paper_key": "WA7",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "WA7 c1: no."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model_verified",
+        "reason": "WA7 c2: yes."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "tb_mini",
+    "paper_key": "WB1",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model_verified",
+        "reason": "WB1 c1: yes."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "human",
+        "reason": "WB1 c2: yes."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "tb_mini",
+    "paper_key": "WB2",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "human",
+        "reason": "WB2 c1: no."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "WB2 c2: yes."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "tb_mini",
+    "paper_key": "WB3",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "WB3 c1: no."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model_verified",
+        "reason": "WB3 c2: yes."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "tb_mini",
+    "paper_key": "WB4",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model_verified",
+        "reason": "WB4 c1: yes."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "human",
+        "reason": "WB4 c2: yes."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "tb_mini",
+    "paper_key": "WB5",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "human",
+        "reason": "WB5 c1: yes."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "WB5 c2: yes."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "tb_mini",
+    "paper_key": "WB6",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "WB6 c1: yes."
+      },
+      "c2": {
+        "answer": "not_stated",
+        "source": "model_verified",
+        "reason": "WB6 c2: not_stated."
+      }
+    },
+    "decision": "uncertain"
+  }
+]

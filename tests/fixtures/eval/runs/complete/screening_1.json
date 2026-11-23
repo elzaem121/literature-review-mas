@@ -1,0 +1,82 @@
+[
+  {
+    "paper_key": "WA1",
+    "decision": "include",
+    "error": null,
+    "reasoning": "WA1: include.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  },
+  {
+    "paper_key": "WA2",
+    "decision": "uncertain",
+    "error": null,
+    "reasoning": "WA2: uncertain.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  },
+  {
+    "paper_key": "WA4",
+    "decision": "exclude",
+    "error": null,
+    "reasoning": "WA4: exclude.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  },
+  {
+    "paper_key": "WA5",
+    "decision": "include",
+    "error": null,
+    "reasoning": "WA5: include.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  },
+  {
+    "paper_key": "WA6",
+    "decision": "failed",
+    "error": "Validation failed after retries",
+    "reasoning": "WA6: failed.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  },
+  {
+    "paper_key": "WB1",
+    "decision": "include",
+    "error": null,
+    "reasoning": "WB1: include.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  },
+  {
+    "paper_key": "WB2",
+    "decision": "include",
+    "error": null,
+    "reasoning": "WB2: include.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  },
+  {
+    "paper_key": "WB3",
+    "decision": "exclude",
+    "error": null,
+    "reasoning": "WB3: exclude.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  },
+  {
+    "paper_key": "WB4",
+    "decision": "exclude",
+    "error": null,
+    "reasoning": "WB4: exclude.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  },
+  {
+    "paper_key": "WB5",
+    "decision": "include",
+    "error": null,
+    "reasoning": "WB5: include.",
+    "matched_inclusion": [],
+    "matched_exclusion": []
+  }
+]

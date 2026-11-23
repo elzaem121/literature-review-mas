@@ -1,0 +1,28 @@
+{
+  "topic_id": "tb_mini",
+  "retrieved_at": "2026-11-23T10:00:00Z",
+  "duration_s": 40.0,
+  "search_model": "qwen2.5-coder:7b",
+  "search_prompt_version": "v1",
+  "synthetic_abstract": "Synthetic abstract for tb_mini.",
+  "fallback_used": false,
+  "openalex_params": {
+    "target_output_count": 25,
+    "min_citations": 0,
+    "start_year": 2020
+  },
+  "papers": [
+    {
+      "title": "Online Communities and Young Adults",
+      "openalex_id": "WB1"
+    },
+    {
+      "title": "Study Two on Moderation",
+      "openalex_id": "WB2"
+    },
+    {
+      "title": "Study Three on Trust",
+      "openalex_id": "WB3"
+    }
+  ]
+}

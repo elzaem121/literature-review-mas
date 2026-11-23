@@ -1,0 +1,30 @@
+{
+  "status": "incomplete",
+  "incomplete_reason": "Ollama is not reachable",
+  "adapter": "phase1",
+  "git_commit": "abc1234",
+  "started_at": "2026-11-23T12:00:00Z",
+  "models": {
+    "search": "m",
+    "screening": "m",
+    "extraction": "m"
+  },
+  "ollama_digests": {
+    "m": "sha256:0000"
+  },
+  "prompt_versions": {
+    "search": "v1",
+    "screening": "v1",
+    "extraction": "v1"
+  },
+  "context_length": "ollama_default",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "chunker_version": "v1",
+  "retrieval_top_k": 5,
+  "concurrency": 3,
+  "gold_version": "v0",
+  "snapshot_retrieved_at": {
+    "ta_mini": "2026-11-23T10:00:00Z",
+    "tb_mini": "2026-11-23T10:00:00Z"
+  }
+}
