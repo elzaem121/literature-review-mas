@@ -178,3 +178,27 @@ surface for the search and a recorded `claude` process. They cover the fallback 
 the exact `claude` flags and the model check, the selection mix, cap and seed, the sheets (including that the model's
 answers never appear), the escalation scope from `decided_by`, the import rules, and the extraction quote check and
 import. I broke each of eleven key rules once and every break failed a test.
+
+## Step 5 — The three topic configs
+
+Only data this time: three files in `eval/topics/`, one per test topic, and a test that loads them. Nothing in `src/` or
+in the harness code changed.
+
+Each file holds the research question, the earliest year (2020) and the checks, as accepted in `docs/eval_notes.md`:
+five for social media and adolescents, four for LLM-based multi-agent system evaluation, five for mobile money and
+household welfare. A check is a question plus a "yes" statement and a "no" statement. The same file feeds two readers.
+The screener gets the "yes" statements as its inclusion criteria and the "no" statements as its exclusion criteria,
+and Claude gets the question and both statements in its labeling prompt, so both read the same checks. The accepted
+boundary rules are written into the text: the wellbeing line for topic 1 (depressive and anxiety symptoms in
+general-population adolescents count as wellbeing), the "main contribution is the evaluation" line for topic 2 (check
+3, the one the blind sample watches), and the closed outcome list for topic 3.
+
+One thing to know before the search is frozen: the search agent adds the inclusion criteria, which are these "yes"
+statements, to its query. So a "yes" statement is also search input. I kept them short and about the topic, and put
+the exclusion cases in the "no" statements, which the search does not see. The "yes" statements for topic 1 check 3
+and topic 2 check 3 are the longest, because the boundary has to reach the screener too.
+
+The test checks that exactly these three topics exist, that each has its accepted number of checks with ids `c1`…,
+that the screener input has one inclusion and one exclusion line per check and no extra instructions, and that the
+labeling prompt names every check. It also ties the config to the code that already names a topic: the blind sample's
+decisive check for topic 2 must be the evaluation check, and the topic that has the link list must exist.

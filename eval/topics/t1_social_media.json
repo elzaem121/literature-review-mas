@@ -1,0 +1,37 @@
+{
+  "topic_id": "t1_social_media",
+  "research_question": "How is social media use related to adolescents' everyday life, identity, wellbeing and peer relations?",
+  "min_year": 2020,
+  "checks": [
+    {
+      "id": "c1",
+      "question": "Does the study population include people under 18, or is it described as adolescents or teenagers? (Only university students or adults is \"no\"; a mixed-age sample that includes under-18s is \"yes\".)",
+      "yes": "The study population includes adolescents or teenagers under 18, alone or within a mixed-age sample.",
+      "no": "The study population consists only of adults, including university students."
+    },
+    {
+      "id": "c2",
+      "question": "Is social media use studied, either named platforms such as Instagram, TikTok, Snapchat or YouTube, or social media in general? (General screen time, gaming or internet use without social media is \"no\".)",
+      "yes": "The study examines social media use, on named platforms such as Instagram, TikTok, Snapchat or YouTube or on social media in general.",
+      "no": "The study does not examine social media; it covers only general screen time, gaming or internet use."
+    },
+    {
+      "id": "c3",
+      "question": "Is at least one outcome studied from this list: everyday life, identity, wellbeing, peer relations, social interaction? (Depressive and anxiety symptoms in general-population adolescents count as wellbeing.)",
+      "yes": "The study examines at least one of everyday life, identity, wellbeing, peer relations or social interaction; depressive and anxiety symptoms in general-population adolescents count as wellbeing.",
+      "no": "The study examines none of everyday life, identity, wellbeing, peer relations or social interaction, for example only technical performance or marketing results."
+    },
+    {
+      "id": "c4",
+      "question": "Is the population a general one, not a clinical sample or a treatment study?",
+      "yes": "The study sample is a general population of adolescents.",
+      "no": "The study sample is a clinical sample, or the study evaluates a treatment."
+    },
+    {
+      "id": "c5",
+      "question": "Is it a primary study, not a review or meta-analysis?",
+      "yes": "The paper is a primary study that reports its own data or analysis.",
+      "no": "The paper is a review or meta-analysis of existing studies."
+    }
+  ]
+}

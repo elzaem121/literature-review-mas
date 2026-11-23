@@ -1,0 +1,31 @@
+{
+  "topic_id": "t2_llm_mas_eval",
+  "research_question": "How are LLM-based multi-agent systems evaluated, and which benchmarks, metrics and methods are used?",
+  "min_year": 2020,
+  "checks": [
+    {
+      "id": "c1",
+      "question": "Does the paper study a multi-agent system, with two or more interacting agents? (A single agent, or a standalone LLM, is \"no\".)",
+      "yes": "The paper studies a multi-agent system of two or more interacting agents.",
+      "no": "The paper studies a single agent or a standalone LLM, not a system of interacting agents."
+    },
+    {
+      "id": "c2",
+      "question": "Are the agents built on large language models? (Classic agent systems and multi-agent reinforcement learning without LLMs are \"no\".)",
+      "yes": "The agents are built on large language models.",
+      "no": "The agents are not built on large language models, as in classic agent systems or multi-agent reinforcement learning without LLMs."
+    },
+    {
+      "id": "c3",
+      "question": "Is evaluating such systems the main contribution? \"Yes\" means a benchmark, dataset, evaluation framework, metric, an empirical study that compares systems, or a failure analysis; any kind of evaluation counts (performance, safety, reliability, cost). A paper that proposes a new system or method and evaluates it only to show that it works is \"no\".",
+      "yes": "The main contribution is evaluating such systems: a benchmark, dataset, evaluation framework, metric, empirical comparison of systems or failure analysis, on any aspect such as performance, safety, reliability or cost.",
+      "no": "The main contribution is a new system or method that is evaluated only to show that it works."
+    },
+    {
+      "id": "c4",
+      "question": "Is it a primary study, not a survey, review or position paper?",
+      "yes": "The paper is a primary study.",
+      "no": "The paper is a survey, review or position paper."
+    }
+  ]
+}

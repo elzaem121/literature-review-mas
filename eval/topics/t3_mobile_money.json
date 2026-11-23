@@ -1,0 +1,37 @@
+{
+  "topic_id": "t3_mobile_money",
+  "research_question": "What is the relationship between mobile money use and household or individual welfare in Sub-Saharan Africa?",
+  "min_year": 2020,
+  "checks": [
+    {
+      "id": "c1",
+      "question": "Is the subject mobile money, meaning phone-based payment and transfer services such as M-Pesa?",
+      "yes": "The subject is mobile money, phone-based payment and transfer services such as M-Pesa.",
+      "no": "The subject is not mobile money; it is another financial or digital service."
+    },
+    {
+      "id": "c2",
+      "question": "Does the data come from at least one Sub-Saharan African country?",
+      "yes": "The data come from at least one Sub-Saharan African country.",
+      "no": "The data come only from other regions."
+    },
+    {
+      "id": "c3",
+      "question": "Is the data at household or individual level (survey, panel or field experiment)?",
+      "yes": "The data are at household or individual level, from a survey, panel or field experiment.",
+      "no": "The data are only at country level or only at firm level."
+    },
+    {
+      "id": "c4",
+      "question": "Is at least one outcome on this list: consumption, savings, income, poverty, food security, health spending or use, schooling, coping with shocks?",
+      "yes": "At least one outcome is consumption, savings, income, poverty, food security, health spending or use, schooling or coping with shocks.",
+      "no": "No outcome is on that list: the only outcome is mobile money adoption or its determinants, or the outcomes are others such as energy poverty or entrepreneurship."
+    },
+    {
+      "id": "c5",
+      "question": "Is it a primary empirical study, not a review, meta-analysis or conceptual paper?",
+      "yes": "The paper is a primary empirical study.",
+      "no": "The paper is a review, meta-analysis or conceptual paper."
+    }
+  ]
+}
