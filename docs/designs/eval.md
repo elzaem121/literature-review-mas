@@ -589,6 +589,21 @@ Qwen2.5-Coder tokenizer for `qwen2.5-coder:7b`.
     that is committed under `eval/`. The run's provenance names it, and the
     truncation becomes a backlog item as a v1 finding.
 
+**Result of a synthetic test (2026-11-23, Ollama 0.34.4, `qwen2.5-coder:7b`, no
+`OLLAMA_CONTEXT_LENGTH` set).** Prompts of about 2,000, 10,800 and 33,800
+tokens (Qwen tokenizer count) were sent through the OpenAI-compatible endpoint:
+
+*   **What Ollama reported:** `usage.prompt_tokens` was 2,027, 2,050 and
+    2,050. The two longer prompts were cut to about 2,050 tokens from the
+    beginning, with no API error; only the server log shows the warning
+    "truncating input prompt".
+*   **What the model did:** it lost a word stated at the start of the prompt.
+*   **What this shows about the check:** the reported count is the count after
+    cutting, so the comparison above detects truncation.
+
+Extraction prompts are expected to be well above 2,050 tokens. The G7 run on
+real extraction prompts confirms this before the baseline (backlog #38).
+
 ### Latency budget (author decision: from harness timings)
 
 The budget is built from what the baseline run measures:
@@ -959,7 +974,8 @@ are exact.
         `dataset`, `task`, `main_findings`, `limitations`), `value`, `page`
         (1-based), `quote` (one sentence) and `source`
 *   **Gold provenance** (`eval/gold/v0/provenance.json`):
-    *   `labeling_model` and `claude_code_version`
+    *   `labeling_model` (the pinned Opus id, as reported in the output's
+        `modelUsage`) and `claude_code_version`
     *   `labeling_prompt_sha256` (the prompt text is committed at
         `eval/gold/v0/labeling_prompt.md`) and `prefill_prompt_sha256` (at
         `eval/gold/v0/prefill_prompt.md`)
@@ -1092,8 +1108,13 @@ are exact.
         `exclusion_criteria` (the list of `no` statements),
         `additional_info = None`, `min_year`.
     *   `render_labeling_prompt(topic) -> str` and `labeling_json_schema(topic)
-        -> dict`. The schema requires one answer per check id, each with
-        `answer` in `yes`, `no` or `not_stated`, and a `reason`.
+        -> dict`. The schema requires exactly one answer per check: `check` is
+        an enum of the topic's check ids (`c1` …), so the model cannot write
+        the question text there; `answer` is one of `yes`, `no` or
+        `not_stated`; `reason` is a string. The array has `minItems` and
+        `maxItems` equal to the number of checks. A test run on 2026-11-23
+        showed that without the enum the model wrote the full question into
+        `check`.
 
 #### 9. `eval/harness/text.py` (Create)
 
@@ -1234,8 +1255,11 @@ are exact.
         `completion.usage.prompt_tokens`.
     *   Counts the same messages with
         `transformers.AutoTokenizer.from_pretrained(<HF id>)` and
-        `apply_chat_template`. The HF id comes from a `--tokenizer` argument;
-        the default is `Qwen/Qwen2.5-Coder-7B-Instruct`.
+        `apply_chat_template(..., tokenize=True, add_generation_prompt=True)`.
+        The installed `transformers` returns a dict-like encoding here, so the
+        count is `len(result["input_ids"])`, not `len(result)`. The HF id
+        comes from a `--tokenizer` argument; the default is
+        `Qwen/Qwen2.5-Coder-7B-Instruct`.
     *   Prints both counts. It reports truncation if the Ollama count is
         lower than the tokenizer count by more than 5%.
 
@@ -1276,7 +1300,10 @@ are exact.
     *   `label_run`: for each input file without an answer, runs `claude -p`
         with the working directory set to that inputs folder, so this
         repository's `CLAUDE.md` is not loaded. The flags are:
-        *   `--model <id>`
+        *   `--model <id>`: always passed. It pins a strong model, Opus; the
+            exact id comes from a required `--model` argument of `label_run`
+            (for example `claude-opus-5-5`). The CLI's default model is never
+            used.
         *   `--tools ""`
         *   `--system-prompt <labeling prompt>`
         *   `--json-schema <schema>`
@@ -1284,8 +1311,10 @@ are exact.
         *   `--no-session-persistence`
 
         The paper text is passed on stdin. Each raw JSON answer is saved to
-        `<data_dir>/labeling/answers/`. It records `claude --version` and the
-        model id.
+        `<data_dir>/labeling/answers/`. The step records `claude --version`.
+        It reads the model that actually answered from the output's
+        `modelUsage` key. If that model is not the pinned id, it stops with an
+        error. The id goes into `provenance.json` as `labeling_model`.
     *   `label_import`: writes `screening.json` with source `model` and
         derived decisions.
     *   `select_sets`: the screening-set selection in the Technical Plan,
@@ -1307,7 +1336,8 @@ are exact.
         *   downloads each chosen paper's PDF to `<data_dir>/pdfs/`, hashes
             it, and writes `<data_dir>/pages/<key>.json` with
             `extract_pages_from_pdf` and the PyMuPDF version
-        *   runs `claude -p` as in `label_run`, with the pre-fill prompt and
+        *   runs `claude -p` as in `label_run` (same pinned `--model` and the
+            same model check), with the pre-fill prompt and
             the page text, and saves the raw answer
         *   runs the quote check and lists failures for a re-run
     *   `extraction_verify`: writes `<data_dir>/labeling/extraction_sheet.csv`
@@ -1457,10 +1487,10 @@ are exact.
     *   #27: closed, the golden test is kept unchanged.
     *   #29: rejected for v0, because provenance lives in the results files;
         phase becomes "when needed".
-    *   New row #38: the eval "Later" items, listed in `eval.md` "Future
+    *   New row #39: the eval "Later" items, listed in `eval.md` "Future
         Improvements".
-    *   After step 8, if truncation is found: a new row for it, as a v1
-        finding.
+    *   Row #38 (prompt truncation, added 2026-11-23 from the synthetic test):
+        after step 8, update it with the measured extraction prompt sizes.
 
 #### 30. `docs/eval_notes.md` and `docs/plan_v2.md` (Modify)
 
