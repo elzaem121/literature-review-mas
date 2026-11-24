@@ -12,9 +12,10 @@ structured findings from each paper — all orchestrated as a LangGraph pipeline
 and a Streamlit frontend. All LLM calls go to a **local (or port-forwarded Kubernetes) Ollama endpoint**
 via the `instructor` library patched onto the OpenAI SDK client — there is no cloud LLM provider involved.
 
-This is the v2 rewrite (branch `v2`). Phase 1 is in progress: the code has moved into `src/` and goes
-through one LLM seam; run state and the paper library (papers, page-aware chunks, embeddings) are in
-Postgres with pgvector (commits 2a and 2b, see `docs/designs/phase1_foundation.md`).
+This is the v2 rewrite (branch `v2`). Phase 1 is done (tag `v0.2`): the code has moved into `src/` and
+goes through one LLM seam; run state and the paper library (papers, page-aware chunks, embeddings) are in
+Postgres with pgvector (commits 2a and 2b, see `docs/designs/phase1_foundation.md`). Phase 2a, the
+evaluation harness (`docs/designs/eval.md`), is in progress.
 
 ## Setup & running
 

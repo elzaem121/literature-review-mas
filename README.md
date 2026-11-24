@@ -207,7 +207,8 @@ src/
   llm/        settings, get_llm / get_embedder, tracing, fake test surface, versioned prompts
   ui/         Streamlit frontend
 tests/        unit/, e2e/, fixtures/
-eval/         frozen v1 search results (eval/snapshots/v1/)
+eval/         evaluation harness: topic configs, gold set, run results, scoring (eval/README.md);
+              snapshots/v1/ keeps the frozen v1 search results
 deploy/       Kubernetes/Ollama notes
 docs/         plan, designs, backlog
 ```
