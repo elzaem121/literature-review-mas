@@ -53,8 +53,8 @@ make up        # docker compose up -d --build
 ```bash
 make test                      # pytest from the repo root; unit + fake end-to-end, no network, no model
 pytest tests/unit/test_screening.py -q
-ruff check src tests
-ruff format --check src tests
+ruff check src tests eval
+ruff format --check src tests eval
 ```
 
 `make test` runs with the `test` profile's fake surface (fake LLM, fake embedder, stubbed OpenAlex,
@@ -63,6 +63,20 @@ compose Postgres (`make integration`; they use their own `literature_review_test
 server, recreated each session). Unit tests need no database. The golden-transcript test
 (`tests/e2e/test_golden_transcript.py`) diffs the fake end-to-end run against
 `tests/fixtures/golden_run.json`; regenerate that file only as a deliberate, reviewed step.
+
+### Evaluation harness (Phase 2a)
+
+Design: `docs/designs/eval.md`; setup and the gold-build steps: `eval/README.md`. Live eval commands need Ollama and
+`EVAL_DATA_DIR` (a local clone of a private backup repository for PDFs, page text and raw run outputs); CI runs only
+the unit tests of the scoring and build logic.
+
+```bash
+python -m eval.gold_build <step>          # build the gold set, one step at a time (steps in eval/README.md)
+python -m eval.harness.truncation_check   # does Ollama truncate extraction prompts? (G7)
+make eval-run                             # the baseline run: REPOSITORY_BACKEND=memory, ADAPTER=phase1
+make eval-score RUN=<run_id>              # re-score saved outputs against the current gold set
+make eval-sync                            # commit and push the data folder to its backup
+```
 
 ## Architecture
 
@@ -80,12 +94,22 @@ src/
   db/         SQLAlchemy models, session, repository (all SQL), Alembic migrations
   llm/        settings.py, client.py (get_llm / get_embedder), tracing.py, fake.py, prompts/
   ui/         Streamlit frontend (app.py)
-tests/        unit/, e2e/, fixtures/ (golden_run.json, OpenAlex works, PDFs, review config)
-eval/snapshots/v1/   frozen v1 search results (inputs for the Phase 2a baseline)
+tests/        unit/ (unit/eval/ for the harness), e2e/, fixtures/ (golden_run.json, OpenAlex works, PDFs, review config)
+eval/
+  topics/       one config per test topic: question, min year, yes/no checks (feed labeler and screener)
+  gold/v0/      frozen search, candidate pools, gold labels, labeling prompts, provenance (committed)
+  results/      one results file per eval run (committed)
+  harness/      records, scoring, gold validation, run/score/sync commands; adapters/ wraps a pipeline version
+  gold_build/   the gold-set build commands (`python -m eval.gold_build <step>`)
+  snapshots/v1/ frozen v1 search results, kept for history; not used by gold set v0
 ```
 
 Imports are `from src.pipeline.search import ...`. Layering: api -> graph/pipeline -> llm/db; `src/llm`
 imports nothing from `src/pipeline` (the fake LLM is a registry that tests fill in `tests/fakes.py`).
+`eval/` sits beside `src/` and imports it; nothing in `src/` imports `eval/`. Pipeline code reaches the harness only
+through `eval/harness/adapters/`, and scoring and gold validation import nothing from `src/`, so they stay the same
+across pipeline versions. Other `eval/` modules import only settings (`src/llm/settings.py`); `eval/gold_build/` also
+reuses the OpenAlex client, `format_openalex_work` and the PDF helpers, so labeled text is the text the pipeline sees.
 
 ### Pipeline shape
 
@@ -114,9 +138,10 @@ on process start the lifespan marks unfinished runs `interrupted`. `src/ui/app.p
    `OpenAlexClient` queries the OpenAlex Works API (blocking `requests`, called via `asyncio.to_thread`) and
    locally filters by year/citations/PDF availability. A programmatic keyword "gatekeeping firewall"
    (`_apply_programmatic_gatekeeping_firewall`) exists but is currently **bypassed** in
-   `run_precise_retrieval_cycle`. Output shape: `{"papers": [...]}` (`ResearchPaper` in
-   `src/pipeline/screening/screening_schemas.py`). `new_main.py::main()` is the entry point wired into
-   `src/graph/nodes.py::search_node`.
+   `run_precise_retrieval_cycle`. Output shape: `{"papers": [...], "synthetic_abstract": str, "fallback_used": bool}`
+   (`ResearchPaper` in `src/pipeline/screening/screening_schemas.py`; the node reads only `papers`, the eval harness
+   reads the other two). `format_openalex_work` is the one place that turns an OpenAlex work into a paper dict.
+   `new_main.py::main()` is the entry point wired into `src/graph/nodes.py::search_node`.
 
 2. **Screening** (`src/pipeline/screening/`) — `AcademicScreeningAgent` first applies a local
    publication-year prefilter (no LLM call), then classifies each remaining paper independently via
@@ -157,7 +182,8 @@ environment and `.env`): `PROFILE`, `OLLAMA_BASE_URL`, `SEARCH_MODEL` / `SCREENI
 `EXTRACTION_MODEL` (default `qwen2.5-coder:7b`), `EMBEDDING_MODEL` (default
 `sentence-transformers/all-MiniLM-L6-v2`), `REPOSITORY_BACKEND` (`postgres` default, or `memory` for tests),
 `DATABASE_URL` (required with the postgres backend), `OPENALEX_EMAIL`
-(required), `OPENALEX_API_KEY` (optional), `LANGSMITH_TRACING`, `PDF_DIR`. `.env.example` documents each
+(required), `OPENALEX_API_KEY` (optional), `LANGSMITH_TRACING`, `PDF_DIR`, `EVAL_DATA_DIR` (optional; only eval
+commands need it). `.env.example` documents each
 one. The frontend also reads `BACKEND_URL` directly, and `src/llm/tracing.py` reads `LANGSMITH_PROJECT`
 directly. New configuration goes through settings.
 

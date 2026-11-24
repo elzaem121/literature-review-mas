@@ -210,3 +210,21 @@ system and also releases a new benchmark or dataset that others can reuse as "ye
 "without releasing a reusable new benchmark or dataset". Topic 3 check 1 now accepts "digital financial services" or
 "mobile banking" only if mobile money is part of what is measured, and online banking alone is "no". Each rule is in the
 question (for the labeler) and in the yes and no statements (for the screener); three tests pin the wording.
+
+## Step 6 — Documentation
+
+No code changed. The written record now matches the harness that exists.
+
+`eval/README.md` is new: what is committed where and why, the one-time setup of the data folder (a private GitHub
+repository, cloned outside this one and named by `EVAL_DATA_DIR`), the thirteen gold-build steps in order with the
+human steps marked (the blind sheet, the escalation sheet, the extraction sheet), and then the truncation check, the
+baseline run, re-scoring and the sync. `CLAUDE.md` gets the `eval/` layout, the eval commands, the import rule (nothing in
+`src/` imports `eval/`; only the adapters carry pipeline code into the harness, and scoring imports nothing from `src/`),
+the search result's two new fields and the `EVAL_DATA_DIR` setting. The `eval/snapshots/v1/` line no longer calls those
+files inputs for the baseline: they are kept for history.
+
+The backlog triage the author accepted is applied: #16 and #27 closed, #24 moved to Phase 4, #29 rejected for v0, #10
+unchanged, and a new #39 lists the eval refinements that were left out of v0. #38 (truncation) is not touched yet: it is
+updated with real prompt sizes after the truncation check runs. The eval notes now say they are superseded by the design
+document, the plan's evaluation section points to it instead of calling itself provisional, and the first Phase 2a
+checkbox in the plan is ticked, because the design is committed.

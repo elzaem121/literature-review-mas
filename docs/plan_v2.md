@@ -178,7 +178,7 @@ Columns, keys and enumerations are defined in the Phase 1 design (data model) an
 
 ## 8. Evaluation
 
-> Provisional. Metrics, datasets and thresholds are settled at the start of Phase 2a from `docs/eval_notes.md` and written to `docs/designs/eval.md`.
+> Metrics, datasets, thresholds and the model-selection rule are defined in `docs/designs/eval.md`; the brainstorm record is `docs/eval_notes.md`. The principles below stay as the plan-level summary.
 
 **Components measured:** router, search, screening, retrieval, extraction, chat answers and summary, end-to-end latency.
 
@@ -227,7 +227,7 @@ Each phase ends with a working system and a git tag. From Phase 2a on, each phas
 
 ### Phase 2a — Eval baseline · `v0.3`
 Input: `docs/eval_notes.md` (brainstorm record) and `concepts_brief.md`. Phase 2a is kept minimal: gold set, harness, baseline, error analysis. The model benchmark is a Phase 2b experiment.
-- [ ] Write `docs/designs/eval.md` from the brainstorm decisions, including the paired model-selection rule used in Phase 2b
+- [x] Write `docs/designs/eval.md` from the brainstorm decisions, including the paired model-selection rule used in Phase 2b
 - [ ] Gold dataset v0 for three test topics: screening decisions for every topic; for a few papers, the `found` fields with evidence page and a script-verified quote
 - [ ] Check with one logged run whether Ollama truncates extraction prompts; if it does, set the context length explicitly for all runs, including the baseline
 - [ ] Eval harness; measure the baseline: the Phase 1 system with the v1 models. Extraction is scored by field status and retrieval recall only; the baseline extraction outputs are saved for the Phase 2b faithfulness judge. Baseline screening runs twice, and the number of flipped decisions is recorded as the run-to-run noise

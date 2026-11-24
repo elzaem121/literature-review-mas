@@ -1,7 +1,7 @@
 # v1 eval input snapshot
 
-Frozen copies of the two gitignored v1 search outputs, kept as inputs for the Phase 2a eval
-baseline. Do not edit them.
+Frozen copies of the two gitignored v1 search outputs. Kept for history; not used by gold set v0
+(see `docs/designs/eval.md`). Do not edit them.
 
 | Snapshot file | Copied from | Papers | Retrieved |
 | --- | --- | --- | --- |
@@ -22,4 +22,4 @@ v1 repository, where earlier copies of both files were committed:
   (2026-08-05), the first commit that contains it. It was therefore retrieved no later than
   2026-08-05. The local file's modification time is 2026-06-28.
 
-If an exact date matters for the Phase 2a report, re-run the search and replace these files.
+If an exact date ever matters, re-run the search and add the result as a new snapshot.
