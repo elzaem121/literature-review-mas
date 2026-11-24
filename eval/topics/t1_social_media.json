@@ -23,9 +23,9 @@
     },
     {
       "id": "c4",
-      "question": "Is the population a general one, not a clinical sample or a treatment study?",
-      "yes": "The study sample is a general population of adolescents.",
-      "no": "The study sample is a clinical sample, or the study evaluates a treatment."
+      "question": "Is the population a general one, not a clinical sample or a treatment study? Answer \"yes\" unless the abstract describes a clinical sample (participants selected because of a diagnosis) or a treatment study. Depression or anxiety measured as an outcome does not make a sample clinical.",
+      "yes": "The study sample is not clinical, because participants were not selected because of a diagnosis and the study is not a treatment study; depression or anxiety measured as an outcome does not make a sample clinical.",
+      "no": "The study sample is clinical, with participants selected because of a diagnosis, or the study evaluates a treatment."
     },
     {
       "id": "c5",

@@ -17,9 +17,9 @@
     },
     {
       "id": "c3",
-      "question": "Is evaluating such systems the main contribution? \"Yes\" means a benchmark, dataset, evaluation framework, metric, an empirical study that compares systems, or a failure analysis; any kind of evaluation counts (performance, safety, reliability, cost). A paper that proposes a new system or method and evaluates it only to show that it works is \"no\".",
-      "yes": "The main contribution is evaluating such systems: a benchmark, dataset, evaluation framework, metric, empirical comparison of systems or failure analysis, on any aspect such as performance, safety, reliability or cost.",
-      "no": "The main contribution is a new system or method that is evaluated only to show that it works."
+      "question": "Is evaluating such systems the main contribution? \"Yes\" means a benchmark, dataset, evaluation framework, metric, an empirical study that compares systems, or a failure analysis; any kind of evaluation counts (performance, safety, reliability, cost). A paper that proposes a new system and also releases a new benchmark or dataset that others can reuse is \"yes\". A paper that proposes a new system or method and evaluates it only to show that it works is \"no\".",
+      "yes": "The main contribution is evaluating such systems: a benchmark, dataset, evaluation framework, metric, empirical comparison of systems or failure analysis, on any aspect such as performance, safety, reliability or cost; a paper that proposes a system and also releases a reusable new benchmark or dataset counts.",
+      "no": "The main contribution is a new system or method that is evaluated only to show that it works, without releasing a reusable new benchmark or dataset."
     },
     {
       "id": "c4",

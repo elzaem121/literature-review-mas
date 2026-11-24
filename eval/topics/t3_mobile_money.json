@@ -5,9 +5,9 @@
   "checks": [
     {
       "id": "c1",
-      "question": "Is the subject mobile money, meaning phone-based payment and transfer services such as M-Pesa?",
-      "yes": "The subject is mobile money, phone-based payment and transfer services such as M-Pesa.",
-      "no": "The subject is not mobile money; it is another financial or digital service."
+      "question": "Is the subject mobile money, meaning phone-based payment and transfer services such as M-Pesa? \"Digital financial services\" or \"mobile banking\" count as \"yes\" only if mobile money is part of what is measured; online banking alone is \"no\".",
+      "yes": "The subject is mobile money, phone-based payment and transfer services such as M-Pesa; digital financial services or mobile banking count only if mobile money is part of what is measured.",
+      "no": "The subject is not mobile money; it is another financial or digital service, including online banking alone."
     },
     {
       "id": "c2",

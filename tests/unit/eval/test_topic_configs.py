@@ -67,3 +67,34 @@ def test_the_decisive_check_of_topic_2_is_the_evaluation_check():
 
 def test_the_link_list_topic_is_a_real_topic_config():
     assert load_topic(LINK_LIST_TOPIC).topic_id == "t1_social_media"
+
+
+def check_of(topic_id: str, check_id: str):
+    return next(c for c in load_topic(topic_id).checks if c.id == check_id)
+
+
+def test_topic_1_check_4_is_yes_unless_clinical_or_treatment_and_outcomes_do_not_count():
+    check = check_of("t1_social_media", "c4")
+
+    assert 'Answer "yes" unless' in check.question
+    assert "selected because of a diagnosis" in check.question
+    assert "measured as an outcome does not make a sample clinical" in check.question
+    assert "measured as an outcome does not make a sample clinical" in check.yes
+    assert "selected because of a diagnosis" in check.no
+
+
+def test_topic_2_check_3_counts_a_system_paper_that_releases_a_reusable_benchmark():
+    check = check_of("t2_llm_mas_eval", "c3")
+
+    assert "also releases a new benchmark or dataset that others can reuse" in check.question
+    assert "releases a reusable new benchmark or dataset" in check.yes
+    assert "without releasing a reusable new benchmark or dataset" in check.no
+
+
+def test_topic_3_check_1_accepts_digital_finance_only_when_mobile_money_is_measured():
+    check = check_of("t3_mobile_money", "c1")
+
+    assert "only if mobile money is part of what is measured" in check.question
+    assert 'online banking alone is "no"' in check.question
+    assert "only if mobile money is part of what is measured" in check.yes
+    assert "online banking alone" in check.no

@@ -202,3 +202,11 @@ The test checks that exactly these three topics exist, that each has its accepte
 that the screener input has one inclusion and one exclusion line per check and no extra instructions, and that the
 labeling prompt names every check. It also ties the config to the code that already names a topic: the blind sample's
 decisive check for topic 2 must be the evaluation check, and the topic that has the link list must exist.
+
+**Three clarifications added after the first commit.** Topic 1 check 4 now says to answer "yes" unless the abstract
+describes a clinical sample (participants selected because of a diagnosis) or a treatment study, and that depression or
+anxiety measured as an outcome does not make a sample clinical. Topic 2 check 3 now counts a paper that proposes a new
+system and also releases a new benchmark or dataset that others can reuse as "yes"; the "no" statement now says
+"without releasing a reusable new benchmark or dataset". Topic 3 check 1 now accepts "digital financial services" or
+"mobile banking" only if mobile money is part of what is measured, and online banking alone is "no". Each rule is in the
+question (for the labeler) and in the yes and no statements (for the screener); three tests pin the wording.
