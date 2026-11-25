@@ -15,6 +15,7 @@ from eval.gold_build.blind_sample import blind_sample
 from eval.gold_build.build_pool import (
     build_pool,
     extend_pool,
+    extend_pool_with_query,
     read_link_list_from_git,
 )
 from eval.gold_build.compare import compare
@@ -41,6 +42,15 @@ def _freeze_search(args: argparse.Namespace) -> int:
 
 
 def _build_pool(args: argparse.Namespace) -> int:
+    if args.extend_query:
+        if not args.abstract_file:
+            raise ValueError("--extend-query needs --abstract-file")
+        abstract = args.abstract_file.read_text(encoding="utf-8")
+        added = extend_pool_with_query(args.extend_query, abstract)
+        print(
+            f"{args.extend_query}: added {len(added)} papers from the second query; label them next"
+        )
+        return 0
     if args.extend:
         added = extend_pool(args.extend)
         print(f"{args.extend}: added {len(added)} papers as search_extended; label them next")
@@ -150,9 +160,16 @@ def build_parser() -> argparse.ArgumentParser:
     add("freeze_search", _freeze_search, "freeze the baseline search of one topic").add_argument(
         "--topic", required=True
     )
-    add("build_pool", _build_pool, "build the candidate pools, or extend one").add_argument(
+    pool = add("build_pool", _build_pool, "build the candidate pools, or extend one")
+    pool.add_argument(
         "--extend", metavar="TOPIC", help="append the next results of the frozen query"
     )
+    pool.add_argument(
+        "--extend-query",
+        metavar="TOPIC",
+        help="freeze a second, hand-written query for the topic and add its papers",
+    )
+    pool.add_argument("--abstract-file", type=Path, help="the second query's synthetic abstract")
     add("label_prepare", _label_prepare, "write the labeling inputs")
     add("label_run", _label_run, "label every paper with headless Claude").add_argument(
         "--model", required=True, help="the pinned model id, e.g. claude-opus-5-5"

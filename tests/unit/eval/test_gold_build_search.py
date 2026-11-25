@@ -12,6 +12,7 @@ from eval.gold_build.build_pool import (
     deduplicate,
     doi_from_url,
     extend_pool,
+    extend_pool_with_query,
     is_journal_venue,
     parse_link_list,
     read_link_list_from_git,
@@ -439,3 +440,35 @@ def test_extend_adds_new_results_of_the_frozen_query_as_search_extended(
     assert len(pool) == 13
     assert pool["WX1"].aliases == ["WX5"]
     assert pool["WA4"].aliases == ["WX4"]
+
+
+def test_a_second_query_is_frozen_added_as_search_extended_and_recorded(
+    gold_dir: Path, topics_dir: Path, add_topic, monkeypatch: pytest.MonkeyPatch
+):
+    add_topic("ta_mini", ["include"] * 12, prefix="WA", labeled=False)
+    calls: list[str] = []
+
+    def retrieval(
+        self: Any, synthetic_abstract: str, limit: int, min_citations: int, start_year: int
+    ):
+        calls.append(synthetic_abstract)
+        return [raw_work("WA3", "Paper WA3"), raw_work("WX1", "Fresh One")]
+
+    monkeypatch.setattr(OpenAlexClient, "execute_retrieval", retrieval)
+    client = OpenAlexClient(email="tests@example.invalid")
+
+    added = extend_pool_with_query(
+        "ta_mini", "A broader abstract.", gold_dir=gold_dir, topics_dir=topics_dir, client=client
+    )
+
+    assert calls == ["A broader abstract."]
+    assert [(p.paper_key, p.origin) for p in added] == [("WX1", "search_extended")]
+    frozen = read(gold_dir / "ta_mini" / "search_extra.json")
+    assert frozen["synthetic_abstract"] == "A broader abstract."
+    assert frozen["added_keys"] == ["WX1"]
+    assert read(gold_dir / "provenance.json")["extra_queries"]["ta_mini"]["papers_added"] == 1
+    assert load_search_snapshot(gold_dir, "ta_mini").synthetic_abstract.startswith("Synthetic")
+    with pytest.raises(ValueError, match="never overwritten"):
+        extend_pool_with_query(
+            "ta_mini", "Another.", gold_dir=gold_dir, topics_dir=topics_dir, client=client
+        )
