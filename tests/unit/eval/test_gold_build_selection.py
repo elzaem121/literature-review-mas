@@ -147,6 +147,23 @@ def test_a_topic_that_cannot_reach_the_minimum_includes_stops_the_selection_and_
     assert topics_below_min_includes(gold_dir, topics_dir) == ["tb_mini"]
 
 
+def test_a_topic_with_a_recorded_mix_exception_is_selected_with_the_includes_it_has(
+    add_topic: AddTopic, gold_dir: Path, topics_dir: Path
+):
+    add_topic("ta_mini", MIXED, prefix="WA")
+    add_topic("tb_mini", [INCLUDE] * 2 + [EXCLUDE] * 28, prefix="WB")
+    write(gold_dir / "provenance.json", {"mix_exceptions": {"tb_mini": "only 2 includes found"}})
+
+    select_sets(gold_dir=gold_dir, topics_dir=topics_dir)
+
+    chosen = screening_set(gold_dir, "tb_mini")
+    assert len(chosen) == 20
+    assert sum(r.decision == INCLUDE for r in chosen) == 2
+    assert read(gold_dir / "provenance.json")["mix_exceptions"] == {
+        "tb_mini": "only 2 includes found"
+    }
+
+
 def test_the_extension_report_lists_no_topic_when_every_topic_has_enough_includes(
     add_topic: AddTopic, gold_dir: Path, topics_dir: Path
 ):

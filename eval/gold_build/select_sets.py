@@ -1,6 +1,7 @@
 """Step `select_sets`: the seeded choice of the screening set, 20 papers per topic."""
 
 import random
+from dataclasses import replace
 from pathlib import Path
 
 from eval.gold_build.files import load_labels, load_topics, save_labels, update_provenance
@@ -9,6 +10,7 @@ from eval.harness.gold import (
     SEARCH_SET_SIZE,
     GoldLimits,
     ScreeningGold,
+    load_mix_exceptions,
     load_pool,
     load_search_snapshot,
     resolve_search_set,
@@ -90,8 +92,12 @@ def select_sets(
     topics_dir: Path = TOPICS_DIR,
     limits: GoldLimits = GoldLimits(),
 ) -> dict[str, set[str]]:
-    """Mark the screening set in `screening.json` and record the seed and skipped papers."""
+    """Mark the screening set in `screening.json` and record the seed and skipped papers.
+
+    A topic with a recorded mix exception is not held to the minimum of gold includes.
+    """
     records = load_labels(gold_dir)
+    exceptions = load_mix_exceptions(gold_dir)
     selected: dict[str, set[str]] = {}
     skipped: list[dict[str, str]] = []
     for topic_id in load_topics(topics_dir):
@@ -102,7 +108,11 @@ def select_sets(
             raise ValueError(f"{topic_id}: no labels for {sorted(unlabeled)}; run label_import")
         order = resolve_search_set(load_search_snapshot(gold_dir, topic_id), pool, SEARCH_SET_SIZE)
         selected[topic_id], skipped_keys = select_topic(
-            topic_id, topic_records, order, seed, limits
+            topic_id,
+            topic_records,
+            order,
+            seed,
+            replace(limits, min_includes=0) if topic_id in exceptions else limits,
         )
         skipped += [
             {"topic_id": topic_id, "paper_key": key, "reason": SKIP_REASON} for key in skipped_keys
