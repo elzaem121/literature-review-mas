@@ -32,6 +32,7 @@ from eval.harness.gold import (
 from eval.harness.ollama_check import (
     OllamaCheckError,
     check_models,
+    configured_context_length,
     is_infrastructure_error,
     precheck_models,
 )
@@ -49,7 +50,6 @@ from eval.harness.topics import TOPICS_DIR, Topic, load_topic
 from src.llm.settings import get_settings
 
 SCREENING_PASSES = 2
-CONTEXT_LENGTH = "ollama_default"
 POOL_ONLY_FIELDS = {"paper_key", "origin", "search_rank", "aliases"}
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -61,6 +61,11 @@ class RunSummary(BaseModel):
     status: RunStatus
     incomplete_reason: str | None = None
     results_path: Path | None = None
+
+
+def _progress(message: str) -> None:
+    """Print one progress line at once, so a long run shows where it is."""
+    print(message, flush=True)
 
 
 def _git_commit() -> str:
@@ -95,14 +100,22 @@ def _screening_inputs(
 
 
 async def _screen_everything(
-    adapter: Adapter, inputs: dict[str, list[dict[str, Any]]], topics: dict[str, Topic]
+    adapter: Adapter,
+    inputs: dict[str, list[dict[str, Any]]],
+    topics: dict[str, Topic],
+    pass_number: int,
 ) -> tuple[list[ScreeningRecord], float]:
     """One screening pass over every topic's set; returns the records and the wall-clock seconds."""
     started = time.perf_counter()
     records: list[ScreeningRecord] = []
     for topic_id, papers in inputs.items():
+        _progress(
+            f"screening pass {pass_number}/{SCREENING_PASSES}: {topic_id}, {len(papers)} papers"
+        )
         records += await adapter.screen(papers, topics[topic_id])
-    return records, time.perf_counter() - started
+    seconds = time.perf_counter() - started
+    _progress(f"screening pass {pass_number}/{SCREENING_PASSES} done in {seconds:.0f} s")
+    return records, seconds
 
 
 def verified_pages(data_root: Path, paper: ExtractionGold) -> list[str]:
@@ -132,8 +145,9 @@ async def _extract_gold_papers(
 ) -> ExtractionRun:
     """Retrieve and extract every extraction-gold paper, whatever the screener decided."""
     run = ExtractionRun()
-    for paper in papers:
+    for number, paper in enumerate(papers, start=1):
         key = paper.paper_key
+        _progress(f"extraction paper {number}/{len(papers)}: {key}")
         pool_paper = next(p for p in pools[paper.topic_id] if p.paper_key == key)
         pages = verified_pages(data_root, paper)
         started = time.perf_counter()
@@ -145,6 +159,10 @@ async def _extract_gold_papers(
             info, run.retrieval[key], topics[paper.topic_id]
         )
         run.extraction_s[key] = time.perf_counter() - started
+        _progress(
+            f"extraction paper {number}/{len(papers)} done: "
+            f"retrieval {run.retrieval_s[key]:.0f} s, extraction {run.extraction_s[key]:.0f} s"
+        )
     return run
 
 
@@ -206,7 +224,12 @@ async def run_eval(
     adapter = get_adapter(adapter_name)
     system = adapter.provenance()
     models = sorted(set(system["models"].values()))
+    _progress(f"checking models: {', '.join(models)}")
     digests = precheck_models(models, settings.ollama_base_url)
+    context_length = configured_context_length(
+        system["models"]["extraction"], settings.ollama_base_url
+    )
+    _progress(f"models ready, context length {context_length}")
     started_at = datetime.now(UTC)
     git_commit = _git_commit()
 
@@ -216,7 +239,10 @@ async def run_eval(
     pools = {topic_id: load_pool(gold_dir, topic_id) for topic_id in topic_ids}
     inputs = _screening_inputs(gold, pools)
 
-    passes = [await _screen_everything(adapter, inputs, topics) for _ in range(SCREENING_PASSES)]
+    passes = [
+        await _screen_everything(adapter, inputs, topics, number)
+        for number in range(1, SCREENING_PASSES + 1)
+    ]
     screening_runs = [records for records, _ in passes]
     extraction_run = await _extract_gold_papers(
         adapter, data_root, load_extraction_gold(gold_dir), pools, topics
@@ -238,7 +264,7 @@ async def run_eval(
         git_commit=git_commit,
         started_at=f"{started_at:%Y-%m-%dT%H:%M:%SZ}",
         ollama_digests=digests,
-        context_length=CONTEXT_LENGTH,
+        context_length=context_length,
         gold_version=gold_dir.name,
         snapshot_retrieved_at={
             topic_id: load_search_snapshot(gold_dir, topic_id).retrieved_at
@@ -251,6 +277,7 @@ async def run_eval(
     _save_outputs(run_dir, provenance, screening_runs, extraction_run, timings)
     results_path = None
     if status == "complete":
+        _progress("scoring")
         results_path = score_run(run_dir, gold_dir, results_dir, search_size=search_size)
     return RunSummary(
         run_id=run_id, status=status, incomplete_reason=reason, results_path=results_path

@@ -80,6 +80,7 @@ def ollama(monkeypatch: pytest.MonkeyPatch) -> list[list[str]]:
 
     monkeypatch.setattr(run_module, "precheck_models", check_models)
     monkeypatch.setattr(run_module, "check_models", check_models)
+    monkeypatch.setattr(run_module, "configured_context_length", lambda model, base_url: 16384)
     return asked
 
 
@@ -141,7 +142,7 @@ def test_the_provenance_records_the_system_and_the_frozen_inputs(
         "extraction": "qwen2.5-coder:7b",
     }
     assert provenance["ollama_digests"] == {"qwen2.5-coder:7b": "sha256:fixture"}
-    assert provenance["context_length"] == "ollama_default"
+    assert provenance["context_length"] == 16384
     assert provenance["gold_version"] == "gold"
     assert provenance["snapshot_retrieved_at"] == {
         "ta_mini": "2026-11-23T10:00:00Z",
@@ -149,6 +150,30 @@ def test_the_provenance_records_the_system_and_the_frozen_inputs(
     }
     assert provenance["git_commit"] == summary.run_id.rsplit("-", 1)[1]
     assert (provenance["chunker_version"], provenance["retrieval_top_k"]) == ("v1", 5)
+
+
+def test_the_run_prints_its_progress_per_stage(
+    workspace: Path, ollama: list[list[str]], capsys: pytest.CaptureFixture[str]
+):
+    run(workspace)
+
+    lines = capsys.readouterr().out.splitlines()
+    stages = [line for line in lines if not line.startswith("screening pass") or "done" in line]
+    assert lines[0] == "checking models: qwen2.5-coder:7b"
+    assert lines[1] == "models ready, context length 16384"
+    assert [line for line in lines if line.startswith("screening pass 1/2:")] == [
+        "screening pass 1/2: ta_mini, 5 papers",
+        "screening pass 1/2: tb_mini, 5 papers",
+    ]
+    assert (
+        len([line for line in stages if re.fullmatch(r"screening pass \d/2 done in \d+ s", line)])
+        == 2
+    )
+    assert any(
+        re.fullmatch(r"extraction paper 1/\d+ done: retrieval \d+ s, extraction \d+ s", line)
+        for line in lines
+    )
+    assert lines[-1] == "scoring"
 
 
 def test_the_models_are_checked_once_before_and_once_after_the_run(

@@ -1,6 +1,8 @@
 """Checks against Ollama's native API; this is not an LLM client, it only asks for one token."""
 
+import re
 from collections.abc import Iterable
+from typing import Literal
 
 import requests
 
@@ -10,6 +12,8 @@ LOAD_TIMEOUT_S = 300
 PROBE_PROMPT = "Hello"
 OPENAI_SUFFIX = "/v1"
 LATEST_TAG = ":latest"
+NUM_CTX_PARAMETER = re.compile(r"^num_ctx\s+(\d+)\s*$", re.MULTILINE)
+OLLAMA_DEFAULT = "ollama_default"
 INFRASTRUCTURE_ERROR_MARKERS = ("connection error", "timed out", "connection refused")
 
 
@@ -47,6 +51,22 @@ def precheck_models(models: Iterable[str], base_url: str) -> dict[str, str]:
     for tag in digests:
         _answer_one_token(root, tag)
     return digests
+
+
+def configured_context_length(tag: str, base_url: str) -> int | Literal["ollama_default"]:
+    """The `num_ctx` that the model's Modelfile sets, or "ollama_default" when it sets none."""
+    try:
+        response = requests.post(
+            f"{native_root(base_url)}/api/show", json={"model": tag}, timeout=REQUEST_TIMEOUT_S
+        )
+    except requests.RequestException as exc:
+        raise OllamaCheckError(f"cannot read the settings of Ollama model '{tag}': {exc}") from exc
+    if response.status_code >= 400:
+        raise OllamaCheckError(
+            f"cannot read the settings of Ollama model '{tag}': {_error_detail(response)}"
+        )
+    match = NUM_CTX_PARAMETER.search(response.json().get("parameters") or "")
+    return int(match.group(1)) if match else OLLAMA_DEFAULT
 
 
 def _answer_one_token(root: str, tag: str) -> None:

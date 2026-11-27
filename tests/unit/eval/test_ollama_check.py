@@ -7,6 +7,7 @@ from eval.harness import ollama_check
 from eval.harness.ollama_check import (
     OllamaCheckError,
     check_models,
+    configured_context_length,
     is_infrastructure_error,
     native_root,
     precheck_models,
@@ -194,3 +195,48 @@ def test_error_texts_that_point_at_the_infrastructure_are_recognised(text: str):
 )
 def test_other_error_texts_are_not_infrastructure_errors(text: str):
     assert not is_infrastructure_error(text)
+
+
+def show_returning(monkeypatch: pytest.MonkeyPatch, payload: Any) -> list[dict[str, Any]]:
+    """Answer every show request with `payload` and record what was posted."""
+    requests_made: list[dict[str, Any]] = []
+
+    def fake_post(url: str, json: dict[str, Any], timeout: float) -> FakeResponse:
+        requests_made.append({"url": url, "json": json})
+        return FakeResponse(payload)
+
+    monkeypatch.setattr(ollama_check.requests, "post", fake_post)
+    return requests_made
+
+
+def test_the_context_length_is_the_num_ctx_of_the_models_modelfile(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    posted = show_returning(
+        monkeypatch, {"parameters": "stop    <|im_end|>\nnum_ctx                        16384"}
+    )
+
+    assert configured_context_length("qwen2.5-coder:7b-ctx16k", BASE_URL) == 16384
+    assert posted == [
+        {"url": "http://localhost:11434/api/show", "json": {"model": "qwen2.5-coder:7b-ctx16k"}}
+    ]
+
+
+@pytest.mark.parametrize("payload", [{}, {"parameters": None}, {"parameters": "stop <|im_end|>"}])
+def test_a_model_without_num_ctx_has_the_ollama_default(
+    monkeypatch: pytest.MonkeyPatch, payload: dict[str, Any]
+):
+    show_returning(monkeypatch, payload)
+
+    assert configured_context_length("qwen2.5-coder:7b", BASE_URL) == "ollama_default"
+
+
+def test_an_unreadable_model_stops_the_run_with_a_clear_error(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setattr(
+        ollama_check.requests,
+        "post",
+        lambda url, json, timeout: FakeResponse({"error": "model not found"}, status_code=404),
+    )
+
+    with pytest.raises(OllamaCheckError, match="model not found"):
+        configured_context_length("nope", BASE_URL)
