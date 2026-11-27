@@ -59,8 +59,14 @@ make eval-score RUN=<run_id>                # re-score saved outputs; also write
 make eval-sync
 ```
 
-`truncation_check` runs the largest extraction-gold paper. If it reports truncation, set an explicit context length
-for every run, including the baseline (design, "Truncation check").
+`truncation_check` runs the largest extraction-gold paper. On 2026-11-27 it reported truncation (8,860 tokens needed,
+2,050 seen), so every eval run, including the baseline, uses a derived model with an explicit context length:
+
+```bash
+ollama create qwen2.5-coder:7b-ctx16k -f eval/ollama/Modelfile
+export SEARCH_MODEL=qwen2.5-coder:7b-ctx16k SCREENING_MODEL=qwen2.5-coder:7b-ctx16k EXTRACTION_MODEL=qwen2.5-coder:7b-ctx16k
+python -m eval.harness.truncation_check     # now reports truncated: False
+```
 
 `make eval-run` sets `REPOSITORY_BACKEND=memory`, so it never touches the paper library. It checks that every model
 answers, screens the screening set twice, retrieves and extracts the extraction-gold papers, saves every output to
