@@ -1,0 +1,333 @@
+{
+  "run_id": "20261127T095143-phase1-4fc1921",
+  "status": "complete",
+  "provenance": {
+    "status": "complete",
+    "incomplete_reason": null,
+    "adapter": "phase1",
+    "git_commit": "4fc1921",
+    "started_at": "2026-11-27T09:51:43Z",
+    "models": {
+      "search": "qwen2.5-coder:7b-ctx16k",
+      "screening": "qwen2.5-coder:7b-ctx16k",
+      "extraction": "qwen2.5-coder:7b-ctx16k"
+    },
+    "ollama_digests": {
+      "qwen2.5-coder:7b-ctx16k": "8db9947d451b5717a903a0a2ddc8e830fef60218f6c2d0de257238711cec9a4e"
+    },
+    "prompt_versions": {
+      "search": "v1",
+      "screening": "v1",
+      "extraction": "v1"
+    },
+    "context_length": "ollama_default",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "chunker_version": "v1",
+    "retrieval_top_k": 5,
+    "concurrency": 3,
+    "gold_version": "v0",
+    "snapshot_retrieved_at": {
+      "t1_social_media": "2026-11-24T15:09:11Z",
+      "t2_llm_mas_eval": "2026-11-24T15:09:31Z",
+      "t3_mobile_money": "2026-11-24T15:09:56Z"
+    }
+  },
+  "screening": {
+    "topics": {
+      "t1_social_media": {
+        "table": {
+          "include": {
+            "include": 11,
+            "exclude": 0,
+            "uncertain": 0,
+            "failed": 0
+          },
+          "exclude": {
+            "include": 9,
+            "exclude": 0,
+            "uncertain": 0,
+            "failed": 0
+          },
+          "uncertain": {
+            "include": 0,
+            "exclude": 0,
+            "uncertain": 0,
+            "failed": 0
+          }
+        },
+        "include_recall": {
+          "k": 11,
+          "n": 11,
+          "rate": 1.0
+        },
+        "exclude_recall": {
+          "k": 0,
+          "n": 9,
+          "rate": 0.0
+        },
+        "hard_errors": {
+          "k": 9,
+          "n": 20,
+          "rate": 0.45
+        },
+        "failed": 0,
+        "gold_uncertain_outcomes": {
+          "include": 0,
+          "exclude": 0,
+          "uncertain": 0,
+          "failed": 0
+        }
+      },
+      "t2_llm_mas_eval": {
+        "table": {
+          "include": {
+            "include": 9,
+            "exclude": 0,
+            "uncertain": 0,
+            "failed": 0
+          },
+          "exclude": {
+            "include": 9,
+            "exclude": 1,
+            "uncertain": 0,
+            "failed": 0
+          },
+          "uncertain": {
+            "include": 1,
+            "exclude": 0,
+            "uncertain": 0,
+            "failed": 0
+          }
+        },
+        "include_recall": {
+          "k": 9,
+          "n": 9,
+          "rate": 1.0
+        },
+        "exclude_recall": {
+          "k": 1,
+          "n": 10,
+          "rate": 0.1
+        },
+        "hard_errors": {
+          "k": 9,
+          "n": 19,
+          "rate": 0.47368421052631576
+        },
+        "failed": 0,
+        "gold_uncertain_outcomes": {
+          "include": 1,
+          "exclude": 0,
+          "uncertain": 0,
+          "failed": 0
+        }
+      },
+      "t3_mobile_money": {
+        "table": {
+          "include": {
+            "include": 2,
+            "exclude": 0,
+            "uncertain": 0,
+            "failed": 0
+          },
+          "exclude": {
+            "include": 10,
+            "exclude": 7,
+            "uncertain": 0,
+            "failed": 0
+          },
+          "uncertain": {
+            "include": 1,
+            "exclude": 0,
+            "uncertain": 0,
+            "failed": 0
+          }
+        },
+        "include_recall": {
+          "k": 2,
+          "n": 2,
+          "rate": 1.0
+        },
+        "exclude_recall": {
+          "k": 7,
+          "n": 17,
+          "rate": 0.4117647058823529
+        },
+        "hard_errors": {
+          "k": 10,
+          "n": 19,
+          "rate": 0.5263157894736842
+        },
+        "failed": 0,
+        "gold_uncertain_outcomes": {
+          "include": 1,
+          "exclude": 0,
+          "uncertain": 0,
+          "failed": 0
+        }
+      }
+    },
+    "pooled": {
+      "table": {
+        "include": {
+          "include": 22,
+          "exclude": 0,
+          "uncertain": 0,
+          "failed": 0
+        },
+        "exclude": {
+          "include": 28,
+          "exclude": 8,
+          "uncertain": 0,
+          "failed": 0
+        },
+        "uncertain": {
+          "include": 2,
+          "exclude": 0,
+          "uncertain": 0,
+          "failed": 0
+        }
+      },
+      "include_recall": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+      },
+      "exclude_recall": {
+        "k": 8,
+        "n": 36,
+        "rate": 0.2222222222222222
+      },
+      "hard_errors": {
+        "k": 28,
+        "n": 58,
+        "rate": 0.4827586206896552
+      },
+      "failed": 0,
+      "gold_uncertain_outcomes": {
+        "include": 2,
+        "exclude": 0,
+        "uncertain": 0,
+        "failed": 0
+      }
+    }
+  },
+  "noise": {
+    "flips_total": 0,
+    "flips_gold_include": 0
+  },
+  "search": {
+    "precision_at_10": {
+      "topics": {
+        "t1_social_media": {
+          "k": 7,
+          "n": 10,
+          "rate": 0.7
+        },
+        "t2_llm_mas_eval": {
+          "k": 3,
+          "n": 10,
+          "rate": 0.3
+        },
+        "t3_mobile_money": {
+          "k": 2,
+          "n": 10,
+          "rate": 0.2
+        }
+      },
+      "pooled": {
+        "k": 12,
+        "n": 30,
+        "rate": 0.4
+      }
+    }
+  },
+  "retrieval": {
+    "recall_at_5": {
+      "fields": {
+        "method": {
+          "k": 2,
+          "n": 6,
+          "rate": 0.3333333333333333
+        },
+        "dataset": {
+          "k": 2,
+          "n": 6,
+          "rate": 0.3333333333333333
+        },
+        "task": {
+          "k": 0,
+          "n": 6,
+          "rate": 0.0
+        },
+        "main_findings": {
+          "k": 0,
+          "n": 6,
+          "rate": 0.0
+        },
+        "limitations": {
+          "k": 2,
+          "n": 5,
+          "rate": 0.4
+        }
+      },
+      "pooled": {
+        "k": 6,
+        "n": 29,
+        "rate": 0.20689655172413793
+      }
+    }
+  },
+  "extraction": {
+    "found": {
+      "fields": {
+        "method": {
+          "k": 6,
+          "n": 6,
+          "rate": 1.0
+        },
+        "dataset": {
+          "k": 4,
+          "n": 6,
+          "rate": 0.6666666666666666
+        },
+        "task": {
+          "k": 6,
+          "n": 6,
+          "rate": 1.0
+        },
+        "main_findings": {
+          "k": 5,
+          "n": 6,
+          "rate": 0.8333333333333334
+        },
+        "limitations": {
+          "k": 4,
+          "n": 5,
+          "rate": 0.8
+        }
+      },
+      "pooled": {
+        "k": 25,
+        "n": 29,
+        "rate": 0.8620689655172413
+      }
+    }
+  },
+  "failures": {
+    "screening_1": 0,
+    "screening_2": 0,
+    "extraction": 0
+  },
+  "timings": {
+    "screening_pass_s": [
+      1476.0195840839879,
+      1364.1424607909867
+    ],
+    "screening_per_paper_s": 23.66801704062479,
+    "retrieval_per_paper_s": 3.249973604348876,
+    "extraction_per_paper_s": 98.84497047199208,
+    "retrieval_extraction_per_paper_s": 102.09494407634095
+  },
+  "latency_budget_s": 1640.516533445696
+}
