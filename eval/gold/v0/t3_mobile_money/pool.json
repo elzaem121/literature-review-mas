@@ -1,0 +1,466 @@
+[
+  {
+    "paper_key": "W4396854085",
+    "title": "Investigating the Economic Dynamics of Mobile Money in Post-Conflict Economies: Empirical Evidence from Somalia",
+    "abstract": "This study investigates the economic dynamics of mobile money in Somalia, focusing on its transformative potential to impact economic activities in the short and long term. Adopting a quantitative research design, the study utilizes secondary data from 2010 to 2022. The autoregressive distributed lag (ARDL) approach is employed to assess the impact of mobile money on household consumption, real income, exports, and imports. Theoretical insights from the quantity theory of money further guide the examination of how mobile money influences economic activities. The findings demonstrate that mobile money has a significant positive effect on household consumption, real income, export growth, and import activity both in the short and long term. The study reveals that mobile money not only facilitates financial transactions but also enhances trade efficiency and promotes financial inclusion, thereby stimulating economic activities and growth. The study underscores the need for a supportive regulatory environment for mobile money services. It highlights that financial institutions and mobile money service providers should expand innovative services to include the unbanked population. By doing so, they can leverage mobile money to foster greater economic engagement and empowerment. Policymakers are encouraged to develop strategies that promote financial inclusion and economic development to harness the full potential of mobile money. This study enriches the existing literature by uniquely investigating the economic impacts of mobile money in Somalia, a post-conflict setting, thereby broadening the understanding of how financial technologies can catalyze economic activities and growth in similar contexts.",
+    "year": 2024,
+    "authors": [
+      "Mohamed Ibrahim Nor",
+      "Abdinur Ali Mohamed"
+    ],
+    "doi": "https://doi.org/10.32388/y8c0mk",
+    "url": "https://openalex.org/W4396854085",
+    "openalex_id": "W4396854085",
+    "pdf_url": "https://www.qeios.com/read/Y8C0MK/pdf",
+    "venue": "Qeios",
+    "origin": "search",
+    "search_rank": 1,
+    "aliases": [
+      "W4409851680"
+    ]
+  },
+  {
+    "paper_key": "W7165146517",
+    "title": "E-Payment System Adoption and Financial Inclusion in Rural Economies: A Multi-Country Panel Study",
+    "abstract": "The adoption of mobile money and e-payment systems is arguably one of the most transformative fintech developments in the Global South, yet there is little empirical evidence of the financial inclusion and welfare effects of such innovations. This study investigates the impact of e-payment system adoption (measured by mobile subscriptions per 100 adults) on household financial inclusion in 15 lower-income and lower-middle-income economies in Sub-Saharan Africa, South Asia, and Southeast Asia between 2010 and 2022 (N = 15, T = 13, n = 190 country-year observations). All data are extracted from the World Bank World Development Indicators (WDI) database via the R WDI package, and the analysis is fully replicable. We use pooled OLS, two-way fixed effects, random effects, and first-difference panel estimators as well as Im-Pesaran-Shin panel unit root and Pedroni cointegration tests to estimate that a one-percentage-point increase in mobile penetration is associated with a 0.387-point increase in a composite Financial Inclusion Index (FII) under fixed effects (p < 0.001). Causal mediation analysis also shows that financial inclusion accounts for 35.4% of the total negative effect of mobile penetration on the household poverty rate (ACME = − 0.174, p < 0.001). In addition to mobile penetration, other significant complementary drivers of inclusion are regulatory quality, rural internet penetration, broadband access, and female labour force participation. The results of regional heterogeneity analysis indicate that Sub-Saharan Africa has the largest effects. Results are robust across 12 alternative specifications. This study offers an open-data empirical framework for replicable studies to examine the e-payment welfare dynamics in developing economies. JEL Codes: G21, G28, 016, 017, 033, R51",
+    "year": 2026,
+    "authors": [
+      "Gerson Japhet Fumbuka",
+      "Latha Manickam",
+      "Manickam Ramasamy",
+      "D.Hepzibah Vinsyah Jeyaseeli",
+      "B. Ramani Mabel"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-9929375/v1",
+    "url": "https://openalex.org/W7165146517",
+    "openalex_id": "W7165146517",
+    "pdf_url": "https://www.researchsquare.com/article/rs-9929375/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search",
+    "search_rank": 3,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4386525601",
+    "title": "Examining Factors Affecting Mobile Money Usage and Its Impact on Livelihood in Ghana",
+    "abstract": "The study examines factors affecting the acceptance of mobile money usage and its impact on livelihood in Ghana. A holistic view of mobile money usage suggests that, it is still a rapidly a novel area for research in developing countries and has the potential to better the livelihoods of people. For this reason, it is imperative to find out the factors affecting the wide usage of mobile money and its impact on livelihood. It used TAM as the theoretical lens to examine mobile money user’s acceptance and empirically validated data by using regression analysis. Data was collected from mobile money users through an online survey through a structured questionnaire. Purposive and Simple Random sampling approach, were used as the research methodology to select 385 mobile money users in Ghana. Results showed that all constructs (PU, PEOU, PS, PEOL) influenced consumers' desire to use mobile money services which has improved and facilitated the growth of small businesses, provided secure transactions, and provided savings. Mobile money services have also given access to credit, reduced corruption, and job opportunities in areas like customer service, mobile money agent networks. The study recommends that mobile money service providers should provide services that provide ease of use and usefulness to consumers.",
+    "year": 2023,
+    "authors": [
+      "Ekuban Charles Aaron Adams",
+      "Shivapratap Gopakumar"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-3324732/v1",
+    "url": "https://openalex.org/W4386525601",
+    "openalex_id": "W4386525601",
+    "pdf_url": "https://www.researchsquare.com/article/rs-3324732/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search",
+    "search_rank": 4,
+    "aliases": []
+  },
+  {
+    "paper_key": "W3181766881",
+    "title": "Adopting Mobile Money: Evidence from an Experiment in Rural Africa",
+    "abstract": "Who uses mobile money? What is mobile money used for? This paper describes the mobile money adoption patterns following the experimental introduction of mobile money for the first time in rural areas of Southern Mozambique. We use a combination of administrative and household survey data to characterize early and late adopters, as well as their mobile money usage patterns during the three years after mobile money was introduced. We find that a large proportion of the individuals who were offered mobile money services actively adopted this technology. Adopters of mobile money (and early adopters in particular) are more educated than non-adopters, and they are also more likely to already hold a bank account. Positive self-selection of mobile money adopters raises questions about the effectiveness of mobile money as a tool for financial inclusion.",
+    "year": 2020,
+    "authors": [
+      "Cátia Batista",
+      "Pedro C. Vicente"
+    ],
+    "doi": null,
+    "url": "https://openalex.org/W3181766881",
+    "openalex_id": "W3181766881",
+    "pdf_url": "https://docs.iza.org/dp12934.pdf",
+    "venue": "RePEc: Research Papers in Economics",
+    "origin": "search",
+    "search_rank": 5,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4416841157",
+    "title": "Microfinance Institutions, Financial Inclusion, and Household Welfare: Evidence From the Indonesian Context",
+    "abstract": "This study investigates the impact of microfinance institutions (MFIs) on household welfare within the Indonesian context, where financial inclusion remains uneven despite substantial sectoral expansion. Using nationally representative microdata from 175,749 households across 13 provinces, the analysis employs Propensity Score Matching (PSM) to estimate the causal effect of microfinance usage on welfare, proxied by per capita household consumption. Results reveal that only 6.75% of households accessed microfinance, with participants generally poorer, less educated, and more vulnerable. Both nearest neighbor and kernel matching indicate negative treatment effects, with kernel estimates showing a reduction in consumption. Subgroup analyses suggest urban households are more resilient, while rural households display greater vulnerability to adverse impacts. These findings underscore that microfinance, in its current form, does not enhance short-run welfare and may exacerbate financial pressures, highlighting the need for policy reforms in credit design and complementary support mechanisms.",
+    "year": 2025,
+    "authors": [
+      "Ibrahim Kouzo",
+      "Doddy Setiawan",
+      "Falikhatun Falikhatun",
+      "Taufiq Arifin"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-8221912/v1",
+    "url": "https://openalex.org/W4416841157",
+    "openalex_id": "W4416841157",
+    "pdf_url": "https://www.researchsquare.com/article/rs-8221912/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search",
+    "search_rank": 6,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4383553808",
+    "title": "Impact of Mobile Banking Adoption on the Technical Efficiency of Commercial Banks in Ethiopia: An Analysis from 2010 to 2022",
+    "abstract": "The study investigates the relationship between mobile banking adoption and the technical efficiency of commercial banks in Ethiopia. The research utilizes a stochastic frontier model and analyzes data from 2010 to 2022. Descriptive statistics, pairwise correlations, and regression analysis are employed to examine the impact of mobile banking on technical efficiency. The findings reveal a small but significant positive effect of mobile banking on technical efficiency, aligning with previous literature highlighting the benefits of mobile banking adoption. However, the results also suggest that other factors not accounted for in the model significantly influence technical efficiency. This study contributes to the understanding of the role of mobile banking in enhancing efficiency within the Ethiopian banking sector and emphasizes the need for further research to explore additional determinants of technical efficiency.",
+    "year": 2023,
+    "authors": [
+      "Dereje Fedasa Hordofa"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-3146976/v1",
+    "url": "https://openalex.org/W4383553808",
+    "openalex_id": "W4383553808",
+    "pdf_url": "https://www.researchsquare.com/article/rs-3146976/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search",
+    "search_rank": 7,
+    "aliases": []
+  },
+  {
+    "paper_key": "W7168257689",
+    "title": "The Role of Mobile Money Services in Enhancing Financial Inclusion Among Low-Income Communities in Mogadishu, Somalia",
+    "abstract": "Mobile money services are widely regarded as a transformative tool for advancing financial inclusion in developing and fragile economies. However, empirical evidence on their actual impact remains limited in under-researched contexts such as Somalia. This study examines the role of mobile money services in enhancing financial inclusion among low-income communities in Mogadishu, with a specific focus on service accessibility, affordability, and reliability. A quantitative approach using a correlational research design was employed. The study sample consisted of 200 respondents, including low-income residents, small business owners, and active mobile money users, selected through simple random sampling to ensure representativeness. Data were collected using a structured questionnaire and analyzed using the Statistical Package for the Social Sciences (SPSS), applying both descriptive and inferential statistics, including correlation and regression analyses. The findings reveal that mobile money service factors do not have a statistically significant effect on financial inclusion, as indicated by weak correlations and low explanatory power. The results suggest that despite widespread usage, mobile money services alone are insufficient to drive meaningful financial inclusion. The study concludes that structural and behavioral factors—such as financial literacy, income stability, trust, and integration with formal financial institutions—play a more critical role, highlighting the need for more comprehensive and inclusive policy interventions.",
+    "year": 2026,
+    "authors": [
+      "Ali Abdi Yusuf",
+      "Abdisamad Yusuf Mohamud"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-10173253/v1",
+    "url": "https://openalex.org/W7168257689",
+    "openalex_id": "W7168257689",
+    "pdf_url": "https://www.researchsquare.com/article/rs-10173253/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search",
+    "search_rank": 8,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4221154976",
+    "title": "Mobile money-driven financial inclusion, exposure to shocks and households' financial resilience strategies adoption process: Evidence from Cameroon",
+    "abstract": "Relying on the 2017 Cameroon Finscope Consumer survey dataset, the goal of this working paper is to conceptualize households’ adoption of financial resilience strategies to adverse shocks as a multi-step process and investigate the key factors that influence the transition from one step to another as well as the role of mobile money in each of these transitions",
+    "year": 2022,
+    "authors": [
+      "Patrick-Hervé Mbouombouo Mfossa"
+    ],
+    "doi": null,
+    "url": "https://openalex.org/W4221154976",
+    "openalex_id": "W4221154976",
+    "pdf_url": "https://hal.science/hal-03614064/document",
+    "venue": "HAL",
+    "origin": "search",
+    "search_rank": 9,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4411529520",
+    "title": "Financial Sector Development, Fiscal Capacity, and Social Welfare in East Africa: A Principal Component Analysis Approach",
+    "abstract": "This study investigates the interconnected roles of financial sector development and fiscal capacity in shaping social welfare outcomes in East Africa. Using panel data from 1990 to 2023 for seven countries: Burundi, Ethiopia, Kenya, Rwanda, Sudan, Tanzania, and Uganda, the research constructs a Composite Welfare Index (CWI) through Principal Component Analysis (PCA). This index integrates key social, economic, political, and environmental indicators to provide a multidimensional measure of welfare. Descriptive analysis reveals persistent disparities in welfare performance, with Kenya consistently leading the region and Sudan ranking lowest. Empirical results from a dynamic heterogeneous panel model indicate that robust financial sector development and strong fiscal capacity significantly enhance social welfare. These effects operate primarily through improved government ability to mobilize resources, deliver essential services, and implement inclusive policies. The findings underscore the critical role of financial and fiscal institutions in promoting equitable and sustainable welfare outcomes. Based on the study's findings, it is recommended that East African countries strengthen financial infrastructure to broaden access to financial services, thereby supporting the delivery of essential social services. Enhancing fiscal capacity through efficient revenue mobilization and improved tax administration is crucial for sustainable public financing. Moreover, governments should strategically allocate public resources to key sectors such as healthcare, education, and infrastructure to optimize welfare outcomes.",
+    "year": 2025,
+    "authors": [
+      "Abdissa Demise Damasa"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-6937770/v1",
+    "url": "https://openalex.org/W4411529520",
+    "openalex_id": "W4411529520",
+    "pdf_url": "https://www.researchsquare.com/article/rs-6937770/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search",
+    "search_rank": 10,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4398230001",
+    "title": "From Phone Access to Food Markets: Is Mobile Connectivity Transforming West-African Livelihoods ?",
+    "abstract": "This paper investigates the impact of mobile connectivity on food market prices and household demand for food products in the West African Economic and Monetary Union (WAEMU) region. Leveraging data from harmonized World Bank LSMS household surveys across eight WAEMU countries, this study includes 59,319 households and 146 food products across 4,983 enumeration areas, with data gathered in 2018-2019. By using exposure to lightning strikes as an instrumental variable for cell tower coverage, we find that mobile connectivity reduces food price dispersion by spurring food prices catch-up in rural areas. Greater market demand for food products and lower reliance on self-consumption of food produced by rural households appear to be the drivers of this observed convergence in food price. Additionally, enhanced financial inclusion through mobile money and diversification of income sources through off-farm and non-agricultural activities are identified as key enablers of these observed changes. Overall, these results suggest that the digitalization of rural areas stimulates the transition from a subsistence to a market economy, thereby accelerating rural transformations, albeit with the added risk of leaving unconnected households behind.",
+    "year": 2024,
+    "authors": [
+      "Joël Cariolle",
+      "David Carroll"
+    ],
+    "doi": null,
+    "url": "https://openalex.org/W4398230001",
+    "openalex_id": "W4398230001",
+    "pdf_url": "https://hal.science/hal-04583057v1/file/WP341-Cariolle%20and%20Carroll%20II.pdf",
+    "venue": "HAL",
+    "origin": "search",
+    "search_rank": 11,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4287003077",
+    "title": "Mobile Broadband Internet, Poverty and Labor Outcomes in Tanzania",
+    "abstract": "What are the impacts of expanding mobile broadband coverage on poverty, household consumption and labor market outcomes in developing countries? Who benefits from improved coverage of mobile internet? To respond to these questions, this paper applies a difference-in-differences estimation using panel household survey data combined with geospatial information on the rollout of mobile broadband coverage in Tanzania. The results reveal that being covered by 3G networks has a large positive effect on total household consumption and poverty reduction, driven by positive impacts on labor market outcomes. Working age individuals living in areas covered by mobile internet witnessed an increase in labor force participation, wage employment, and non-farm self-employment, and a decline in farm employment. These effects vary by age, gender and skill level. Younger and more skilled men benefit the most through higher labor force participation and wage employment, while high-skilled women benefit from transitions from self-employed farm work into non-farm employment.",
+    "year": 2021,
+    "authors": [
+      "Kalvin Bahia",
+      "Pau Castells",
+      "Genaro Cruz",
+      "Takaaki Masaki",
+      "Carlos Rodríguez Castelán",
+      "Viviane Sanfelice"
+    ],
+    "doi": null,
+    "url": "https://openalex.org/W4287003077",
+    "openalex_id": "W4287003077",
+    "pdf_url": "https://docs.iza.org/dp14720.pdf",
+    "venue": "RePEc: Research Papers in Economics",
+    "origin": "search",
+    "search_rank": 12,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4410807047",
+    "title": "Mobile Money and the Future of Digital Currency: Evidence from Kenya",
+    "abstract": "This paper explores the dynamics of mobile money adoption and satisfaction in Kenya, using household survey data from the Research ICT Africa (RIA) series. The study examines demographic and socio-economic determinants of M-Pesa ownership and user satisfaction through logistic and Poisson regression models. Results suggest that traditional barriers such as gender, age, and education have limited influence on M-Pesa adoption and user satisfaction, indicating a narrowing digital divide. Although the intensity of mobile money usage is proxied by self-reported satisfaction scores rather than transaction frequency, the analysis highlights the platform’s widespread acceptance and usability. These findings carry important implications for the design and rollout of central bank digital currencies (CBDCs), particularly in low- and middle-income countries. Kenya’s experience with M-Pesa provides a valuable reference point for future digital currency innovations that are inclusive, trusted, and infrastructure-ready.",
+    "year": 2025,
+    "authors": [
+      "Monzur Morshed"
+    ],
+    "doi": "https://doi.org/10.31219/osf.io/msbz4_v1",
+    "url": "https://openalex.org/W4410807047",
+    "openalex_id": "W4410807047",
+    "pdf_url": "https://osf.io/msbz4_v1/download",
+    "venue": "OSF Preprints (OSF Preprints)",
+    "origin": "search",
+    "search_rank": 13,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4416796935",
+    "title": "Empowering communities: how digital financial inclusion is driving energy consumption in Sub-Saharan Africa",
+    "abstract": "Promoting financial inclusion in Sub-Saharan Africa (SSA) aims to stimulate inclusive economic growth and reduce poverty in the region. The development of improved technologies in the financial sector has made financial services accessible to a significant segment of the population in the region. Between 2004 and 2019, we assess how digital financial inclusion affects energy consumption, using the system generalised method of moments. Utilising data from the international energy agency and global Findex, the results reveal that the increased accessibility and utilisation of financial services beyond commercial bank loans lead to higher energy consumption. Moreover, financial service availability driven by mobile phone usage decreases energy intensity. However, the number of borrowers from commercial bank is negatively associated with energy consumption.",
+    "year": 2025,
+    "authors": [
+      "Nancy Muvumbu Mukalayi",
+      "Roula Inglesi‐Lotz"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-7907104/v1",
+    "url": "https://openalex.org/W4416796935",
+    "openalex_id": "W4416796935",
+    "pdf_url": "https://www.researchsquare.com/article/rs-7907104/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search",
+    "search_rank": 14,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4413193965",
+    "title": "Implications of Financial Inclusion on Welfare in Nigeria: A K-Mode Analysis and Semi-parametric Regression",
+    "abstract": "This study examines the role of financial inclusion on the welfare of Nigerian households. While the importance of financial inclusion in improving welfare has long been stressed, the multidimensional effects on poverty, food insecurity, dietary diversity, and assets remain partially acknowledged. We use panel data from the World Bank’s Living Standard Measurement Survey, covering four waves. As against existing studies, we employ an innovative K-mode clustering technique suitable for categorical data to identify subgroups of financial inclusion among households. Furthermore, a control function semi-parametric regression enabled us to estimate the relationship between these clusters (as well as individual financial services) and four outcomes. Results showed that a comprehensive financial inclusion is associated with better poverty, dietary diversity, and asset outcomes. Consequently, we recommend that governments continue to take advantage of the potential benefits of access to financial services by reducing inequality in access to financial services for female-headed households while strengthening other products (for instance, credit) via literacy and related educational programs. JEL: G21, I32, D14, O55, E21, R20, J16",
+    "year": 2025,
+    "authors": [
+      "Toyib Aremu",
+      "Richmond Silvanus Baye",
+      "Tosin Kolajo Gbadegesin",
+      "Kingsford Onyina"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-7228787/v1",
+    "url": "https://openalex.org/W4413193965",
+    "openalex_id": "W4413193965",
+    "pdf_url": "https://www.researchsquare.com/article/rs-7228787/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search",
+    "search_rank": 15,
+    "aliases": []
+  },
+  {
+    "paper_key": "W3200528294",
+    "title": "Effect of mobile financial services on financial behavior in developing economies-Evidence from India",
+    "abstract": "The study examines the relationship between mobile financial services and individual financial behavior in India wherein a sizeable population is yet to be financially included. Addressing the endogeneity associated with the use of mobile financial services using an instrumental variable method, the study finds that the use of mobile financial services increases the likelihood of investment, having insurance and borrowing from formal financial institutions. Further, the analysis highlights that access to mobile financial services have the potential to bridge the gender divide in financial inclusion. Fastening the pace of access to mobile financial services may partially alter pandemic induced poverty.",
+    "year": 2021,
+    "authors": [
+      "Shreya Biswas"
+    ],
+    "doi": "https://doi.org/10.48550/arxiv.2109.07077",
+    "url": "https://openalex.org/W3200528294",
+    "openalex_id": "W3200528294",
+    "pdf_url": "http://arxiv.org/pdf/2109.07077",
+    "venue": "RePEc: Research Papers in Economics",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W3186986914",
+    "title": "E-money, Financial Inclusion and Mobile Money Tax in Sub-Saharan African Mobile Networks",
+    "abstract": "E-money and financial inclusion are both development challenges for developing countries, the former contributing to improving tax mobilization and the latter to achieving particular sustainable development objectives. However, one of the central financial inclusion and e-money services providers is mobile network operators using mobile money. The latter is subject to numerous taxes that can affect their operations. The paper studies the incidence of the new mobile money excise duty in the mobile networks sector on the adoption of electronic money and the advancement of financial inclusion through digital services in sub-Saharan countries. It appears that the introduction of the tax leads to an increase in user fees, which has a positive impact on demand for cash, and it is only in the presence of the latter that MM reduces the demand for cash for studied countries. In addition, the study assumes that tax administrations in these countries would raise more revenue without this excise because the tax is not conducive to the full adoption of e-money.",
+    "year": 2021,
+    "authors": [
+      "Tarna Silue"
+    ],
+    "doi": null,
+    "url": "https://openalex.org/W3186986914",
+    "openalex_id": "W3186986914",
+    "pdf_url": "https://uca.hal.science/hal-03281898/file/E%26D_22.pdf",
+    "venue": "HAL",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4416354426",
+    "title": "Determinants of financial and digital inclusion in West and Central Africa: Evidence from binary models with cross-validation",
+    "abstract": "This study examines the determinants of financial and digital inclusion in West and Central Africa using the World Bank Findex 2021 data. Unlike prior works that rely solely on traditional logit and probit models, we combine country-by-country analysis with robustness checks including K-fold cross-validation and Vuong test. Three samples were considered : a full sample combin- ing both regions and two separate subsamples for West and Central Africa. The results indicate that gender, educational attainment, income level, and place of residence are significant factors influencing both financial and digital inclusion in the full sample and the West African subsam- ple. In the Central African subsample, gender is not significant; however, age, education, income, and rural residence emerge as key determinants of financial and digital inclusion. Overall, Ghana stands out as the most financially inclusive country, although it trails Senegal in terms of credit access and digital payment use. Nigeria leads in formal account ownership and formal savings but falls considerably behind Ghana in mobile money account ownership and digital payments. Central African countries generally report lower levels of inclusion compared to West Africa, with Cameroon performing comparatively better.",
+    "year": 2025,
+    "authors": [
+      "Ismaila A. Jallow",
+      "Samya Tajmouati"
+    ],
+    "doi": "https://doi.org/10.48550/arxiv.2511.12179",
+    "url": "https://openalex.org/W4416354426",
+    "openalex_id": "W4416354426",
+    "pdf_url": "https://arxiv.org/pdf/2511.12179",
+    "venue": "arXiv",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4285093376",
+    "title": "Financial technology and financial inclusion in Africa",
+    "abstract": "This paper examines the effect of financial technology (FINTECH) on financial inclusion in 36 African countries for 2011, 2014 and 2017 in a two-stage analysis. In the first stage, data on access, usage and availability of financial services is employed to compute financial inclusion index (FII) using the Principal Component Analysis. In the second stage, a panel data regression model is estimated using the fixed and random effects techniques to examine the effect of proxies of financial technology of the FII. The findings suggests that the sample is characterized by low levels of financial inclusion. From the panel regression analysis, FINTECH is observed to have a positive effect on financial inclusion. Specifically, the use of mobile accounts is observed to have the greatest impact on financial inclusion compared to the use of digital payments from traditional bank accounts. The policy implications of the findings are discussed.",
+    "year": 2022,
+    "authors": [
+      "Abdul Latif Alhassan",
+      "Sandisiwe Yengeni"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-1794818/v1",
+    "url": "https://openalex.org/W4285093376",
+    "openalex_id": "W4285093376",
+    "pdf_url": "https://www.researchsquare.com/article/rs-1794818/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W3014193054",
+    "title": "No gender please, we're central bankers: Distributional impacts of quantitative easing",
+    "abstract": "This paper first explores the role of digital financial services, e.g. mobile money systems and cryptocurrency-based systems, and their impact on the choice of migrants to send remittances. Secondly we discuss whether alternative remittances sending channels increase access to financial services for remittance-sending and remittance-receiving households. Africa, and in particularly Kenya, arepioneers in alternative money transfer systems and of tailor-made regulatory initiatives to address digital financial services. Thus,our paper focuses on the technologies of the Kenyan mobile money system, M-Pesa, and the major cryptocurrency, Bitcoin,and based on that takes into account selected experiences of other Sub-Saharan African countries. We find that in comparison to traditional remittances sending channels, mobile money transfer channels are often superior in terms of service-related features as costs of transfers for sending and receiving households, speed of delivery, availability and access to the remittances by receiving households or security of transactions. More importantly,mobile cash systems can fulfil the SDG goal of the 3 per cent fee more than 10 years earlier than envisaged in 2030. On the other side, the choice to use a specific transfer channel might be restricted by the lack of physical and technological availability of providers and means, and technological illiteracy. In addition, sending and receiving households might be cautious to use mobile cash system due to a lack of trust in the system, the providersor regulatory authorities. Accordingly, financial inclusion beyond e-payments and outreach to the poor is not an automatism. In contrast, the use of Bitcoin-based transfer systems is more ambivalent; these systems are technically more challenging both in terms of infrastructure and literacy and more vulnerable to fraud. Some findings also indicate that Bitcoin is anincompleteand inferior substitute to which migrants refer to if their first option is not available or suffers from severe deficiencies. Future research also needs to differentiate sending and receiving households stronger according to personal features in order todeepen our understanding about the choices of and restrictions of vulnerable groups who would benefit the most from using mobile cash systems.",
+    "year": 2020,
+    "authors": [
+      "Marc J. Metzger",
+      "Brigitte Young"
+    ],
+    "doi": null,
+    "url": "https://openalex.org/W3014193054",
+    "openalex_id": "W3014193054",
+    "pdf_url": "https://www.econstor.eu/bitstream/10419/214915/1/1692376071.pdf",
+    "venue": "RePEc: Research Papers in Economics",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W3184153016",
+    "title": "Financial Inclusion and Economic Growth : Evidence in the Digital Environment of Developing Countries",
+    "abstract": "The paper focuses on the relationship between economic growth and financial inclusion in developing countries. One of the main innovations of the analysis is to report on the contribution to developing new digital financial services such as mobile money. To do this, I first realize a simple endogenous growth model in which the role of the financial sector is to provide sources of investment to included population. The model indicates that consumption could be the main channel through financial inclusion, contributing to growth. Then, the empirical estimation realized using the Generalized Method of Moments (GMM) with 57 countries over 2007-2017 evaluates the impacts of traditional and digital inclusion on growth. The results confirm the positive effect of financial inclusion on growth. For formal inclusion, estimators reveal that the financial system deposits contribute to growth in developing countries. Concerning digital inclusion, we note that an active mobile money account has a higher positive impact on growth than standard inclusion.",
+    "year": 2021,
+    "authors": [
+      "Tarna Silue"
+    ],
+    "doi": null,
+    "url": "https://openalex.org/W3184153016",
+    "openalex_id": "W3184153016",
+    "pdf_url": "https://hal.uca.fr/hal-03281843/document",
+    "venue": "HAL",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W4416346143",
+    "title": "Digital Financial Inclusion and Individual Savings in East Africa: Evidence from Uganda, Kenya, and Tanzania",
+    "abstract": "This study analyses the determinants of individual savings in Uganda, Kenya, and Tanzania using the Global Financial Inclusion (Global Findex) database 2021. The model integrates descriptive statistics, chi-square tests, t tests, ANOVA, and propensity score matching (PSM) to estimate causal effects while following the methodological guidelines of Rosenbaum and Rubin (1983).The study first documents strong associations between saving and a range of demographic, socioeconomic, and financial inclusion variables. Men, urban residents, higher-income and better-educated individuals, and those integrated into formal and digital financial systems (through account ownership, mobile phones, internet access, and digital payments) are significantly more likely to save and accumulate higher savings balances. The ANOVA results further reveal pronounced gradients in average savings across income quintiles, remittance channels, and modes of receiving wages, transfers, pensions, and agricultural payments, with account-based and digital channels consistently associated with greater savings.To address selection bias, PSM was employed to estimate causal effects. The results indicate that borrowing, remittances through formal or semiformal channels, and internet access significantly increase the probability of saving. Cross-country PSM estimates reveal that saving has a positive causal effect on income in Tanzania but not in Uganda or Kenya once financial inclusion and socioeconomic characteristics are controlled for. Regarding financial inclusion outcomes, saving has a clear causal link with borrowing in Uganda and a weak causal effect in Kenya but no robust causal impact on internet access, account ownership, or digital payment use in any of the countries after matching. In Kenya’s more mature digital ecosystem, digital payment usage itself has a strong causal effect on saving.Overall, the findings underscore the central role of digital and formal financial infrastructure, income, and labor market attachment in shaping savings, consistent with foundational theories such as the permanent income hypothesis (Friedman, 1957) and life cycle hypothesis (Modigliani & Brumberg, 1954). Policy priorities include expanding inclusive digital finance, promoting account-based payment channels, and designing country-specific strategies that leverage the complementarities between saving, borrowing, and digital financial inclusion.",
+    "year": 2025,
+    "authors": [
+      "Kasumba Stephen Robert",
+      "Gertrude S. Muwanga"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-8118462/v1",
+    "url": "https://openalex.org/W4416346143",
+    "openalex_id": "W4416346143",
+    "pdf_url": "https://www.researchsquare.com/article/rs-8118462/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W7214071725",
+    "title": "Mobile Banking Features User Trust and Financial Inclusion among Premier Wallet Users in Somalia",
+    "abstract": "Digital financial services can expand access to payments, savings, credit, and remittances in contexts where conventional banking infrastructure is limited. This study examines the relationships among mobile banking features, user trust, and financial inclusion among 272 active Premier Wallet users in Mogadishu, Somalia. It also tests whether user trust statistically mediates the association between mobile banking features and financial inclusion and whether age, gender, employment status, and income level condition selected pathways. Data were collected through a cross-sectional questionnaire and analyzed using exploratory scale assessment, reliability analysis, bivariate correlations, regression-based mediation with bootstrapped confidence intervals, and moderation analysis. Mobile banking features were positively associated with financial inclusion (β = .72, p < .001) and user trust (β = .86, p < .001). The mediation analysis indicated a significant indirect association through user trust (B = 0.53, 95% CI [0.31, 0.73]), while the direct association remained significant. The feature–inclusion association was stronger among respondents aged 35–44 than among younger users and was stronger for men than for women. Employment status also moderated the association, with a non-significant conditional association among self-employed respondents. Income strengthened the association between user trust and financial inclusion but weakened the association between mobile banking features and user trust. The findings highlight the importance of reliable, affordable, secure, and context-sensitive digital financial services in fragile-state settings.",
+    "year": 2026,
+    "authors": [
+      "Mahad Abdiwali Mohamed",
+      "Ali Abdukadir Ali Gutale",
+      "Ahmed Nur Dirie",
+      "Abdiaziz Bashir Mohamud",
+      "Ali Yasin Sheikh Ali",
+      "Hussein Mohamud Ahmed"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-10826165/v1",
+    "url": "https://openalex.org/W7214071725",
+    "openalex_id": "W7214071725",
+    "pdf_url": "https://www.researchsquare.com/article/rs-10826165/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W3082982688",
+    "title": "Towards a new index of mobile money inclusion and the role of the regulatory environment",
+    "abstract": "It is an undeniable fact that financial inclusion has become a global policy priority. Despite its popularity in the policy sphere, the concept of financial inclusion lacks a comprehensive measure to monitor and evaluate inclusive financial systems across the globe. To fill this gap, we combine macro-level data from the Financial Access Survey of the International Monetary Fund and the World Bank’s Global Findex database to construct novel indices of financial inclusion. First, we compute new financial inclusion indices that incorporate access to financial services by groups prone to exclusion. Second, we account for the recent upsurge in mobile money adoption in the developing world by computing a novel mobile money inclusion index. We further relate the financial inclusion indices with legal origin to ascertain the role of initial conditions of the regulatory environment in countries’ financial inclusion achievements. We find that whereas developed countries continue to lead in banking inclusion, developing countries in sub-Saharan Africa are at the frontiers of mobile money inclusion. Also, we find evidence suggesting that the regulatory environment matters for financial inclusion.",
+    "year": 2020,
+    "authors": [
+      "Godsway Korku Tetteh",
+      "Micheline Goedhuys",
+      "Maty Konté",
+      "Pierre Mohnen"
+    ],
+    "doi": null,
+    "url": "https://openalex.org/W3082982688",
+    "openalex_id": "W3082982688",
+    "pdf_url": "https://unu-merit.nl/publications/wppdf/2020/wp2020-035.pdf",
+    "venue": "RePEc: Research Papers in Economics",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W7143439148",
+    "title": "Digital Connectivity and Financial Inclusion: An Empirical Cross-Country Analysis Using the Global Findex 2025 Database",
+    "abstract": "This study empirically explores the digital determinants of financial account ownership of 152 economies using the Global Findex Database 2025, which is the most recent cross-country repository on financial inclusion produced by the World Bank. By using ordinary least squares (OLS) regressions, together with descriptive, regional and bivariate analytical procedures, the authors examine the extent to which digital financial access, ownership of a mobile money account and the use of the internet predict financial account ownership at country level. The results show that digital financial access is the strongest and statistically significant determinant of financial account ownership in the world with a coefficient of 0.911 (p < 0.001), while the full model explains 76.7% of the cross-country variation in account ownership. Mobile money account ownership is added to the model with a negative and statistically significant coefficient of -0.236 (p = 0.006) indicating a substitution effect in economies where mobile money becomes the primary avenue to financial access in lieu of the traditional infrastructure of a banking sector. While internet usage is positively correlated with account ownership in bivariate tests, in the multivariate model, internet usage is not found statistically significant in driving financial inclusion without the presence of functioning digital financial infrastructure alongside with it. The regional analysis shows significant disparities in the results of financial inclusion. High income economies have an average account ownership rate of 92.03%, compared with 42.41% in the Middle East and North Africa and 55.60% in Sub-Saharan Africa. These results have some interesting implications for policymakers and development-finance institutions interested in designing inclusive digital financial ecosystems; they highlight the importance of investing in digital financial infrastructure in a targeted way rather than simply expanding internet access as a tool of financial inclusion. This study is the first cross-country empirical analysis of the factors driving digital financial inclusion based on the Global Findex 2025 dataset and offers timely and original evidence that can be relevant for policy formulation and practice concerning digital financial inclusion.",
+    "year": 2026,
+    "authors": [
+      "Miracle Edeh",
+      "Antony Raj"
+    ],
+    "doi": "https://doi.org/10.20944/preprints202603.2167.v1",
+    "url": "https://openalex.org/W7143439148",
+    "openalex_id": "W7143439148",
+    "pdf_url": "https://www.preprints.org/frontend/manuscript/63f11f475325093497296ddf21cfe503/download_pub",
+    "venue": "Preprints.org",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  },
+  {
+    "paper_key": "W7203828579",
+    "title": "From financial access to food resilience: A household-level analysis of gender and urban–rural disparities in Sub-Saharan Africa",
+    "abstract": "This study examines the impact of financial inclusion (FI) on household food insecurity in Sub-Saharan Africa (SSA), emphasizing gender and residential disparities. Using an ordered probit model with Copula approach to control for endogeneity and data from 45,683 households across 32 SSA countries, the findings reveal that expanding FI significantly reduces the probability of food insecurity. However, women and rural households face heightened vulnerability. Contributing factors include climatic shocks, conflicts, corruption, discrimination, and traditional land allocation practices. Conversely, access to healthcare and education mitigates food insecurity risks. Policymakers should enhance FI, especially for women and rural populations, through financial literacy programs, mobile banking, and tailored credit facilities. Addressing gender disparities requires empowering women via affordable credit, and entrepreneurial training. Investments in rural financial infrastructure, such as banking networks and digital payment systems, can improve service access. Systemic issues like corruption and inequitable land allocation must be tackled through policy reforms and conflict resolution. Strengthening education and healthcare infrastructure is also critical, as it boosts household productivity and enhances the efficacy of financial services in reducing food insecurity. By addressing these economic and structural barriers, policymakers can build a more inclusive financial ecosystem, fostering resilience and food security across SSA.",
+    "year": 2026,
+    "authors": [
+      "Mohamed Porgo",
+      "Pirénam Diane Kpatcha",
+      "Essossinam Ali",
+      "Pouwemdéou Tchila"
+    ],
+    "doi": "https://doi.org/10.21203/rs.3.rs-10183302/v1",
+    "url": "https://openalex.org/W7203828579",
+    "openalex_id": "W7203828579",
+    "pdf_url": "https://www.researchsquare.com/article/rs-10183302/latest.pdf",
+    "venue": "Research Square",
+    "origin": "search_extended",
+    "search_rank": null,
+    "aliases": []
+  }
+]

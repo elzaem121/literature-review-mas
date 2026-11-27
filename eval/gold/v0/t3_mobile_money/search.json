@@ -1,0 +1,248 @@
+{
+  "topic_id": "t3_mobile_money",
+  "retrieved_at": "2026-11-24T15:09:56Z",
+  "duration_s": 22.9,
+  "search_model": "qwen2.5-coder:7b",
+  "search_prompt_version": "v1",
+  "synthetic_abstract": "This paper investigates the correlation between mobile money use and household welfare in Sub-Saharan Africa. Utilizing data from a comprehensive survey in Kenya, the study employs a rigorous econometric approach to analyze the impact of mobile money on various welfare indicators, including consumption, savings, and income. The findings reveal a significant positive correlation between mobile money use and household welfare, suggesting that mobile money enhances financial inclusion and economic empowerment. The study also explores the mechanisms through which mobile money contributes to improved welfare, providing actionable insights for policymakers and financial service providers.",
+  "fallback_used": false,
+  "openalex_params": {
+    "target_output_count": 25,
+    "min_citations": 0,
+    "start_year": 2020
+  },
+  "papers": [
+    {
+      "title": "Investigating the Economic Dynamics of Mobile Money in Post-Conflict Economies: Empirical Evidence from Somalia",
+      "abstract": "This study investigates the economic dynamics of mobile money in Somalia, focusing on its transformative potential to impact economic activities in the short and long term. Adopting a quantitative research design, the study utilizes secondary data from 2010 to 2022. The autoregressive distributed lag (ARDL) approach is employed to assess the impact of mobile money on household consumption, real income, exports, and imports. Theoretical insights from the quantity theory of money further guide the examination of how mobile money influences economic activities. The findings demonstrate that mobile money has a significant positive effect on household consumption, real income, export growth, and import activity both in the short and long term. The study reveals that mobile money not only facilitates financial transactions but also enhances trade efficiency and promotes financial inclusion, thereby stimulating economic activities and growth. The study underscores the need for a supportive regulatory environment for mobile money services. It highlights that financial institutions and mobile money service providers should expand innovative services to include the unbanked population. By doing so, they can leverage mobile money to foster greater economic engagement and empowerment. Policymakers are encouraged to develop strategies that promote financial inclusion and economic development to harness the full potential of mobile money. This study enriches the existing literature by uniquely investigating the economic impacts of mobile money in Somalia, a post-conflict setting, thereby broadening the understanding of how financial technologies can catalyze economic activities and growth in similar contexts.",
+      "year": 2024,
+      "authors": [
+        "Mohamed Ibrahim Nor",
+        "Abdinur Ali Mohamed"
+      ],
+      "doi": "https://doi.org/10.32388/y8c0mk",
+      "url": "https://openalex.org/W4396854085",
+      "relevance_score": 0,
+      "openalex_id": "W4396854085",
+      "pdf_url": "https://www.qeios.com/read/Y8C0MK/pdf",
+      "venue": "Qeios"
+    },
+    {
+      "title": "Investigating the Economic Dynamics of Mobile Money in Post-Conflict Economies: Empirical Evidence from Somalia",
+      "abstract": "This study investigates the economic dynamics of mobile money in Somalia, focusing on its transformative potential to impact economic activities in the short and long term. Adopting a quantitative research design, the study utilizes secondary data from 2010 to 2022. The autoregressive distributed lag (ARDL) approach is employed to assess the impact of mobile money on household consumption, real income, exports, and imports. Theoretical insights from the quantity theory of money further guide the examination of how mobile money influences economic activities. The findings demonstrate that mobile money has a significant positive effect on household consumption, real income, export growth, and import activity both in the short and long term. The study reveals that mobile money not only facilitates financial transactions but also enhances trade efficiency and promotes financial inclusion, thereby stimulating economic activities and growth. The study underscores the need for a supportive regulatory environment for mobile money services. It highlights that financial institutions and mobile money service providers should expand innovative services to include the unbanked population. By doing so, they can leverage mobile money to foster greater economic engagement and empowerment. Policymakers are encouraged to develop strategies that promote financial inclusion and economic development to harness the full potential of mobile money. This study enriches the existing literature by uniquely investigating the economic impacts of mobile money in Somalia, a post-conflict setting, thereby broadening the understanding of how financial technologies can catalyze economic activities and growth in similar contexts.",
+      "year": 2024,
+      "authors": [
+        "Mohamed Ibrahim Nor",
+        "Abdinur Ali Mohamed"
+      ],
+      "doi": "https://doi.org/10.32388/y8c0mk",
+      "url": "https://openalex.org/W4409851680",
+      "relevance_score": 0,
+      "openalex_id": "W4409851680",
+      "pdf_url": "https://www.qeios.com/read/Y8C0MK/pdf",
+      "venue": "Qeios"
+    },
+    {
+      "title": "E-Payment System Adoption and Financial Inclusion in Rural Economies: A Multi-Country Panel Study",
+      "abstract": "The adoption of mobile money and e-payment systems is arguably one of the most transformative fintech developments in the Global South, yet there is little empirical evidence of the financial inclusion and welfare effects of such innovations. This study investigates the impact of e-payment system adoption (measured by mobile subscriptions per 100 adults) on household financial inclusion in 15 lower-income and lower-middle-income economies in Sub-Saharan Africa, South Asia, and Southeast Asia between 2010 and 2022 (N = 15, T = 13, n = 190 country-year observations). All data are extracted from the World Bank World Development Indicators (WDI) database via the R WDI package, and the analysis is fully replicable. We use pooled OLS, two-way fixed effects, random effects, and first-difference panel estimators as well as Im-Pesaran-Shin panel unit root and Pedroni cointegration tests to estimate that a one-percentage-point increase in mobile penetration is associated with a 0.387-point increase in a composite Financial Inclusion Index (FII) under fixed effects (p < 0.001). Causal mediation analysis also shows that financial inclusion accounts for 35.4% of the total negative effect of mobile penetration on the household poverty rate (ACME = − 0.174, p < 0.001). In addition to mobile penetration, other significant complementary drivers of inclusion are regulatory quality, rural internet penetration, broadband access, and female labour force participation. The results of regional heterogeneity analysis indicate that Sub-Saharan Africa has the largest effects. Results are robust across 12 alternative specifications. This study offers an open-data empirical framework for replicable studies to examine the e-payment welfare dynamics in developing economies. JEL Codes: G21, G28, 016, 017, 033, R51",
+      "year": 2026,
+      "authors": [
+        "Gerson Japhet Fumbuka",
+        "Latha Manickam",
+        "Manickam Ramasamy",
+        "D.Hepzibah Vinsyah Jeyaseeli",
+        "B. Ramani Mabel"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-9929375/v1",
+      "url": "https://openalex.org/W7165146517",
+      "relevance_score": 0,
+      "openalex_id": "W7165146517",
+      "pdf_url": "https://www.researchsquare.com/article/rs-9929375/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "Examining Factors Affecting Mobile Money Usage and Its Impact on Livelihood in Ghana",
+      "abstract": "The study examines factors affecting the acceptance of mobile money usage and its impact on livelihood in Ghana. A holistic view of mobile money usage suggests that, it is still a rapidly a novel area for research in developing countries and has the potential to better the livelihoods of people. For this reason, it is imperative to find out the factors affecting the wide usage of mobile money and its impact on livelihood. It used TAM as the theoretical lens to examine mobile money user’s acceptance and empirically validated data by using regression analysis. Data was collected from mobile money users through an online survey through a structured questionnaire. Purposive and Simple Random sampling approach, were used as the research methodology to select 385 mobile money users in Ghana. Results showed that all constructs (PU, PEOU, PS, PEOL) influenced consumers' desire to use mobile money services which has improved and facilitated the growth of small businesses, provided secure transactions, and provided savings. Mobile money services have also given access to credit, reduced corruption, and job opportunities in areas like customer service, mobile money agent networks. The study recommends that mobile money service providers should provide services that provide ease of use and usefulness to consumers.",
+      "year": 2023,
+      "authors": [
+        "Ekuban Charles Aaron Adams",
+        "Shivapratap Gopakumar"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-3324732/v1",
+      "url": "https://openalex.org/W4386525601",
+      "relevance_score": 0,
+      "openalex_id": "W4386525601",
+      "pdf_url": "https://www.researchsquare.com/article/rs-3324732/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "Adopting Mobile Money: Evidence from an Experiment in Rural Africa",
+      "abstract": "Who uses mobile money? What is mobile money used for? This paper describes the mobile money adoption patterns following the experimental introduction of mobile money for the first time in rural areas of Southern Mozambique. We use a combination of administrative and household survey data to characterize early and late adopters, as well as their mobile money usage patterns during the three years after mobile money was introduced. We find that a large proportion of the individuals who were offered mobile money services actively adopted this technology. Adopters of mobile money (and early adopters in particular) are more educated than non-adopters, and they are also more likely to already hold a bank account. Positive self-selection of mobile money adopters raises questions about the effectiveness of mobile money as a tool for financial inclusion.",
+      "year": 2020,
+      "authors": [
+        "Cátia Batista",
+        "Pedro C. Vicente"
+      ],
+      "doi": null,
+      "url": "https://openalex.org/W3181766881",
+      "relevance_score": 0,
+      "openalex_id": "W3181766881",
+      "pdf_url": "https://docs.iza.org/dp12934.pdf",
+      "venue": "RePEc: Research Papers in Economics"
+    },
+    {
+      "title": "Microfinance Institutions, Financial Inclusion, and Household Welfare: Evidence From the Indonesian Context",
+      "abstract": "This study investigates the impact of microfinance institutions (MFIs) on household welfare within the Indonesian context, where financial inclusion remains uneven despite substantial sectoral expansion. Using nationally representative microdata from 175,749 households across 13 provinces, the analysis employs Propensity Score Matching (PSM) to estimate the causal effect of microfinance usage on welfare, proxied by per capita household consumption. Results reveal that only 6.75% of households accessed microfinance, with participants generally poorer, less educated, and more vulnerable. Both nearest neighbor and kernel matching indicate negative treatment effects, with kernel estimates showing a reduction in consumption. Subgroup analyses suggest urban households are more resilient, while rural households display greater vulnerability to adverse impacts. These findings underscore that microfinance, in its current form, does not enhance short-run welfare and may exacerbate financial pressures, highlighting the need for policy reforms in credit design and complementary support mechanisms.",
+      "year": 2025,
+      "authors": [
+        "Ibrahim Kouzo",
+        "Doddy Setiawan",
+        "Falikhatun Falikhatun",
+        "Taufiq Arifin"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-8221912/v1",
+      "url": "https://openalex.org/W4416841157",
+      "relevance_score": 0,
+      "openalex_id": "W4416841157",
+      "pdf_url": "https://www.researchsquare.com/article/rs-8221912/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "Impact of Mobile Banking Adoption on the Technical Efficiency of Commercial Banks in Ethiopia: An Analysis from 2010 to 2022",
+      "abstract": "The study investigates the relationship between mobile banking adoption and the technical efficiency of commercial banks in Ethiopia. The research utilizes a stochastic frontier model and analyzes data from 2010 to 2022. Descriptive statistics, pairwise correlations, and regression analysis are employed to examine the impact of mobile banking on technical efficiency. The findings reveal a small but significant positive effect of mobile banking on technical efficiency, aligning with previous literature highlighting the benefits of mobile banking adoption. However, the results also suggest that other factors not accounted for in the model significantly influence technical efficiency. This study contributes to the understanding of the role of mobile banking in enhancing efficiency within the Ethiopian banking sector and emphasizes the need for further research to explore additional determinants of technical efficiency.",
+      "year": 2023,
+      "authors": [
+        "Dereje Fedasa Hordofa"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-3146976/v1",
+      "url": "https://openalex.org/W4383553808",
+      "relevance_score": 0,
+      "openalex_id": "W4383553808",
+      "pdf_url": "https://www.researchsquare.com/article/rs-3146976/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "The Role of Mobile Money Services in Enhancing Financial Inclusion Among Low-Income Communities in Mogadishu, Somalia",
+      "abstract": "Mobile money services are widely regarded as a transformative tool for advancing financial inclusion in developing and fragile economies. However, empirical evidence on their actual impact remains limited in under-researched contexts such as Somalia. This study examines the role of mobile money services in enhancing financial inclusion among low-income communities in Mogadishu, with a specific focus on service accessibility, affordability, and reliability. A quantitative approach using a correlational research design was employed. The study sample consisted of 200 respondents, including low-income residents, small business owners, and active mobile money users, selected through simple random sampling to ensure representativeness. Data were collected using a structured questionnaire and analyzed using the Statistical Package for the Social Sciences (SPSS), applying both descriptive and inferential statistics, including correlation and regression analyses. The findings reveal that mobile money service factors do not have a statistically significant effect on financial inclusion, as indicated by weak correlations and low explanatory power. The results suggest that despite widespread usage, mobile money services alone are insufficient to drive meaningful financial inclusion. The study concludes that structural and behavioral factors—such as financial literacy, income stability, trust, and integration with formal financial institutions—play a more critical role, highlighting the need for more comprehensive and inclusive policy interventions.",
+      "year": 2026,
+      "authors": [
+        "Ali Abdi Yusuf",
+        "Abdisamad Yusuf Mohamud"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-10173253/v1",
+      "url": "https://openalex.org/W7168257689",
+      "relevance_score": 0,
+      "openalex_id": "W7168257689",
+      "pdf_url": "https://www.researchsquare.com/article/rs-10173253/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "Mobile money-driven financial inclusion, exposure to shocks and households' financial resilience strategies adoption process: Evidence from Cameroon",
+      "abstract": "Relying on the 2017 Cameroon Finscope Consumer survey dataset, the goal of this working paper is to conceptualize households’ adoption of financial resilience strategies to adverse shocks as a multi-step process and investigate the key factors that influence the transition from one step to another as well as the role of mobile money in each of these transitions",
+      "year": 2022,
+      "authors": [
+        "Patrick-Hervé Mbouombouo Mfossa"
+      ],
+      "doi": null,
+      "url": "https://openalex.org/W4221154976",
+      "relevance_score": 0,
+      "openalex_id": "W4221154976",
+      "pdf_url": "https://hal.science/hal-03614064/document",
+      "venue": "HAL"
+    },
+    {
+      "title": "Financial Sector Development, Fiscal Capacity, and Social Welfare in East Africa: A Principal Component Analysis Approach",
+      "abstract": "This study investigates the interconnected roles of financial sector development and fiscal capacity in shaping social welfare outcomes in East Africa. Using panel data from 1990 to 2023 for seven countries: Burundi, Ethiopia, Kenya, Rwanda, Sudan, Tanzania, and Uganda, the research constructs a Composite Welfare Index (CWI) through Principal Component Analysis (PCA). This index integrates key social, economic, political, and environmental indicators to provide a multidimensional measure of welfare. Descriptive analysis reveals persistent disparities in welfare performance, with Kenya consistently leading the region and Sudan ranking lowest. Empirical results from a dynamic heterogeneous panel model indicate that robust financial sector development and strong fiscal capacity significantly enhance social welfare. These effects operate primarily through improved government ability to mobilize resources, deliver essential services, and implement inclusive policies. The findings underscore the critical role of financial and fiscal institutions in promoting equitable and sustainable welfare outcomes. Based on the study's findings, it is recommended that East African countries strengthen financial infrastructure to broaden access to financial services, thereby supporting the delivery of essential social services. Enhancing fiscal capacity through efficient revenue mobilization and improved tax administration is crucial for sustainable public financing. Moreover, governments should strategically allocate public resources to key sectors such as healthcare, education, and infrastructure to optimize welfare outcomes.",
+      "year": 2025,
+      "authors": [
+        "Abdissa Demise Damasa"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-6937770/v1",
+      "url": "https://openalex.org/W4411529520",
+      "relevance_score": 0,
+      "openalex_id": "W4411529520",
+      "pdf_url": "https://www.researchsquare.com/article/rs-6937770/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "From Phone Access to Food Markets: Is Mobile Connectivity Transforming West-African Livelihoods ?",
+      "abstract": "This paper investigates the impact of mobile connectivity on food market prices and household demand for food products in the West African Economic and Monetary Union (WAEMU) region. Leveraging data from harmonized World Bank LSMS household surveys across eight WAEMU countries, this study includes 59,319 households and 146 food products across 4,983 enumeration areas, with data gathered in 2018-2019. By using exposure to lightning strikes as an instrumental variable for cell tower coverage, we find that mobile connectivity reduces food price dispersion by spurring food prices catch-up in rural areas. Greater market demand for food products and lower reliance on self-consumption of food produced by rural households appear to be the drivers of this observed convergence in food price. Additionally, enhanced financial inclusion through mobile money and diversification of income sources through off-farm and non-agricultural activities are identified as key enablers of these observed changes. Overall, these results suggest that the digitalization of rural areas stimulates the transition from a subsistence to a market economy, thereby accelerating rural transformations, albeit with the added risk of leaving unconnected households behind.",
+      "year": 2024,
+      "authors": [
+        "Joël Cariolle",
+        "David Carroll"
+      ],
+      "doi": null,
+      "url": "https://openalex.org/W4398230001",
+      "relevance_score": 0,
+      "openalex_id": "W4398230001",
+      "pdf_url": "https://hal.science/hal-04583057v1/file/WP341-Cariolle%20and%20Carroll%20II.pdf",
+      "venue": "HAL"
+    },
+    {
+      "title": "Mobile Broadband Internet, Poverty and Labor Outcomes in Tanzania",
+      "abstract": "What are the impacts of expanding mobile broadband coverage on poverty, household consumption and labor market outcomes in developing countries? Who benefits from improved coverage of mobile internet? To respond to these questions, this paper applies a difference-in-differences estimation using panel household survey data combined with geospatial information on the rollout of mobile broadband coverage in Tanzania. The results reveal that being covered by 3G networks has a large positive effect on total household consumption and poverty reduction, driven by positive impacts on labor market outcomes. Working age individuals living in areas covered by mobile internet witnessed an increase in labor force participation, wage employment, and non-farm self-employment, and a decline in farm employment. These effects vary by age, gender and skill level. Younger and more skilled men benefit the most through higher labor force participation and wage employment, while high-skilled women benefit from transitions from self-employed farm work into non-farm employment.",
+      "year": 2021,
+      "authors": [
+        "Kalvin Bahia",
+        "Pau Castells",
+        "Genaro Cruz",
+        "Takaaki Masaki",
+        "Carlos Rodríguez Castelán",
+        "Viviane Sanfelice"
+      ],
+      "doi": null,
+      "url": "https://openalex.org/W4287003077",
+      "relevance_score": 0,
+      "openalex_id": "W4287003077",
+      "pdf_url": "https://docs.iza.org/dp14720.pdf",
+      "venue": "RePEc: Research Papers in Economics"
+    },
+    {
+      "title": "Mobile Money and the Future of Digital Currency: Evidence from Kenya",
+      "abstract": "This paper explores the dynamics of mobile money adoption and satisfaction in Kenya, using household survey data from the Research ICT Africa (RIA) series. The study examines demographic and socio-economic determinants of M-Pesa ownership and user satisfaction through logistic and Poisson regression models. Results suggest that traditional barriers such as gender, age, and education have limited influence on M-Pesa adoption and user satisfaction, indicating a narrowing digital divide. Although the intensity of mobile money usage is proxied by self-reported satisfaction scores rather than transaction frequency, the analysis highlights the platform’s widespread acceptance and usability. These findings carry important implications for the design and rollout of central bank digital currencies (CBDCs), particularly in low- and middle-income countries. Kenya’s experience with M-Pesa provides a valuable reference point for future digital currency innovations that are inclusive, trusted, and infrastructure-ready.",
+      "year": 2025,
+      "authors": [
+        "Monzur Morshed"
+      ],
+      "doi": "https://doi.org/10.31219/osf.io/msbz4_v1",
+      "url": "https://openalex.org/W4410807047",
+      "relevance_score": 0,
+      "openalex_id": "W4410807047",
+      "pdf_url": "https://osf.io/msbz4_v1/download",
+      "venue": "OSF Preprints (OSF Preprints)"
+    },
+    {
+      "title": "Empowering communities: how digital financial inclusion is driving energy consumption in Sub-Saharan Africa",
+      "abstract": "Promoting financial inclusion in Sub-Saharan Africa (SSA) aims to stimulate inclusive economic growth and reduce poverty in the region. The development of improved technologies in the financial sector has made financial services accessible to a significant segment of the population in the region. Between 2004 and 2019, we assess how digital financial inclusion affects energy consumption, using the system generalised method of moments. Utilising data from the international energy agency and global Findex, the results reveal that the increased accessibility and utilisation of financial services beyond commercial bank loans lead to higher energy consumption. Moreover, financial service availability driven by mobile phone usage decreases energy intensity. However, the number of borrowers from commercial bank is negatively associated with energy consumption.",
+      "year": 2025,
+      "authors": [
+        "Nancy Muvumbu Mukalayi",
+        "Roula Inglesi‐Lotz"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-7907104/v1",
+      "url": "https://openalex.org/W4416796935",
+      "relevance_score": 0,
+      "openalex_id": "W4416796935",
+      "pdf_url": "https://www.researchsquare.com/article/rs-7907104/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "Implications of Financial Inclusion on Welfare in Nigeria: A K-Mode Analysis and Semi-parametric Regression",
+      "abstract": "This study examines the role of financial inclusion on the welfare of Nigerian households. While the importance of financial inclusion in improving welfare has long been stressed, the multidimensional effects on poverty, food insecurity, dietary diversity, and assets remain partially acknowledged. We use panel data from the World Bank’s Living Standard Measurement Survey, covering four waves. As against existing studies, we employ an innovative K-mode clustering technique suitable for categorical data to identify subgroups of financial inclusion among households. Furthermore, a control function semi-parametric regression enabled us to estimate the relationship between these clusters (as well as individual financial services) and four outcomes. Results showed that a comprehensive financial inclusion is associated with better poverty, dietary diversity, and asset outcomes. Consequently, we recommend that governments continue to take advantage of the potential benefits of access to financial services by reducing inequality in access to financial services for female-headed households while strengthening other products (for instance, credit) via literacy and related educational programs. JEL: G21, I32, D14, O55, E21, R20, J16",
+      "year": 2025,
+      "authors": [
+        "Toyib Aremu",
+        "Richmond Silvanus Baye",
+        "Tosin Kolajo Gbadegesin",
+        "Kingsford Onyina"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-7228787/v1",
+      "url": "https://openalex.org/W4413193965",
+      "relevance_score": 0,
+      "openalex_id": "W4413193965",
+      "pdf_url": "https://www.researchsquare.com/article/rs-7228787/latest.pdf",
+      "venue": "Research Square"
+    }
+  ]
+}

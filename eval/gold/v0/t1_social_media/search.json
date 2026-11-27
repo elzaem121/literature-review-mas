@@ -1,0 +1,335 @@
+{
+  "topic_id": "t1_social_media",
+  "retrieved_at": "2026-11-24T15:09:11Z",
+  "duration_s": 42.8,
+  "search_model": "qwen2.5-coder:7b",
+  "search_prompt_version": "v1",
+  "synthetic_abstract": "This paper investigates the multifaceted relationship between social media use and adolescents' everyday life, identity, wellbeing, and peer relations. Utilizing a mixed-age sample of adolescents, the study explores how social media platforms like Instagram, TikTok, Snapchat, and YouTube influence these aspects of their lives. Findings highlight the positive role of social media in fostering identity development and peer connections while also identifying potential negative impacts on mental health, such as depressive and anxiety symptoms. The study underscores the importance of understanding these dynamics to inform supportive interventions and promote healthier social media practices among adolescents.",
+  "fallback_used": false,
+  "openalex_params": {
+    "target_output_count": 25,
+    "min_citations": 0,
+    "start_year": 2020
+  },
+  "papers": [
+    {
+      "title": "Diverse Platforms, Diverse Effects: Evidence From a 100-Day Study on Social Media and Adolescent Mental Health",
+      "abstract": "The rising prevalence of mental health problems among adolescents has prompted increased scrutiny of social media as a contributing factor. Previous research has produced mixed results, likely due to the varying impact of social media on different dimensions of mental health. To advance understanding in this area, this study examined how social media use affects three critical dimensions of adolescent mental health – well-being, self-esteem, and friendship closeness. Specifically, we examined whether adolescents experienced consistent (unity) or contrasting (duality) effects across these dimensions by analyzing 44,211 daily diaries from 479 adolescents over 100 days. We found that the majority of adolescents (60%) experienced unity in negative effects of social media, suggesting that social media use is a notable contributor to mental health issues. Moreover, 13.6% of adolescents experienced duality in effects, indicating that social media use simultaneously harms and benefits different dimensions of their mental health. Exploratory analyses demonstrated the importance of examining platform-specific effects, revealing negative impacts of TikTok, YouTube, and Instagram use and positive or null effects of Snapchat and WhatsApp use on the three dimensions of mental health. Our findings highlight the need for tailored strategies that account for the varying impacts of social media on adolescent mental health.",
+      "year": 2024,
+      "authors": [
+        "Amber van der Wal",
+        "Ine Beyens",
+        "Loes H. C. Janssen",
+        "Patti M. Valkenburg"
+      ],
+      "doi": "https://doi.org/10.31234/osf.io/qe9rn",
+      "url": "https://openalex.org/W4401581022",
+      "relevance_score": 0,
+      "openalex_id": "W4401581022",
+      "pdf_url": "https://osf.io/qe9rn/download",
+      "venue": "PsyArXiv (OSF Preprints)"
+    },
+    {
+      "title": "Diverse Platforms, Diverse Effects: Evidence From a 100-Day Study on Social Media and Adolescent Mental Health",
+      "abstract": "The rising prevalence of mental health problems among adolescents has prompted increased scrutiny of social media as a contributing factor. Previous research has produced mixed results, likely due to the varying impact of social media on different dimensions of mental health. To advance understanding in this area, this study examined how social media use affects three critical dimensions of adolescent mental health – well-being, self-esteem, and friendship closeness. Specifically, we examined whether adolescents experienced consistent (unity) or contrasting (duality) effects across these dimensions by analyzing 44,211 daily diaries from 479 adolescents over 100 days. We found that the majority of adolescents (60%) experienced unity in negative effects of social media, suggesting that social media use is a notable contributor to mental health issues. Moreover, 13.6% of adolescents experienced duality in effects, indicating that social media use simultaneously harms and benefits different dimensions of their mental health. Exploratory analyses demonstrated the importance of examining platform-specific effects, revealing negative impacts of TikTok, YouTube, and Instagram use and positive or null effects of Snapchat and WhatsApp use on the three dimensions of mental health. Our findings highlight the need for tailored strategies that account for the varying impacts of social media on adolescent mental health.",
+      "year": 2025,
+      "authors": [
+        "Amber van der Wal",
+        "Ine Beyens",
+        "Loes H. C. Janssen",
+        "Patti M. Valkenburg"
+      ],
+      "doi": "https://doi.org/10.31234/osf.io/qe9rn_v2",
+      "url": "https://openalex.org/W4414373054",
+      "relevance_score": 0,
+      "openalex_id": "W4414373054",
+      "pdf_url": "https://lirias.kuleuven.be/retrieve/b490fa35-2b75-4969-aebf-1c483f4a7db1",
+      "venue": "PsyArXiv (OSF Preprints)"
+    },
+    {
+      "title": "Current Challenges to Adolescent Well-being",
+      "abstract": "Mental health problems are increasing among adolescents with depression, anxiety, and multiple areas where self-esteem is negatively impacted on the rise. Dangers of social media use include social comparison and the risk of not receiving positive feedback. This study focused on a review of previous research literature and used data supplied by RemedyLive. The purpose of this paper is to examine the influence of social media on an adolescent’s well-being. The data were provided and complied by RemedyLive with all individual user data scrubbed. RemedyLive is an organization offering support to students in middle and high school around the United States. RemedyLive operates the ‘Get Schooled Tour’, giving talks in schools and asking students to respond to questions regarding family, friends, school, and other areas that may influence mental health. The findings suggest that school and homework are top stressors for students, with 35% of high school students reporting high levels of anxiety. There are numerous concerns with social media relating to increases in depression, anxiety, and lower self-esteem. The content, especially on Instagram, significantly lowers mental health, However, with 60% of students reporting 4 or more hours of non-academic screen time each day there is less time being spent on productive and academic tasks. The conclusion of the research points to a concerning relationship between social media platforms and decreasing adolescent mental health that suggest the dangers of social media are indirect and often unnoticed by adolescents and young adults. An ongoing analysis of social media on development is recommended for further investigation to determine the long-term effects.",
+      "year": 2022,
+      "authors": [
+        "Vincent Jeevar",
+        "Bonneta Chapman-Little",
+        "Sarah Jackson"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-1447988/v1",
+      "url": "https://openalex.org/W4220861150",
+      "relevance_score": 0,
+      "openalex_id": "W4220861150",
+      "pdf_url": "https://www.researchsquare.com/article/rs-1447988/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "How do Norwegian Adolescents Experience The Role of Social Media in Relation to Mental Health and Well-Being: A Qualitative Study",
+      "abstract": "Background: During the last decade, social media has permeated most parts of society. Adolescents are particularly active users of social media, and their use has been suggested as a contributing factor to mental health issues in this group. Quantitative studies have found associations between the frequency and/or duration of social media use and more mental health issues. However, most studies are cross-sectional and the identified associations are weak and of questionable practical significance. The aim of this study was to investigate adolescents’ lived experiences of using social media, focusing on both negative and positive aspects, using a qualitative approach. Qualitative research enables in-depth explorations of the experiences of individuals, nuance quantitative findings, and offer the perspective of adolescents into policies regarding social media use.Methods: Experiences and perspectives of 27 adolescents from two upper secondary schools in Norway were gathered using focus group interviews (mean age 16.8, range 15-18). The data were analysed using thematic analysis. Results: According to the participants, social media use catalyse changes to how people communicate and relate to each other (theme 1). Some changes were positive, in terms of facilitating social connectedness, while others were negative, such as people behaving worse than in face-to-face interactions. Further, social media use affected the participants at the individual level (theme 2); positively in terms of a sense of belonging and social support, and negatively in terms of perceived stress, body pressure, and displacing other activities such as sleep and homework. The motivations for using, or not using, social media were multifaceted (theme 3), reflecting the positive and negative aspects of social media in terms of interpersonal and personal consequences.Conclusion: Social media was described as an important part of the participants’ everyday life, with both a positive and negative impact on their mental health and well-being. Considering the compelling nature of social media and adolescents’ relatively limited self-regulatory capacities, efforts to modify social media use should avoid relying on self-regulation, while also recognizing the importance of social media as an arena for peer interaction.",
+      "year": 2020,
+      "authors": [
+        "Gunnhild Johnsen Hjetland",
+        "Viktor Schønning",
+        "Randi Træland Hella",
+        "Marius Veseth",
+        "Jens Christoffer Skogen"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-133641/v1",
+      "url": "https://openalex.org/W4235716068",
+      "relevance_score": 0,
+      "openalex_id": "W4235716068",
+      "pdf_url": "https://www.researchsquare.com/article/rs-133641/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "Role of Social Media in Adolescent Mental Health: A Comprehensive Review",
+      "abstract": "Social media has become a prominent part of adolescent experiences, with more than 90% of individuals ages 13-18 utilizing social media platforms such as Instagram, TikTok, and Snapchat daily (Pew Research Center, 2023). This review uses literature from 2018 - 2025 to explore the role of social media in adolescent mental health whereby anxiety, depression and self-esteem are the primary focus for high-income countries. Studies reveal both beneficial (e.g., social connection, self-expression) and detrimental (e.g., cyberbullying, social comparison) impacts of social media on adolescent mental health, broadly dependent upon dose of use, platform type and the demographics of the individual using social media. The primary findings suggest that moderate social media use (1-2 hours daily) is associated with more benefits, whereas excessive use (>3 hours daily) is linked with increased risk to mental health. There are still gaps in this review with respect to: renewed longitudinal data examining newer platforms (e.g., TikTok); a lack of leverage in considering marginalized groups in exploring adolescent mental health; and a need to standardize metrics for mental health outcomes. Future research could examine AI-directed content moderation, platform prefixes of problematic situations, and individual categorizations. The implications of this review indicates the need for balanced social media policies that support the well-being of youth and adolescents.",
+      "year": 2025,
+      "authors": [
+        "Tvisha Kumar"
+      ],
+      "doi": "https://doi.org/10.58445/rars.2635",
+      "url": "https://openalex.org/W4411281317",
+      "relevance_score": 0,
+      "openalex_id": "W4411281317",
+      "pdf_url": "https://research-archive.org/index.php/rars/preprint/download/2635/3707/3301",
+      "venue": null
+    },
+    {
+      "title": "Objectively measured social media use and psychosocial wellbeing among adolescent girls: a prospective study",
+      "abstract": "Objective Cross-sectional studies indicate associations between self-reported social media use and adolescent wellbeing outcomes. We aimed to evaluate longitudinal associations of objectively measured smartphone and social media use with psychosocial wellbeing. Design Observational study with one year of follow-up Setting High schools in Finland from 2022 to 2023 Population 259 adolescent girls (mean age 16.3 years at baseline) Main outcome measures screenshots depicting smartphone and social media use, Bergen Social Media Addiction Scale (BSMAS), Generalized Anxiety Disorder-7 questionnaire, Body Appreciation Scale 2 (BAS-2) and visual analogue scales (VAS) of mood, tiredness, and loneliness Results Across one year of follow-up, anxiety, body appreciation, and mood improved, but possible social media addiction increased from 15% to 17%. Social media addiction at baseline was associated with increased anxiety (r=0.29, p<0.001), lower body appreciation (r=-0.15, p=0.022), and more loneliness (r=0.20, p=0.001) at follow-up. Anxiety at baseline was associated with social media addiction at follow-up (r=0.19, p=0.005). The highest quartile of TikTok users reported more social media addiction (BSMAS 19 [IQR 16-21] vs. 17 [IQR 14-20]; p=0.009) and lower body appreciation (BAS-2 32 [IQR 28-38] vs. 35 [IQR 29-40]; p=0.003) than did others. The highest quartile of Snapchat users reported more social media addiction (BSMAS 19 [IQR 15-21] vs. 17 [IQR 14-20]; p=0.007) and tiredness (VAS 21 [IQR 13-32] vs. 26 [IQR 15-35]; p=0.049) than did others. Conclusions Consistent with cross-sectional studies, social media addiction was associated with poorer psychosocial outcomes across follow-up. Policies to protect adolescents from social media addiction are urgently needed. Key messages What is already known on this topic Longitudinal studies utilizing objectively collected data on smartphone and social media use to assess associations with adolescent wellbeing are infrequent, as are detailed analyses regarding different social media platforms. What this study adds The bidirectional association between social media addiction and anxiety across one year of follow-up suggests the possibility of a vicious cycle. The most active users of TikTok and Snapchat scored especially high on social media addiction but presented some differences in wellbeing profiles. How this study might affect research, practice or policy Screenshots appear to be a valid instrument for objective assessment of smartphone and social media use. Policies are urgently needed to limit the addictiveness of social media.",
+      "year": 2026,
+      "authors": [
+        "Silja K. Kosola",
+        "Sara Mörö",
+        "Elina Holopainen"
+      ],
+      "doi": "https://doi.org/10.64898/2026.05.25.26354016",
+      "url": "https://openalex.org/W7162423762",
+      "relevance_score": 0,
+      "openalex_id": "W7162423762",
+      "pdf_url": "https://www.medrxiv.org/content/medrxiv/early/2026/05/26/2026.05.25.26354016.full.pdf",
+      "venue": "medRxiv"
+    },
+    {
+      "title": "Investigating the Impact of Social Media Use on Adolescent Mental Health",
+      "abstract": "The preprint \"Investigating the Impact of Social Media Use on Adolescent Mental Health\" explores the intricate relationships that exist between teenage social media use and psychological health. Using a mixed-methods approach that combines qualitative interviews with quantitative surveys, the study seeks to clarify the connection between different aspects of teenage social media use and markers of mental health. The study looks at how often, for how long, and what kind of interactions teenagers have on social media and how these relate to symptoms of anxiety, depression, and low self-esteem. The study aims to provide a thorough understanding of how various aspects of social media use may influence teenage mental health outcomes by analyzing both quantitative data, such as survey responses, and qualitative insights obtained through interviews. Initial research indicates fascinating correlations between particular social media usage patterns and mental health markers. These preliminary findings lay the groundwork for future research, inspiring scientists to examine more closely the underlying processes and putative causes of the associations between teenage social media use and mental health. Beyond scholarly research, the study's implications are important for parents, educators, and legislators who are worried about how social media affects teenage development. The research adds to a deeper comprehension of the opportunities and challenges posed by digital technologies in modern society by clarifying the complex relationship between social media use and mental health outcomes.",
+      "year": 2024,
+      "authors": [
+        "Najmo Mohamed"
+      ],
+      "doi": "https://doi.org/10.31234/osf.io/fbr84",
+      "url": "https://openalex.org/W4393202030",
+      "relevance_score": 0,
+      "openalex_id": "W4393202030",
+      "pdf_url": "https://osf.io/fbr84/download",
+      "venue": "PsyArXiv (OSF Preprints)"
+    },
+    {
+      "title": "Social Media Use, Distress, and Smartphone-Related Behavioral Dysregula- tion Across Adolescence and Emerging Adulthood",
+      "abstract": "Introduction: Adolescence and emerging adulthood involve developmental changes in peer orientation and self-regulation that may shape associations between digital media use and well-being. This study examined whether associations between regular platform use, psychological distress, and smartphone-related behavioral dysregulation differed across these developmental periods. Methods We analyzed cross-sectional survey data collected in Germany in 2024 from a nationwide sample of 2,042 individuals aged 14–29 years, of which 50% were male, 49% were female, and fewer than 1% identified as non-binary. Structural equation models examined associations between regular use of Instagram, TikTok, Telegram, and WhatsApp, psychological distress, and smartphone-related behavioral dysregulation. Models were estimated separately for adolescents (14–18 years), younger emerging adults (19–23 years), and older emerging adults (24–29 years). Results Regular Instagram and TikTok use showed the largest direct associations with smartphone-related behavioral dysregulation in the full sample, whereas psychological distress was positively associated with behavioral dysregulation across all age groups. Adolescents showed the broadest pattern of significant platform-specific associations, and the age-stratified model explained the greatest proportion of variance in this group. Conclusions The findings highlight the importance of distinguishing between individual social media platforms across developmental periods. Most associations between platform-specific social media use, psychological distress, and smartphone-related behavioral dysregulation were broadly similar across adolescence and emerging adulthood. These results underscore the value of considering both platform-specific engagement and broader difficulties in behavioral self-regulation when examining the role of digital media in young people's psychosocial development. Clinical trial registration Not applicable.",
+      "year": 2026,
+      "authors": [
+        "Nina Kolleck",
+        "Keith L. Goldstein",
+        "Klaus Hurrelmann"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-10523802/v1",
+      "url": "https://openalex.org/W7202161519",
+      "relevance_score": 0,
+      "openalex_id": "W7202161519",
+      "pdf_url": "https://www.researchsquare.com/article/rs-10523802/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "Advancing Our Understanding of the Associations Between Social Media Use and Well-Being",
+      "abstract": "The effect of social media use on well-being is among the hottest debates in academia and society at large. Adults and adolescents alike spend around 2-3 hours per day on social media, and they typically use five to seven different platforms in a complementary way, to chat with their friends, to browse others’ posts, and present themselves to their friends and followers. In parallel with this surging social media use, research into its impact on well-being has accumulated rapidly. The aim of this special issue of Current Opinion in Psychology is to inform researchers about the rapidly expanding volume of studies into social media use and well-being. Each of the 26 invited reviews in this issue provides an indispensable overview of the uses and effects of social media use on well-being. A first section of this issue includes reviews that provide theoretical and/or methodological meta-perspectives. A second section focuses on different types of social media use, such as online dating, social gaming, and cyberbullying. A third section reviews the effects of social media use on risk and resilience factors of well-being, such as self-esteem, social comparison, and body image. And a final section pays attention to the uses and effects of social media among special audiences (older people, youth) and in different contexts (the workplace, the Global South). Together, this collection of accessible and inclusive reviews provides interested readers—researchers and practitioners alike—with the conceptual tools and empirical knowledge to assess the state of research into social media use and well-being.",
+      "year": 2022,
+      "authors": [
+        "Patti M. Valkenburg",
+        "Ine Beyens",
+        "Adrian Meier",
+        "Mariek Vanden Abeele"
+      ],
+      "doi": "https://doi.org/10.31234/osf.io/wqs2a",
+      "url": "https://openalex.org/W4281859680",
+      "relevance_score": 0,
+      "openalex_id": "W4281859680",
+      "pdf_url": "https://psyarxiv.com/wqs2a/download",
+      "venue": "PsyArXiv (OSF Preprints)"
+    },
+    {
+      "title": "Social Media and Influencers; Trends & Effects on Holistic Development of Adolescents",
+      "abstract": "Social Media use among teens specially YouTube, Instagram or Snapchat is on peak today, creators on these platforms are of diverse age groups but dominated by Teenagers and Young adults whom the audience of the same age find easy to relate with. This research seeks to figure out the viable fruits teenagers are able to consume from the help of Social Media and Influencers (SM&I) for the five aspects of their development i.e. 'holistic development”, while briefly touching the type and category of content. In this descriptive research we used a quantitative survey to analyze the perception of teens about influencers and their effects on their development. The research is solely focusing on holistic development with social media uses trends and prevalence. It does not dwell on quality quantity and negative sides of this phenomenon. This could be oveserved after this survey research that adolescents in rural settings too are heavily using social media, impact of social media on teens is huge teens are not only using social media for Identity formation but for formative development as well.",
+      "year": 2024,
+      "authors": [
+        "Rohit Patidar"
+      ],
+      "doi": "https://doi.org/10.20944/preprints202410.0354.v2",
+      "url": "https://openalex.org/W4403274833",
+      "relevance_score": 0,
+      "openalex_id": "W4403274833",
+      "pdf_url": "https://www.preprints.org/manuscript/202410.0354/v2/download",
+      "venue": "Preprints.org"
+    },
+    {
+      "title": "Applying a Gendered Lens to the Issue of Adolescent Social Media Use and Well-being; Salient Susceptibilities and Alternative Within-person Processes",
+      "abstract": "Why does research find that girls demonstrate stronger, more negative associations betweensocial media use and well-being compared to boys? Applying a gendered lens to processes ofsocial media and adolescent well-being, this study empirically examined two commonexplanations for gendered patterns in these processes; differences between the experiences andcontext of boys and girls, or that girls often use social media more frequently than boys. Usingintensive longitudinal data collected from N = 97 adolescents living in the United States and aDynamic Structural Equation Modeling framework, we found limited evidence that social mediause was related to well-being, or that gendered facets of adolescents’ social context moderatedthese associations. However, we did find that two gendered facets of adolescents’ social mediaexperiences, frequency of use and unwanted exposure to sexually explicit content, were bothnegatively associated with the stability of adolescents’ sense of purpose. This finding points toalternative within-person processes, where instead of a direct causal relationship between socialmedia use and well-being, social media use and experiences are related to the stability ofadolescents’ well-being.",
+      "year": 2025,
+      "authors": [
+        "Jane E. Shawcroft",
+        "Drew P. Cingel"
+      ],
+      "doi": "https://doi.org/10.31234/osf.io/tcsp6_v2",
+      "url": "https://openalex.org/W4412581618",
+      "relevance_score": 0,
+      "openalex_id": "W4412581618",
+      "pdf_url": "https://osf.io/tcsp6_v2/download",
+      "venue": "PsyArXiv (OSF Preprints)"
+    },
+    {
+      "title": "Social media use may not be that harmful for late adolescents’ sleep and the following day school wellbeing - an experience sampling study",
+      "abstract": "The evidence regarding how social media use (SMU) influences adolescents’ daily lives is contradictory. Using experience sampling design, we examined associations between adolescents’ pre-bedtime SMU, same-night sleep and wellbeing at school the next day. In addition, we examined how social pressure to stay available to others and related availability stress moderate the day-to-day effects of SMU on sleep or wellbeing. We collected data during 12 consecutive days from N=143 adolescents (aged 17-18, 68% female) using N=2,590 momentary measures from school days and N=1,102 measures from the evenings/nights. We measured bedtimes objectively with activity bracelets. Multilevel models showed that pre-bedtime SMU per se was not harmful for adolescents’ sleep or following day wellbeing at school but that pressure to stay available to peers via phone had more negative effects. The results suggest that using social media to interact with friends close to bedtime is not harmful for late adolescents. However, adolescents may need socio-emotional and self-regulative skills to tackle availability demands related to technology use.",
+      "year": 2023,
+      "authors": [
+        "Erika Maksniemi",
+        "Elina E. Ketonen",
+        "Visajaani Salonen",
+        "Kirsti Lonka",
+        "Katariina Salmela‐Aro"
+      ],
+      "doi": "https://doi.org/10.31234/osf.io/skdf2",
+      "url": "https://openalex.org/W4388199097",
+      "relevance_score": 0,
+      "openalex_id": "W4388199097",
+      "pdf_url": "https://osf.io/skdf2/download",
+      "venue": "PsyArXiv (OSF Preprints)"
+    },
+    {
+      "title": "Applying a Gendered Lens to the Issue of Adolescent Social Media Use and Well-being; Salient Susceptibilities and Alternative Within-person Processes",
+      "abstract": "Why does research find that girls demonstrate stronger, more negative associations betweensocial media use and well-being compared to boys? Applying a gendered lens to processes ofsocial media and adolescent well-being, this study empirically examined two commonexplanations for gendered patterns in these processes; differences between the experiences andcontext of boys and girls, or that girls often use social media more frequently than boys. Usingintensive longitudinal data collected from N = 97 adolescents living in the United States and aDynamic Structural Equation Modeling framework, we found limited evidence that social mediause was related to well-being, or that gendered facets of adolescents’ social context moderatedthese associations. However, we did find that two gendered facets of adolescents’ social mediaexperiences, frequency of use and unwanted exposure to sexually explicit content, were bothnegatively associated with the stability of adolescents’ sense of purpose. This finding points toalternative within-person processes, where instead of a direct causal relationship between socialmedia use and well-being, social media use and experiences are related to the stability ofadolescents’ well-being.",
+      "year": 2025,
+      "authors": [
+        "Jane E. Shawcroft",
+        "Drew P. Cingel"
+      ],
+      "doi": "https://doi.org/10.31234/osf.io/tcsp6_v2",
+      "url": "https://openalex.org/W4412599832",
+      "relevance_score": 0,
+      "openalex_id": "W4412599832",
+      "pdf_url": "https://osf.io/tcsp6_v2/download",
+      "venue": "PsyArXiv (OSF Preprints)"
+    },
+    {
+      "title": "Understanding Social Media’s Impact on Adolescents",
+      "abstract": "Social media plays an increasingly major role in adolescents’ (14–17-year-olds) lives, influencing their mental health, social interactions and relationships, identity formation, personality, and everyday behaviors. This paper examines the benefits and risks of adolescent social media use, understanding how individual characteristics shape its positive and negative effects. Excessive use, social comparison, cyberbullying, negative comments, and exposure to influencers can contribute to lower self-esteem, anxiety, being unwell, and changes in adolescents’ opinions about themselves. Influencers and online interactions can also shape adolescents' belief systems and attitudes. Conversely, social media can offer valuable opportunities for adolescents to express themselves, maintain friendships, discover shared interests with peers, receive emotional support, and develop a sense of belonging. This paper emphasizes that the effects of social media depend not only on screen time but also on the context of online engagement. It highlights the struggles adolescents face in managing their social media use, including fear of missing out (FOMO) and platform features that nudge users to check constantly. This paper also examines the effects of digital literacy education, parental and peer support, responsible platform design, and school policies that help adolescents maintain healthier digital experiences, and it highlights how schools should help students develop the skills to use technology responsibly and effectively rather than resorting to smartphone bans. Finally, the paper highlights the need for further research to better understand its effects on adolescent development.",
+      "year": 2026,
+      "authors": [
+        "Sura Demir"
+      ],
+      "doi": "https://doi.org/10.58445/rars.4307",
+      "url": "https://openalex.org/W7225113696",
+      "relevance_score": 0,
+      "openalex_id": "W7225113696",
+      "pdf_url": "https://www.research-archive.org/index.php/rars/preprint/download/4307/5914/5467",
+      "venue": null
+    },
+    {
+      "title": "Social Media and Influencers; Trends & Effects on Holistic Development of Adolescents",
+      "abstract": "Social Media use among teens specially YouTube, Instagram or Snapchat is on peak today, creators on these platforms are of diverse age groups but dominated by Teenagers and Young adults whom the audience of the same age find easy to relate with. This research seeks to figure out the viable fruits teenagers are able to consume from the help of Social Media and Influencers (SM&I) for the five aspects of their development i.e. 'holistic development”, while briefly touching the type and category of content. In this descriptive research we used a quantitative survey to analyze the perception of teens about influencers and their effects on their development. The research is solely focusing on holistic development with social media uses trends and prevalence. It does not dwell on quality quantity and negative sides of this phenomenon. This could be oveserved after this survey research that adolescents in rural settings too are heavily using social media, impact of social media on teens is huge teens are not only using social media for Identity formation but for formative development as well.",
+      "year": 2024,
+      "authors": [
+        "Rohit Patidar"
+      ],
+      "doi": "https://doi.org/10.20944/preprints202410.0354.v2",
+      "url": "https://openalex.org/W4403439279",
+      "relevance_score": 0,
+      "openalex_id": "W4403439279",
+      "pdf_url": "https://www.preprints.org/manuscript/202410.0354/v2/download",
+      "venue": "Preprints.org"
+    },
+    {
+      "title": "Missing the moment of change? A systematic review and re-analysis of multi-wave social media and adolescent mental well-being studies",
+      "abstract": "Public concerns have prompted scholars to examine longitudinal, within-person effects of social media use on adolescents’ mental well-being, typically yielding inconsistent findings. In this paper, we conducted a systematic review of longitudinal, multi-wave studies (N = 29) published between 2020 and 2025 that examined adolescents’ (12-25 years) social media use and well-being outcomes, using Random Intercept Cross-Lagged Panel Models (RI-CLPM). This review confirms little within-person associations are found. Next, we investigated whether these null findings might stem from mismatches in assumptions about media effect latency. Specifically, we tested whether concurrent effects, i.e., those occurring within the same wave, could explain the absence of delayed within-person associations. To this aim, we re-analyzed data from three longitudinal studies (Study 1: N = 1697, M age = 15.14, SD age = 1.78, 57.2% girls; Study 2: N = 496, M age = 15.05, SD age = 1.49, 67.9% girls; Study 3: N = 1286, M age = 18.33, SD age = 0.64, 56.1% girls) applying an extended RI-CLPM framework that incorporates both cross-lagged and concurrent paths. Our findings did not support the mismatch in effect latency assumption. This suggests a need to re-evaluate which methodological approaches are best suited to address questions of social media effects, particularly in light of possible short-term or rapidly decaying influences. Rather than focusing on causal effects alone, longitudinal research may be better positioned to shed light on the dynamic, evolving nature of the relationship between social media use and adolescent mental well-being.",
+      "year": 2026,
+      "authors": [
+        "Margot Lissens",
+        "Laura Vandenbosch",
+        "Kathleen Beullens",
+        "Femke Geusens",
+        "Steven Eggermont",
+        "Andreas Fahr",
+        "Chelly Maes",
+        "Gaëlle Vanhoffelen",
+        "Ilse Vranken",
+        "Lara Schreurs"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-9428222/v1",
+      "url": "https://openalex.org/W7160493602",
+      "relevance_score": 0,
+      "openalex_id": "W7160493602",
+      "pdf_url": "https://www.researchsquare.com/article/rs-9428222/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "Between-friends similarity in adolescents’ social media motivations and habitual use",
+      "abstract": "Friends are a central part of adolescents' social and emotional development, and social media affordances reflect and extend these dynamics by enabling continuous engagement with peers, including monitoring social interactions and managing online reputation. Despite the prominence of both friendships and social media in adolescent life, research examining their intersection remains limited. This cross-sectional study of 684 adolescents from three rural middle schools in the southeast United States (Mage = 15.32; SD = .649; 48.5% female) used linear network autocorrelation modeling to assess patterns of similarity in social media motivations and habitual use among friends. The findings indicated a significant positive relationship between an adolescent’s reported use of social media for social reputation, social surveillance, and habitual social media use, and the behaviors reported by their friends. These results underscore the presence of shared tendencies within adolescent peer networks, highlighting the relevance of social connections in understanding adolescent social media use.",
+      "year": 2025,
+      "authors": [
+        "Jolien Trekels",
+        "David B Jack",
+        "Jimmy Capella",
+        "Mitchell J. Prinstein",
+        "Eva H. Telzer"
+      ],
+      "doi": "https://doi.org/10.31219/osf.io/sf6ge_v1",
+      "url": "https://openalex.org/W4411642644",
+      "relevance_score": 0,
+      "openalex_id": "W4411642644",
+      "pdf_url": "https://osf.io/sf6ge_v1/download",
+      "venue": "OSF Preprints (OSF Preprints)"
+    },
+    {
+      "title": "The role of Somatization as a clinical marker of Depressive Symptoms and Suicidal Risk associated with Social Media use in Adolescents",
+      "abstract": "Purpose Adolescent mental health disorders are increasing worldwide, and suicidal ideation represents a major public health concern. Social media use is a pervasive component of adolescents’ daily lives and may influence psychological well-being through complex behavioral and emotional mechanisms. This study investigated whether patterns of social media engagement and perceived online self-expression are associated with depressive symptoms, somatic complaints, and suicidal ideation in adolescents. Methods A survey was conducted among 1,364 adolescents aged 11–19 years recruited from six schools. Participants completed questionnaires assessing social media use patterns, depressive symptoms (Children’s Depression Inventory-2), and emotional–behavioral problems including somatization and suicidal ideation (Child Behavior Checklist). Correlation analyses, multiple regression models, and sequential mediation analyses were performed to examine direct and indirect associations among variables. Results Daily social media use was reported by 96% of participants, with 20% spending more than four hours per day online. Clinically relevant depressive symptoms were observed in approximately 12% of adolescents, while 9% reported recurrent suicidal ideation. Greater time spent on social media was significantly associated with higher levels of depressive symptoms, somatic complaints, and suicidal ideation. Adolescents reporting greater ease in online self-expression showed increased psychological vulnerability. Sequential mediation analysis indicated that perceived online self-expression was indirectly associated with suicidal ideation through increased time spent online, depressive symptoms, and somatization. Gender-stratified analyses revealed stronger sequential effects in females, whereas in males suicidal ideation was primarily mediated by depressive and somatic symptoms. Conclusions Problematic patterns of social media engagement may represent clinically relevant psychosocial risk markers in adolescents. Somatic symptoms appear to function as a clinical bridge between maladaptive digital behaviors and suicidal vulnerability. Pediatricians should consider screening for digital habits when adolescents present with depressive symptoms and medically unexplained somatic complaints, as early identification of at-risk youths may improve preventive interventions.",
+      "year": 2026,
+      "authors": [
+        "Grazia Maria Giovanna Pastorino",
+        "Antonio Aquino",
+        "Roberto Buonaiuto",
+        "Giuseppe Diaspro",
+        "Miriam Olivieri",
+        "Francesca Felicia Operto"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-9064743/v1",
+      "url": "https://openalex.org/W7141571015",
+      "relevance_score": 0,
+      "openalex_id": "W7141571015",
+      "pdf_url": "https://www.researchsquare.com/article/rs-9064743/latest.pdf",
+      "venue": "Research Square"
+    },
+    {
+      "title": "Use of social media in primary school aged children: Concurrent associations with mental health variables",
+      "abstract": "Digital screen use has been rising in pre-adolescent children but very little is known about use of social media specifically and how it associates with mental and physical health in this age group. The present study aimed to examine self-reported time spent on social media among primary school-aged children and its associations with indicators of poor mental health. We also explored sex differences in the strengths of these associations. Seven hundred and seventy-three children (ages 8–12 years old) from the DEvelopment of Emotional Resilience (DEER) study reported their screen time use, symptoms of anxiety and depression, sleep quality, somatic complaints, and life satisfaction. Associations between screen time usage and mental health indicators were examined using Structural Equation Modelling. We found that children spend an average of 2 hours on screens on a weekday during term time, with an average of 48% of their time communicating with friends and posting content, and 52% browsing social media feeds. There were no significant differences between boys and girls in estimated time on social media, but older children reported using social media for longer (β = .15, p < .001). Higher social media use was significantly associated with greater symptoms of anxiety (β = .157, p < .001), depression (β = .145, p < .001), poorer sleep habits (β = .09, p = .01), somatic complaints (β = .174, p < .001), and lower life satisfaction (β=–.097, p = .01). Social media usage strongly associated across poor mental health outcomes for girls, but in boys, it only significantly related to anxiety. Our findings suggest cross-sectional associations between measures of social media use and measures of health in pre-adolescent children, particularly girls. Future research should clarify the directions of these associations. Nonetheless, it would be prudent to consider management and regulation of digital technology and social media usage in this age group.",
+      "year": 2025,
+      "authors": [
+        "Nza Amir",
+        "Alina A. Marinca",
+        "Megan McMahon",
+        "Bethany Arkley",
+        "Evelyn Staples",
+        "Alex Wedgbury",
+        "Imogen I. Hensler",
+        "Julia E. Michalek",
+        "Francois van Loggerenberg",
+        "Dennis Ougrin",
+        "Jennifer Y. F. Lau"
+      ],
+      "doi": "https://doi.org/10.21203/rs.3.rs-8051391/v1",
+      "url": "https://openalex.org/W4416729275",
+      "relevance_score": 0,
+      "openalex_id": "W4416729275",
+      "pdf_url": "https://www.researchsquare.com/article/rs-8051391/latest.pdf",
+      "venue": "Research Square"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "topic_id": "t3_mobile_money",
+  "retrieved_at": "2026-11-24T20:52:51Z",
+  "written_by": "hand",
+  "synthetic_abstract": "This study examines how mobile money and digital financial inclusion affect household and individual welfare in Sub-Saharan Africa. Using household survey, panel and field-experiment data from countries such as Kenya, Uganda, Tanzania, Ghana, Nigeria, Rwanda and Mozambique, it estimates the effects of mobile money adoption and use, including M-Pesa, mobile payments, remittances and mobile savings, on consumption, savings, income, poverty, food security, health spending, schooling and resilience to economic shocks. The analysis considers financial inclusion, access to formal financial services and risk sharing among households.\n",
+  "openalex_params": {
+    "target_output_count": 25,
+    "min_citations": 0,
+    "start_year": 2020
+  },
+  "raw_results": 22,
+  "added_keys": [
+    "W3200528294",
+    "W3186986914",
+    "W4416354426",
+    "W4285093376",
+    "W3014193054",
+    "W3184153016",
+    "W4416346143",
+    "W7214071725",
+    "W3082982688",
+    "W7143439148",
+    "W7203828579"
+  ]
+}

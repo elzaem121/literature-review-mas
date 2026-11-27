@@ -1,0 +1,253 @@
+[
+  {
+    "paper_key": "W4393202030",
+    "topic_id": "t1_social_media",
+    "pdf_url": "https://osf.io/fbr84/download",
+    "pdf_sha256": "9ecb7779e4a8897d9ccdd21417f8e564c2ec42fe98a1eede6a29abd452739fb1",
+    "fields": [
+      {
+        "field": "method",
+        "value": "A research protocol for a cross-sectional study. Data come from online self-report surveys using validated scales and are analysed with planned correlation, regression, mediation and moderation analyses.",
+        "page": 3,
+        "quote": "This study uses a cross-sectional design to investigate the connection between teenage social media use and mental health outcomes.",
+        "source": "model_verified"
+      },
+      {
+        "field": "dataset",
+        "value": "A convenience sample of adolescents aged 13 to 18 who regularly use social media, recruited from online forums, community organizations and schools. Measures are a social media use questionnaire, GAD-7, CES-D and the Rosenberg Self-Esteem Scale.",
+        "page": 4,
+        "quote": "The age range for inclusion will be 13 to 18 for teenagers who regularly use social media.",
+        "source": "model_verified"
+      },
+      {
+        "field": "task",
+        "value": "To examine how different aspects of adolescent social media use relate to mental health outcomes (anxiety, depression, self-esteem), including moderators and mediators and differences by platform and content type.",
+        "page": 1,
+        "quote": "This report presents a thorough research protocol designed to examine the impact of adolescent mental health and social media use.",
+        "source": "model_verified"
+      },
+      {
+        "field": "main_findings",
+        "value": "Using social media more often and for longer was positively correlated with anxiety and depression symptoms, and excessive use was linked to lower self-esteem. These results appear even though the paper describes itself as a protocol and reports no data.",
+        "page": 6,
+        "quote": "In particular, there was a positive correlation found between increased frequency and duration of social media use and symptoms of anxiety and depression.",
+        "source": "model_verified"
+      },
+      {
+        "field": "limitations",
+        "value": "Because the design is cross-sectional, it cannot establish causality or rule out reverse causality. The paper also notes that relying on self-report measures may introduce social desirability and recall bias.",
+        "page": 7,
+        "quote": "First of all, because the design is cross-sectional, it is not possible to draw conclusions about causality, and reverse causality is not completely ruled out.",
+        "source": "model_verified"
+      }
+    ]
+  },
+  {
+    "paper_key": "W4405090304",
+    "topic_id": "t2_llm_mas_eval",
+    "pdf_url": "https://arxiv.org/pdf/2412.03359",
+    "pdf_sha256": "2e7de6d47e037920f5b907f7240ac96409371435a61bfd285a0058f7154d82c2",
+    "fields": [
+      {
+        "field": "method",
+        "value": "An evaluation in which ten well-known LLMs, all given the same prompt, play against each other as agents in the \"Who is Spy?\" social deduction game on the authors' platform.",
+        "page": 5,
+        "quote": "In this experiment, we conducted a competitive analysis among ten famous models using the same prompt.",
+        "source": "model_verified"
+      },
+      {
+        "field": "dataset",
+        "value": "Games played on the WiS platform by ten publicly available models, with each experiment repeated more than 90 times using the same generation settings.",
+        "page": 10,
+        "quote": "We evaluated ten publicly available open-source models, each experiment was repeated over 90 times, ensuring consistency in the key generation parameters and sampling algorithms across all models.",
+        "source": "model_verified"
+      },
+      {
+        "field": "task",
+        "value": "Testing how well LLM-based agents handle attacking and defense, understanding, reasoning and deception in a multi-agent game.",
+        "page": 1,
+        "quote": "This platform is designed to provide a diverse environment for evaluating model attacking and defense, understanding, reasoning, and deception abilities.",
+        "source": "model_verified"
+      },
+      {
+        "field": "main_findings",
+        "value": "When spy agents used prompt-injection attacks and defenses, the tested models' vote accuracy, win rates and scores dropped, and some models fouled more often. The authors read this as a weakness in the defense mechanisms of current LLMs.",
+        "page": 6,
+        "quote": "These findings underscore the existing limitations in the defense mechanisms of current large language models.",
+        "source": "model_verified"
+      }
+    ]
+  },
+  {
+    "paper_key": "W4414975314",
+    "topic_id": "t2_llm_mas_eval",
+    "pdf_url": "https://arxiv.org/pdf/2508.16481",
+    "pdf_sha256": "228e4d98ebf9334c2e27405926af6aa18f57a2806546443ddcf0e4202f26c5c2",
+    "fields": [
+      {
+        "field": "method",
+        "value": "A benchmark-based empirical evaluation: adversarial agents placed inside LLM agentic systems try to steer other agents into harmful actions, tested on open-source and proprietary LLMs.",
+        "page": 2,
+        "quote": "Using BAD-ACTS, we conduct extensive experiments to evaluate the robustness of open-source and proprietary LLMs with respect to the interaction with adversarial agents in the same environment.",
+        "source": "model_verified"
+      },
+      {
+        "field": "dataset",
+        "value": "BAD-ACTS-CORE, a dataset of 238 distinct harmful actions set in five agentic environments. It was generated by LLMs and then curated by hand.",
+        "page": 6,
+        "quote": "Using this technique, we generated a dataset consisting of 238 distinct harmful behaviors.",
+        "source": "model_verified"
+      },
+      {
+        "field": "task",
+        "value": "A systematic security evaluation of LLM agentic systems in adversarial settings, focused on whether they carry out harmful actions.",
+        "page": 2,
+        "quote": "In this paper, we argue for a systematic security evaluation of LLM-based agentic systems in an adversarial setting, with a focus on the analysis of harmful actions.",
+        "source": "model_verified"
+      },
+      {
+        "field": "main_findings",
+        "value": "Agents are often vulnerable to adversarially induced harmful actions, with attack success rates of 40% to 90% depending on the model.",
+        "page": 1,
+        "quote": "We found that agents are often vulnerable, as indicated by success rates between 40% and 90% depending on the model.",
+        "source": "model_verified"
+      },
+      {
+        "field": "limitations",
+        "value": "The benchmark may not cover every real-world application or use case of agentic systems.",
+        "page": 10,
+        "quote": "First, while we aimed to test agentic systems on a broad set of potential applications, real-world usage of such systems might consider cases not included in our benchmark.",
+        "source": "model_verified"
+      }
+    ]
+  },
+  {
+    "paper_key": "W4416729275",
+    "topic_id": "t1_social_media",
+    "pdf_url": "https://www.researchsquare.com/article/rs-8051391/latest.pdf",
+    "pdf_sha256": "04bbadaee0e733021e122f772aee995db0fea81bf060574a22f9230ef85921b4",
+    "fields": [
+      {
+        "field": "method",
+        "value": "Cross-sectional self-report study analysed with Pearson correlations, structural equation modelling and multigroup SEM by sex",
+        "page": 2,
+        "quote": "Associations between screen time usage and mental health indicators were examined using Structural Equation Modelling.",
+        "source": "model_verified"
+      },
+      {
+        "field": "dataset",
+        "value": "773 children aged 8–12 from 10 East London primary schools, using second-wave data from the DEER study",
+        "page": 3,
+        "quote": "Our participants were 773 primary school children aged 8-12 years old from the DEvelopment of Emotional Resilience (DEER) study [26], conducted across 10 primary schools in East London.",
+        "source": "model_verified"
+      },
+      {
+        "field": "task",
+        "value": "Examining how much time primary school-aged children say they spend on social media, how this relates to signs of poor mental health, and whether the links differ by sex",
+        "page": 2,
+        "quote": "The present study aimed to examine self-reported time spent on social media among primary school-aged children and its associations with indicators of poor mental health.",
+        "source": "model_verified"
+      },
+      {
+        "field": "main_findings",
+        "value": "More social media use was linked to more anxiety, depression and somatic complaints, worse sleep habits and lower life satisfaction. These links were strong for girls, but for boys only the link with anxiety was significant.",
+        "page": 2,
+        "quote": "Social media usage strongly associated across poor mental health outcomes for girls, but in boys, it only significantly related to anxiety.",
+        "source": "model_verified"
+      },
+      {
+        "field": "limitations",
+        "value": "The study relied on self-report, which may be hard for pre-adolescents; it only measured total screen time, not content or individual differences; and its cross-sectional design means causality cannot be inferred",
+        "page": 9,
+        "quote": "Finally, as our data are cross-sectional, we cannot infer causality.",
+        "source": "model_verified"
+      }
+    ]
+  },
+  {
+    "paper_key": "W7127576860",
+    "topic_id": "t2_llm_mas_eval",
+    "pdf_url": "https://arxiv.org/pdf/2602.03128",
+    "pdf_sha256": "af257e1ec3c6b025aa8367747054187ee8d96f14a50a281c99c336e6ebc7baba",
+    "fields": [
+      {
+        "field": "method",
+        "value": "Controlled empirical comparison of multi-agent LLM frameworks in which the underlying LLM is held fixed and only architectural design choices are varied.",
+        "page": 2,
+        "quote": "We fix the underlying LLM and vary only architectural design choices, so observed differences follow from architecture and not from model capability.",
+        "source": "model_verified"
+      },
+      {
+        "field": "dataset",
+        "value": "Existing reasoning benchmarks GSM8K, CommonsenseQA and MATH are used for planning-interface evaluation (alongside other integrated benchmarks in MAFBench).",
+        "page": 6,
+        "quote": "We adopt GSM8K [12], CommonsenseQA (CSQA) [56], and MATH [21] (Table 6), which cover numerical, commonsense, and symbolic reasoning tasks where multi-step planning influences outcomes.5",
+        "source": "model_verified"
+      },
+      {
+        "field": "task",
+        "value": "Evaluating how the orchestration layer of multi-agent LLM frameworks (rather than applications built on them) affects system performance.",
+        "page": 1,
+        "quote": "This paper evaluates the framework orchestration layer, not the applications built on top of it.",
+        "source": "model_verified"
+      },
+      {
+        "field": "main_findings",
+        "value": "Across frameworks, datasets and LLMs, architectural design rather than model intelligence alone governs multi-agent behavior.",
+        "page": 12,
+        "quote": "These effects hold across the evaluated frameworks, datasets, and LLMs, converging on one theme: architectural design, not model intelligence alone, governs multi-agent behavior.",
+        "source": "model_verified"
+      },
+      {
+        "field": "limitations",
+        "value": "Because of cost, each configuration was run only once.",
+        "page": 7,
+        "quote": "To manage cost, each configuration runs once.",
+        "source": "model_verified"
+      }
+    ]
+  },
+  {
+    "paper_key": "W7162423762",
+    "topic_id": "t1_social_media",
+    "pdf_url": "https://www.medrxiv.org/content/medrxiv/early/2026/05/26/2026.05.25.26354016.full.pdf",
+    "pdf_sha256": "23a47edfcfcccbfdf60dbbdac240fda0825f729d9afd843591aa087635648852",
+    "fields": [
+      {
+        "field": "method",
+        "value": "Prospective observational cohort study with one year of follow-up, using screenshot-derived objective smartphone data, validated questionnaires, and nonparametric statistics (Spearman correlations, Mann-Whitney U, Wilcoxon tests).",
+        "page": 2,
+        "quote": "Design: Observational study with one year of follow-up ",
+        "source": "model_verified"
+      },
+      {
+        "field": "dataset",
+        "value": "259 adolescent girls (mean age 16.3 at baseline) from Finnish high schools in the capital region, 2022–2023, who provided screenshots of smartphone use and survey data at baseline and follow-up.",
+        "page": 9,
+        "quote": "Of the 564 adolescents who completed the study survey and sent screenshots of their smartphone use at baseline, 259 (46 %) provided complete data including screenshots after one year of follow-up (Figure 1).",
+        "source": "model_verified"
+      },
+      {
+        "field": "task",
+        "value": "Estimating the directionality between social media addiction and psychosocial wellbeing, and comparing wellbeing across the most popular social media platforms using objectively measured use.",
+        "page": 5,
+        "quote": "We aimed 1) to estimate directionality between social media addiction and psychosocial wellbeing, and 2) to evaluate the differences between the most popular social media applications and associated psychosocial wellbeing using longitudinally collected objective data on social media use.",
+        "source": "model_verified"
+      },
+      {
+        "field": "main_findings",
+        "value": "Social media addiction at baseline predicted more anxiety, lower body appreciation and more loneliness one year later, and baseline anxiety predicted later addiction, so the link runs both ways. Heavy TikTok use was linked to addiction and lower body appreciation; heavy Snapchat use was linked to addiction and tiredness.",
+        "page": 10,
+        "quote": "In this longitudinal study, social media addiction was associated with increased anxiety, lower body appreciation, and increased loneliness one year later, while anxiety at baseline was associated with social media addiction at the end of follow-up.",
+        "source": "model_verified"
+      },
+      {
+        "field": "limitations",
+        "value": "High attrition (54%) may make the cohort unrepresentative; the authors also lack data on reasons for drop-out and on the age of first smartphone or social media access, and the observational design does not allow causal conclusions.",
+        "page": 12,
+        "quote": "The greatest limitation of our study is the attrition rate (54%) which means our study cohort may not be representative of the background population and the results should be interpreted with due caution.",
+        "source": "model_verified"
+      }
+    ]
+  }
+]

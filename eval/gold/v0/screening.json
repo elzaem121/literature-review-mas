@@ -1,0 +1,3039 @@
+[
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W7116046191",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 479 adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study looks at social media use in general and on named platforms: TikTok, YouTube, Instagram, Snapchat and WhatsApp."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes are well-being, self-esteem and friendship closeness."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract describes no clinical selection or treatment, so this appears to be a general sample of adolescents."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study analysing 44,211 daily diaries collected over 100 days."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4220861150",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from middle and high school students, so the sample is adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper examines the influence of social media, including Instagram specifically."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include wellbeing and mental health: anxiety, depression and self-esteem."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Students answered questions during school talks; they were not selected for a diagnosis, and this is not a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Although it includes a literature review, it analyses its own survey data from RemedyLive (e.g., 35% high anxiety, 60% with 4+ hours of screen time)."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W3115830797",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "27 adolescents from senior high schools, aged 15-18 (mean 16.8)."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study looks at adolescents' experiences of using social media in general."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include mental health and well-being, everyday life, belonging, social support and peer interaction."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "General school sample; participants were not chosen because of a diagnosis and no treatment was tested."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary qualitative study using focus group interviews and thematic analysis."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4411281317",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Focuses on adolescents, referencing individuals aged 13-18."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines social media use, naming Instagram, TikTok and Snapchat."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include anxiety, depression, self-esteem, social connection and wellbeing."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Covers general adolescent populations; no clinical sample or treatment study is described."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Described as a comprehensive review of literature from 2018-2025."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W7162423762",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 259 adolescent girls in high school with a mean age of 16.3 years."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study measures social media use objectively, including TikTok and Snapchat, and social media addiction (BSMAS)."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include anxiety, body appreciation, mood, tiredness and loneliness, which are psychosocial wellbeing measures."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a general high-school sample in Finland. Participants were not selected for a diagnosis, and it is not a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a prospective observational study that reports its own one-year follow-up data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4393202030",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study population is described as teenagers/adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It examines social media use in general: how often, how long and what kinds of interactions."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include anxiety, depression and low self-esteem, which count as wellbeing."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Nothing describes a clinical sample or a treatment; mental health symptoms are measured as outcomes."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary mixed-methods study with its own surveys and interviews."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W7202161519",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is aged 14–29 and includes an adolescent subgroup aged 14–18."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines regular use of Instagram, TikTok, Telegram and WhatsApp."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Psychological distress and wellbeing are studied as outcomes."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is a nationwide general-population survey, not a clinical or treatment sample."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary cross-sectional survey analysed with structural equation models."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4281859680",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract mentions adolescents and youth as audiences covered alongside adults."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Social media use in general is the central topic."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Well-being is the main outcome, along with self-esteem, social comparison and body image."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "No clinical sample or treatment is described."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "This is an editorial introducing a special issue of 26 invited reviews, not a primary study."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4403274833",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The survey targets teens/adolescents, including those in rural settings."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines social media use and influencers on YouTube, Instagram and Snapchat."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include holistic development and identity formation."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "General survey of teens; no clinical selection or treatment described."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Descriptive quantitative survey reporting its own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4412581618",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Sample is N = 97 adolescents living in the United States."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines adolescent social media use and experiences on social media."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcome is well-being, including the stability of adolescents' sense of purpose."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Community sample of adolescents, not selected for a diagnosis and not a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary study analyzing its own intensive longitudinal data with DSEM."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4388199097",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 143 adolescents aged 17-18, so it includes under-18s."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines pre-bedtime social media use."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include wellbeing at school, sleep and peer availability pressure."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a general adolescent sample with no diagnosis-based selection and no treatment."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary experience sampling study that collects its own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W7225113696",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract is explicitly about adolescents aged 14–17."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper is about adolescent social media use in general, including influencers and platform features."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It covers mental health, social interactions, identity formation, self-esteem, friendships and everyday behaviours."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It deals with adolescents in general, with no diagnosis-based sample and no treatment being tested."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "It reads as a narrative review of benefits and risks: no sample, data or methods are described, and it ends by calling for further research."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W7160493602",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper covers adolescents (12-25 years), and the re-analysed samples have mean ages around 15, so they include under-18s."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper examines social media use in general."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcome is adolescents' mental well-being."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Nothing in the abstract suggests a clinical sample or a treatment study; the samples are general longitudinal adolescent cohorts."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Besides the systematic review, the paper re-analyses three longitudinal datasets with an extended RI-CLPM, so it reports its own new analysis. This mixed design makes the call debatable."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4411642644",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "684 adolescents from middle schools, mean age 15.32."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines social media motivations and habitual social media use."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines peer relations: similarity among friends in social reputation and surveillance motivations within peer networks."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "General school-based sample; no clinical selection or treatment."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Cross-sectional primary study with its own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W7141571015",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 1,364 adolescents aged 11–19 recruited from schools, so it includes under-18s."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study looks at patterns of social media use, time spent on social media and online self-expression."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include depressive symptoms, somatic complaints and suicidal ideation, which count as wellbeing in general-population adolescents."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants were recruited from schools rather than selected for a diagnosis, and this is not a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "This is a primary survey study that analyzes its own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4416729275",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 773 children aged 8–12, all under 18."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study measures time spent on social media, including communicating with friends, posting content and browsing feeds."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include anxiety, depression, sleep, somatic complaints and life satisfaction, which count as wellbeing."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "These are primary school children from the DEER cohort; they were not selected for a diagnosis and this is not a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary cross-sectional study that analyses its own data with structural equation modelling."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4395075462",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper focuses on adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It examines social media in general as a setting for identity construction."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It looks at identity development, social comparison and peer and online-audience interactions."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Nothing points to a clinical sample or a treatment; it covers adolescents in general."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The paper reviews existing empirical evidence and puts forward a theoretical perspective, so it is not a primary study."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4404588758",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Synthesizes studies of adolescents (mean age 16.43, range 8–26), so under-18s are included."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines the quantity and quality of social media use."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes are identity development dimensions (exploration, self-concept clarity, identity distress)."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "No clinical sample or treatment is described."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The paper is a systematic review of 32 studies."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4410852275",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants are Saudi adolescents aged 14 to 19, which includes people under 18."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study looks at adolescents' social media use and their activities on social media platforms."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcome is identity development, measured as identity statuses with the DIDS."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a general survey sample from all 13 regions, with no diagnosis-based selection and no treatment."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary survey study reporting its own data from 1642 participants."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W7153554365",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 699 Chinese secondary school students, described as adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines short video addiction, which counts as use of short-video social media."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It studies peer pressure, social support and emotion regulation, which cover peer relations and wellbeing."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "This is a general school sample, not selected by diagnosis, and it is not a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary cross-sectional survey that reports its own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4382312891",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 204 high school adolescents with a mean age of 15.90 years."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study measures social media addiction with the Social Media Use Disorder Scale."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include self-esteem and body image, which relate to wellbeing and identity."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants are general high school students, not selected because of a diagnosis, and this is not a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary cross-sectional study that reports its own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4281609450",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The review focuses on adolescents aged 13 to 17."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Social media use in general is the central topic."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include mental health and wellbeing, peer support, self-expression and social engagement."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "No clinical sample or treatment is described; adolescents' perspectives are reviewed in general."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "It is a narrative literature review of 24 qualitative studies."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4284884960",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study looks at young people in an East London youth group, and the abstract frames them as part of the teenage demographic."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It examines how young people talk about social media platforms such as Snapchat, Instagram, Facebook and Twitter."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It looks at how platforms are represented in relation to the young people's everyday lives and social networks."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The participants are from a community youth group, not a clinical sample or a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary ethnographic study that reports its own fieldwork."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W6940620888",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 1,081 Slovenian adolescents."
+      },
+      "c2": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The study looks at general smartphone use and smartphone screen time and never mentions social media or specific platforms."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes are self-esteem and perceived digital well-being, including the social and emotional domains, which count as wellbeing."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a general-population panel of adolescents, not a clinical or treatment sample."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary three-wave longitudinal panel study analyzing its own data."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4416298449",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The review focuses on adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It examines how social media affects adolescent identity."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include identity, self-esteem, body image, emotional distress and cyberbullying/social exclusion."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "No clinical sample or treatment evaluation is described; it covers adolescents in general."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The paper is a scoping review of the literature."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W3085407651",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 210 adolescent girls with a mean age of 15.16 years."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines appearance-related activity on social media and social networking platforms."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include body dissatisfaction, self-esteem and social comparisons with friends, which cover wellbeing and peer relations."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract describes no diagnosis-based selection and no treatment, so the sample is general."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study that gave self-report measures to 210 girls."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W3024025420",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The review is about adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It reviews online social networks and social media use, including passive use and social media ostracism."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes are subjective well-being: mood, self-esteem, loneliness, life satisfaction and body image."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract describes no clinical sample and no treatment study."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The paper is a systematic review of 29 articles."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4388978994",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The population is described as adolescent girls in the US and South Korea."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper examines social media in general and its culture."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Body image, self-esteem and mental wellbeing are covered, which fall under wellbeing and identity."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Nothing in the abstract points to a clinical sample or a treatment study."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The abstract calls itself a 'comprehensive review' of existing work."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W3088040135",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Sample is female adolescents aged 13 to 18."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines social media use, along with smartphone screen time."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes are body esteem, appearance comparisons and social appearance anxiety, which relate to wellbeing and identity."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants were not selected because of a diagnosis, and it is not a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary empirical study testing 100 participants."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4390415551",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Focuses on adolescents/teenagers."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines social media use in general."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include self-image, body image and mental health (identity/wellbeing)."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "No clinical sample or treatment study is described."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Explicitly described as a review study."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W3065818614",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Children were interviewed at ages 10, 12 and 14, so the sample is under 18."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study looks at self-oriented and other-oriented social media use."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Appearance self-esteem is an outcome that relates to wellbeing and identity."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a community sample, and no diagnosis-based selection or treatment is described."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary 3-wave longitudinal study with its own data (n = 725)."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4413297809",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is adolescents followed from mid to late adolescence."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines social media posting behaviour."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include perceived social support from close friends and classmates, which are peer relations."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "No clinical selection or treatment is described; it is an observational longitudinal study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary 2-year longitudinal study that reports its own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4393320957",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 75 middle-school adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines how adolescents engage with social media platforms."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It looks at adolescents' lived, subjective and socio-emotional experiences with social media, which covers everyday life and wellbeing."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants come from a community middle school, not a clinical sample, and no treatment is evaluated."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary ethnographic study based on the authors' own fieldwork."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4395691695",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The participants were 55 adolescents aged 14–17."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines adolescents' social media use in general."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Well-being is the main outcome, along with feelings of connection and isolation."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The focus groups drew on a general group of adolescents; no diagnosis-based selection or treatment is described."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "This is a primary qualitative study that ran its own focus groups."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4402626503",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants were teenagers with mean age 15.83."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines how adolescents use TikTok."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include perceived mental well-being, mood, and connecting with friends."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "No clinical selection or treatment is described; participants were general teenagers."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary qualitative interview study (N=31)."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W3208712535",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants were 30 LGBTQ adolescents aged 14-17 years."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines social media use, specifically Facebook groups."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include identity, relationships, wellbeing support, friendships and discrimination."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Sample selected by LGBTQ identity, not diagnosis; not a treatment study."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary qualitative study using semi-structured interviews."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4363672310",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study population is described as adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines addiction to social media used on mobile phones."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It examines peer pressure (peer relations) along with self-esteem and self-concept clarity (identity and wellbeing)."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is an anonymous questionnaire study with no diagnosis-based selection and no treatment."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary cross-sectional questionnaire study that reports its own results."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W3199521301",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants were twenty-four 13-14-year-olds in English secondary schools."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines social media use in general."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include connectedness to family and peers, face-to-face socialising and identity."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants were school students recruited from schools, not selected for a diagnosis or treatment."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary qualitative interview study reporting its own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4317605919",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The participants were eleven adolescents aged 14-16."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study explores adolescents' social media use and their experiences on social media."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Mental health (wellbeing) and adolescents' positive and negative emotions are studied as outcomes."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Adolescents were recruited across England, with no diagnosis-based selection or treatment described."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary qualitative study using in-depth interviews analysed with interpretative phenomenological analysis (IPA)."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4414443539",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample includes 120 adolescents aged 13-18 alongside adults."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines feedback in a simulated social media environment."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "State self-esteem, a wellbeing outcome, and social comparison are studied."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Participants are general urban Chinese adolescents and adults, not selected for any diagnosis."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "This is a primary quasi-experimental study that collected its own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4403889817",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 737 Spanish adolescents aged 12 to 18."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines TikTok use, including time spent on the app and the type of content watched."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcome is how adolescents rate their own digital well-being on TikTok."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a general sample of adolescents; nobody was selected because of a diagnosis and no treatment is evaluated."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary cross-sectional study using its own questionnaire data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W7138999203",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Reviews studies of children, adolescents and young adults aged 25 or younger, so under-18s are included."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Social media use is one of the main technology categories examined (140 studies)."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcomes include mental, physical and social wellbeing, with a focus on anxiety and depression."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Nothing in the abstract describes a clinical sample or a treatment study; the focus is general youth populations."
+      },
+      "c5": {
+        "answer": "no",
+        "source": "model",
+        "reason": "It is a scoping review of existing longitudinal studies."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t1_social_media",
+    "paper_key": "W4376115764",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Sample is 12,041 UK adolescents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines time spent on social media."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include mental health, wellbeing, and social life."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "General population panel of UK adolescents; no clinical selection or treatment."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary panel network analysis of the study's own data."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4405627542",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The abstract evaluates single LLM agents that act in environments and use tools. It does not describe two or more agents interacting with each other."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The agents being evaluated are LLM agents."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is Agent-SafetyBench, a safety benchmark with 2,000 test cases that has been publicly released, plus a failure analysis."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study that introduces a new benchmark and evaluates 16 agents on it."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4407806725",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The survey covers LLM-based multi-agent systems and how agents communicate and interact."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is explicitly about large language model-based multi-agent systems (LLM-MAS)."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The main contribution is a communication-centric taxonomy and review; it does not provide a benchmark or an evaluation study, and only mentions inadequate benchmarking as a challenge."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The paper calls itself a comprehensive survey and review."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4405768156",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper covers LLM-based multi-agent systems (LLM-MAS)."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The systems it covers are explicitly built on large language models."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Its main contribution is a survey of LLM-MAS applications, not a benchmark, metric or empirical evaluation, although evaluation is one of the applications it reviews."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The paper calls itself a comprehensive survey."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7123695262",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Evaluates single tool-using agents (ReAct, Reflexion architectures); no interacting multi-agent system is described."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Agents are built on LLMs such as Gemini 2.0 Flash and GPT-4o."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Main contribution is ReliabilityBench, a benchmark with reliability metrics and a fault-injection evaluation framework."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary empirical study introducing a benchmark and evaluating models over 1,280 episodes."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7148937781",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The benchmark looks at the safety of single LLM-based agents along tool-use trajectories. It doesn't mention multiple agents interacting."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract says outright that the agents are LLM-based."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is ATBench, a trajectory-level benchmark for evaluating agent safety."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It's a primary study: it builds a benchmark and runs experiments on it."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7131436133",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper studies multi-agent systems, including how agents coordinate and the inter-agent coordination failures between them."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The title and abstract say the systems are LLM-based multi-agent systems built on foundation models."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is MAS-FIRE, a fault injection and reliability evaluation framework applied to three MAS architectures."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study that proposes a framework and reports empirical findings."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4414934022",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper is about multi-agent AI systems, and it covers interactions between agents and the failures that emerge from them."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The title and abstract say explicitly that the systems are LLM-based multi-agent systems."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is a risk-analysis toolkit and a staged testing method for assessing six failure modes, which counts as an evaluation framework."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a methods report that offers a practical toolkit, not a survey or literature review, though parts of it argue for an approach in the way a position paper would."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7141713967",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper studies failure attribution in multi-agent systems with complex inter-agent dependencies."
+      },
+      "c2": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "LLMs are named only as the tools that do the attribution; the abstract never says the agents in the MAS are built on LLMs."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is MP-Bench, a new benchmark, together with an evaluation protocol for MAS failure attribution."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study that introduces a benchmark and reports extensive experiments."
+      }
+    },
+    "decision": "uncertain"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4402705039",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Studies multi-agent systems (MAS) in which agents play specific roles, with monitoring at the agent level."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The agents are explicitly LLM-based."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Main contribution is a framework that predicts MAS task performance and monitors safety risks, i.e., a way to evaluate and assess MAS configurations, though it also adds real-time corrections."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary study with a proposed framework and experiments."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4409319509",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The survey covers LLM-based multi-agent systems with collaborating agents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It explicitly covers Large Language Model (LLM)-based multi-agent systems."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Its focus is the technologies for building these systems (architecture, memory, planning, frameworks), not evaluating them."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The paper describes itself as a survey and review."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4401201041",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The benchmark evaluates individual LLMs acting as agents on offline tasks; it never mentions multiple interacting agents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The agents being evaluated are LLMs (18 representative models are tested)."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is the MMAU benchmark, with datasets and evaluation scripts released."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study that introduces a benchmark and reports empirical results."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4415135829",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Studies multi-agent LLM ensembles with emergent group dynamics such as peer pressure and a supervisor."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The ensembles are made of LLM agents."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Introduces the MAEBE evaluation framework for systematically assessing emergent safety risks in multi-agent ensembles."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary empirical study with a new framework and experimental findings."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7127576860",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper studies multi-agent LLM frameworks, including how agents orchestrate, communicate and coordinate."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The frameworks are explicitly multi-agent LLM frameworks, with the underlying LLM held fixed across them."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contributions are MAFBench, a unified evaluation suite, and a controlled empirical comparison of nine frameworks."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study with new experiments, not a survey or position paper."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7161719727",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "The abstract covers LLM-based autonomous agents in general and never says they are systems of two or more interacting agents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract explicitly concerns LLM-based autonomous agents."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is about evaluation: a taxonomy of agent-safety benchmarks, a cross-benchmark consistency analysis and proposed reporting standards."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "It is mainly a systematic catalogue and taxonomy of 40 existing benchmarks, so it reads as a review, although it adds a small consistency experiment."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7134986479",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper targets multi-agent evaluation and compares system parts such as topology and orchestration in frameworks like AutoGen and CAMEL."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract explicitly covers LLM-based agentic systems and compares 3 models."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is an evaluation library (MASEval) plus a systematic system-level comparison."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study that releases a framework and reports empirical comparisons."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4417097995",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Focuses on LLM-MAS made of multiple LLM-powered agents working together and communicating with each other."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The agents are explicitly described as LLM-powered."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Main contribution is a systematic vulnerability-analysis framework with formal threat models meant to quantify vulnerability and guide evaluation benchmarks."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "A position paper ('This paper argues...') that unifies existing research and names open challenges."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7125105280",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper evaluates LLM-based multi-agent systems and agentic workflows, and AEMA is itself a multi-agent framework."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract explicitly targets LLM-based multi-agent systems."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is AEMA, an evaluation framework for LLM-based multi-agent systems, compared against a single LLM-as-a-Judge."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It presents a new framework and reports experimental results, so it is a primary study."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7137825607",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper targets multi-agent systems, including risks in inter-agent communication and emergent hazards at the system level."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract explicitly says the systems are LLM-based multi-agent systems."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is a safety evaluation and monitoring framework with a risk taxonomy, attack probes and formalized safety metrics."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study that presents a new framework and case studies."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7131893979",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "The paper mostly covers LLM agents in general (GAIA, SWE-bench, OSWorld). It also uses the multi-agent failure taxonomy MAST and mentions inter-agent misalignment, but it is unclear whether multi-agent systems are its focus."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The agents it discusses are LLM-based autonomous agents."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper is entirely about evaluation: it analyses benchmarks and evaluation problems, and puts together a failure taxonomy."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "It is an analysis of the state of the art that maps the existing ecosystem and argues for future directions, so it is a survey or position paper."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4416893006",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper assesses bias in multi-agent systems, where multiple AI models interact within a shared environment, and uses a multi-agent judging system."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract explicitly concerns LLM-based multi-agent systems."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is MALIBU, a new benchmark for assessing implicit bias in LLM-based multi-agent systems."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study that presents a benchmark and quantifies biases empirically."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7161680277",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Studies multi-agent systems, including how agents coordinate across full interaction trajectories."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The systems are explicitly LLM-driven multi-agent systems (LLM-MAS)."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Main contribution is a framework for failure attribution in LLM-MAS, a failure-analysis/evaluation tool, with code and data released."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary study proposing a method with experiments on Aegis-Bench and Who&When."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4405090304",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Studies LLM-based multi-agent systems where agents interact in the multi-player game 'Who is Spy?'."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Agents are explicitly based on open- and closed-source large language models."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Main contribution is an evaluation platform with a leaderboard and metrics (win rates, attack/defense, reasoning) for LLM-based MAS."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary study that introduces a platform and runs experiments; not a survey or position paper."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4414975314",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract mentions inter-agent communication structures and agents acting adversarially within agentic systems, which implies multiple interacting agents."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract explicitly says it evaluates LLM-based agentic systems."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The main contribution is the BAD-ACTS benchmark and datasets for evaluating robustness and safety."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary study that proposes a benchmark and reports empirical results."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W7225397460",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Studies multi-agent systems of cooperating LLM agents whose answers are merged, e.g. majority voting over three models."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The agents are explicitly large language model (LLM) agents."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Main contribution is a reliability assessment framework (imprecise probability plus Bayesian network) for evaluating multi-agent LLM systems."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Proposes a framework and applies it in a case study, so it is a primary study."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t2_llm_mas_eval",
+    "paper_key": "W4414856392",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Studies a multi-agent LLM framework where agents communicate in an iterative game to produce a shared output."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract explicitly calls it a multi-agent LLM system."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The main contribution is a new credibility-scoring framework, evaluated only to show it works; the abstract mentions no reusable benchmark or dataset."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary study that proposes a system and runs experiments on it."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4396854085",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study is explicitly about mobile money in Somalia."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from Somalia, a Sub-Saharan African country."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "It uses a secondary time series from 2010 to 2022 analysed with ARDL, which points to country-level aggregate data rather than household or individual data."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcomes include household consumption and real income."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary quantitative empirical study using ARDL estimation."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W7165146517",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Although framed around mobile money/e-payments, the measured exposure is mobile subscriptions per 100 adults (phone penetration), not mobile money use."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The 15 economies include countries in Sub-Saharan Africa."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Data are country-year observations from World Bank WDI (n=190), not household or individual level."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Household poverty rate is analyzed as an outcome via mediation analysis."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary empirical panel econometric analysis."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4386525601",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study is about mobile money usage and acceptance."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from mobile money users in Ghana."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from an individual-level survey of 385 mobile money users."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Savings is reported as an outcome, along with livelihood impacts such as access to credit and jobs."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical survey study that uses regression analysis."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W3181766881",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper is about mobile money adoption and how people use it."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from rural Southern Mozambique."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It uses household survey and administrative data from a field experiment that offered mobile money to individuals."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The outcomes are who adopts mobile money and how they use it, with no welfare outcomes such as consumption or savings."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study based on an experiment and survey data."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4416841157",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The subject is microfinance institutions, not mobile money or phone-based payment services."
+      },
+      "c2": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The data come only from Indonesia, which is outside Sub-Saharan Africa."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It uses nationally representative microdata covering 175,749 households."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcome is per capita household consumption."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study that uses propensity score matching on survey microdata."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4383553808",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "Subject is 'mobile banking adoption' by commercial banks; abstract does not say whether mobile money is part of what is measured."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Data come from Ethiopia."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Data are on commercial banks (firm level), not households or individuals."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The only outcome is bank technical efficiency, which is not a listed welfare outcome."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary empirical analysis using a stochastic frontier model and regressions on 2010-2022 data."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W7168257689",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study examines mobile money services (accessibility, affordability, reliability)."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Data were collected in Mogadishu, Somalia, a Sub-Saharan African country."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Individual-level structured questionnaire survey of 200 respondents."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The only stated outcome is financial inclusion; no consumption, savings, income, poverty or other listed outcome is mentioned."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary quantitative correlational study using survey data and regression analysis."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4221154976",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper examines mobile money-driven financial inclusion and the role of mobile money."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from Cameroon."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It uses the 2017 Cameroon Finscope Consumer survey of households."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcome is households' adoption of financial resilience strategies to adverse shocks, which counts as coping with shocks."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is an empirical analysis of survey data, even though it conceptualizes adoption as a process."
+      }
+    },
+    "decision": "include"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4411529520",
+    "in_search_set": true,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The subject is financial sector development and fiscal capacity in general; mobile money is not mentioned."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Data cover seven East African countries, including Kenya, Uganda, Tanzania and Rwanda."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The data are a country-level panel for 1990–2023, not household or individual data."
+      },
+      "c4": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "The outcome is a PCA-based Composite Welfare Index; the abstract does not say whether it includes listed items such as poverty or consumption."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is an empirical analysis that estimates a dynamic heterogeneous panel model."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4398230001",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The subject is mobile connectivity (cell tower coverage); mobile money is named only as one enabler of the effects, not the main subject."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from eight WAEMU countries in West Africa."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data are harmonized World Bank LSMS surveys covering 59,319 households."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Outcomes include household food demand and consumption, self-consumption, and diversification of income sources."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study that uses an instrumental-variable analysis of survey data."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4287003077",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The subject is mobile broadband (3G) internet coverage. The abstract does not mention mobile money or phone-based payment services."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from Tanzania."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study uses panel household survey data."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcomes include household consumption and poverty."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical difference-in-differences study."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4410807047",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The subject is M-Pesa mobile money adoption and satisfaction."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from Kenya."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It uses household survey data from the Research ICT Africa series."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The only outcomes are adoption determinants and user satisfaction; no welfare outcome is listed."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study using logistic and Poisson regressions on survey data."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4416796935",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study is on digital financial inclusion and includes financial service availability driven by mobile phone usage, so mobile money is part of what is measured."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study covers Sub-Saharan Africa."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "It uses system GMM on IEA and Global Findex aggregates for 2004-2019, which is country-level panel data."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The outcomes are energy consumption and energy intensity, neither of which is on the list."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary econometric analysis of panel data."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4413193965",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "The subject is financial inclusion and 'individual financial services' in general; the abstract never says whether mobile money is one of the services measured."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from Nigerian households."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It uses household panel data from four waves of the World Bank LSMS."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcomes include poverty and food insecurity."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study using clustering and semi-parametric regression on survey data."
+      }
+    },
+    "decision": "uncertain"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W3200528294",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "Studies 'mobile financial services' but does not state whether mobile money (phone-based payments/transfers) is part of what is measured."
+      },
+      "c2": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Data come only from India."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Examines individual financial behavior and gender differences, implying individual-level data."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Outcomes are investment, insurance and formal borrowing; poverty is only mentioned as a speculative implication."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary empirical study using an instrumental variable method."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W3186986914",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The subject is mobile money provided by mobile network operators and the mobile money excise duty."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract says it studies sub-Saharan countries."
+      },
+      "c3": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "The abstract mentions only 'studied countries' and demand for cash, which hints at country-level data, but it never says what level the data are at."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The outcomes are e-money adoption, demand for cash, financial inclusion and tax revenue, none of which is on the welfare list."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It reports empirical findings on how the tax affects fees and demand for cash in the countries studied."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4416354426",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Digital inclusion is measured, and it explicitly includes mobile money account ownership and digital payments."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Data come from West and Central African countries such as Ghana, Senegal, Nigeria and Cameroon."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It uses World Bank Findex 2021, an individual-level survey."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The study looks at what drives financial and digital inclusion (adoption), not at welfare outcomes of mobile money use."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical analysis using logit and probit models on survey data."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4285093376",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Mobile account use is measured as one of the fintech proxies, alongside digital payments."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample is 36 African countries, so it must include Sub-Saharan African countries."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "It is a country-level panel of 36 countries for 2011, 2014 and 2017, not household or individual data."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The only outcome is a financial inclusion index, which is not on the welfare outcome list."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study using PCA and fixed and random effects panel regressions."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W3014193054",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The abstract centres on mobile money systems, specifically Kenya's M-Pesa, used for sending remittances (it also covers Bitcoin)."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It focuses on Kenya and draws on experiences from other Sub-Saharan African countries."
+      },
+      "c3": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "No data source or unit of analysis is described; it mentions sending and receiving households but no survey, panel or experiment."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "Outcomes are remittance channel choice, transfer costs, speed, security and access to financial services, none of which is on the list."
+      },
+      "c5": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "Wording like 'explores', 'we discuss' and 'some findings indicate' suggests a review or conceptual piece, but this is not stated clearly. The title, about quantitative easing, also does not match the abstract."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W3184153016",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Digital inclusion is measured explicitly through active mobile money accounts."
+      },
+      "c2": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "It covers 57 developing countries but does not say whether any are in Sub-Saharan Africa."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "It uses country-level panel data (57 countries, 2007-2017) with GMM."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The empirical outcome is economic growth; consumption appears only as a channel in the theoretical model."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study with a GMM estimation, plus a theoretical model."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W4416346143",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "Abstract covers digital financial inclusion and digital payments, mobile phones and account ownership, but never says mobile money is one of the measures."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Data cover Uganda, Kenya and Tanzania."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Uses individual-level data from the Global Findex 2021 survey."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Savings is the main outcome, and income is also estimated."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Primary empirical analysis using statistical tests and propensity score matching on survey data."
+      }
+    },
+    "decision": "uncertain"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W7214071725",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The study covers users of Premier Wallet, a phone-based wallet, and treats its mobile banking features as digital financial services for payments and remittances."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from Mogadishu, Somalia."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data come from a cross-sectional questionnaire of 272 individual users."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The outcome is financial inclusion, mediated by user trust; consumption, savings, income, poverty and the other listed welfare outcomes are not measured."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical survey study using regression, mediation and moderation analysis."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W3082982688",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The paper builds a new mobile money inclusion index, so mobile money is a central subject."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The cross-country data include sub-Saharan African countries, which the findings mention by name."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The paper uses macro-level, country-level data from the IMF Financial Access Survey and Global Findex to build the indices."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The outcomes are financial and mobile money inclusion indices and their link to legal origin, not welfare outcomes."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study that builds indices and tests how they relate to the regulatory environment."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W7143439148",
+    "in_search_set": false,
+    "in_screening_set": true,
+    "answers": {
+      "c1": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "Mobile money account ownership is one of the main predictors measured."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The sample covers 152 economies and reports results for Sub-Saharan Africa."
+      },
+      "c3": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The analysis is run at country level across 152 economies."
+      },
+      "c4": {
+        "answer": "no",
+        "source": "model",
+        "reason": "The only outcome is financial account ownership, which is about inclusion or adoption, not a welfare outcome on the list."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study using OLS regressions on Global Findex data."
+      }
+    },
+    "decision": "exclude"
+  },
+  {
+    "topic_id": "t3_mobile_money",
+    "paper_key": "W7203828579",
+    "in_search_set": false,
+    "in_screening_set": false,
+    "answers": {
+      "c1": {
+        "answer": "not_stated",
+        "source": "model",
+        "reason": "The subject is financial inclusion in general. Mobile banking and digital payments come up only in the policy recommendations, and the abstract does not say whether mobile money is part of the FI measure."
+      },
+      "c2": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The data cover households in 32 Sub-Saharan African countries."
+      },
+      "c3": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The analysis uses data on 45,683 individual households."
+      },
+      "c4": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "The outcome is household food insecurity."
+      },
+      "c5": {
+        "answer": "yes",
+        "source": "model",
+        "reason": "It is a primary empirical study that fits an ordered probit model with a copula approach to household data."
+      }
+    },
+    "decision": "uncertain"
+  }
+]
