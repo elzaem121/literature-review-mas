@@ -68,6 +68,32 @@ export SEARCH_MODEL=qwen2.5-coder:7b-ctx16k SCREENING_MODEL=qwen2.5-coder:7b-ctx
 python -m eval.harness.truncation_check     # now reports truncated: False
 ```
 
+### Run on the university cluster's Ollama
+
+The cluster's Ollama (namespace `mas-project`, service `ollama-service`, one NVIDIA A100 GPU) gives the same scores as
+the laptop and runs the eval in minutes instead of hours; it is the reference for Phase 2b. Connection setup is in
+`deploy/NOTES.md`. For the eval:
+
+```bash
+# Terminal 1: keep open. Local port 11435, because a local Ollama usually holds 11434.
+kubectl port-forward svc/ollama-service 11435:11434 -n mas-project
+
+# Terminal 2: pull the base model and create the 16k model on the cluster.
+# Do this again after every pod restart: the deployment has no storage volume, so pulled models are lost.
+kubectl get pods -n mas-project                 # note the Running ollama-deployment pod
+POD=<the running pod>
+kubectl exec -n mas-project $POD -- ollama pull qwen2.5-coder:7b
+kubectl cp eval/ollama/Modelfile mas-project/$POD:/tmp/Modelfile
+kubectl exec -n mas-project $POD -- ollama create qwen2.5-coder:7b-ctx16k -f /tmp/Modelfile
+
+# Run the eval against the cluster. Set the URL for this command only; do not change .env.
+M=qwen2.5-coder:7b-ctx16k
+OLLAMA_BASE_URL=http://localhost:11435/v1 SEARCH_MODEL=$M SCREENING_MODEL=$M EXTRACTION_MODEL=$M make eval-run
+```
+
+The first call after a pod restart takes over a minute while the model loads into GPU memory. The cluster GPU is
+shared, so timings can vary.
+
 `make eval-run` sets `REPOSITORY_BACKEND=memory`, so it never touches the paper library. It checks that every model
 answers, screens the screening set twice, retrieves and extracts the extraction-gold papers, saves every output to
 `<EVAL_DATA_DIR>/outputs/<run_id>/` and writes `eval/results/<run_id>.json`. A run that loses Ollama partway is marked

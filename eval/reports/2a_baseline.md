@@ -131,6 +131,33 @@ with `target_included` = 10 within it. Extraction is 62% of the budget (1,021 of
 end-to-end smoke run below took 3,093 s (51.5 min), about 1.9 times the budget figure, but with different paper
 counts; see that section.
 
+## Cluster run (the reference for Phase 2b)
+
+The same eval was run again on the university cluster's Ollama (one NVIDIA A100 GPU), run
+`20261127T160606-phase1-e7f7169` (results: `eval/results/20261127T160606-phase1-e7f7169.json`), with the same gold
+set, topics, prompts, models (same base model, `dae161e27b0e`) and the 16k context.
+
+*   **The scores are identical.** Every number in the results file is the same as in the laptop baseline: screening,
+    search precision, retrieval recall and extraction field status. Only the run id, commit, start time, model
+    digest, context length and timings differ.
+*   **Phase 2b uses the cluster run as its reference** for scores and timings. The laptop run above stays as the first
+    baseline and is kept for history.
+*   **The digest differs** because the 16k model was created again on the cluster; the base model is the same. The
+    cluster record also shows the real context length (16,384), where the laptop record shows `ollama_default` (explained
+    under "The run").
+
+| Stage | Laptop | Cluster |
+| --- | --- | --- |
+| Screening, one pass of 60 papers | 1,476 s and 1,364 s (23.7 s per paper) | 106 s and 102 s (1.7 s per paper) |
+| Retrieval | 3.2 s per paper | 2.1 s per paper |
+| Extraction | 98.8 s per paper | 5.3 s per paper |
+| Retrieval plus extraction | 102.1 s per paper | 7.4 s per paper |
+| Latency budget (formula above) | 1,640.5 s (27.3 min) | 145.4 s (2.4 min) |
+
+The cluster GPU is shared with other users and the deployment has no storage volume, so timings can vary and the model
+must be pulled and created again after a pod restart (`eval/README.md`). The budget on the laptop and the one on the
+cluster are both from the harness timings, one run each.
+
 ## Truncation (G7)
 
 With Ollama's default context, extraction prompts are cut silently. On 2026-11-27 the check ran on the largest
