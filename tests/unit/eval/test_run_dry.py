@@ -330,6 +330,7 @@ def test_ollama_failing_after_the_run_makes_it_incomplete(
 
     monkeypatch.setattr(run_module, "precheck_models", precheck_models)
     monkeypatch.setattr(run_module, "check_models", check_models)
+    monkeypatch.setattr(run_module, "configured_context_length", lambda model, base_url: 16384)
 
     summary = run(workspace)
 

@@ -1,7 +1,7 @@
 # Research Assistant v2 — Project Plan
 
 > Reference plan for v2. Phase-level designs live in `docs/designs/` and must stay consistent with this plan.
-> Status: active · new ideas go to `docs/backlog.md` · Last updated: 2026-11-22
+> Status: active · new ideas go to `docs/backlog.md` · Last updated: 2026-11-27
 > Versions: "v1" is the legacy system this repository started from. This plan is v2; its release tags run from `v0.1` to `v1.0`, and `v1.0` is the first v2 release.
 
 ## 1. Goal
@@ -228,12 +228,12 @@ Each phase ends with a working system and a git tag. From Phase 2a on, each phas
 ### Phase 2a — Eval baseline · `v0.3`
 Input: `docs/eval_notes.md` (brainstorm record) and `concepts_brief.md`. Phase 2a is kept minimal: gold set, harness, baseline, error analysis. The model benchmark is a Phase 2b experiment.
 - [x] Write `docs/designs/eval.md` from the brainstorm decisions, including the paired model-selection rule used in Phase 2b
-- [ ] Gold dataset v0 for three test topics: screening decisions for every topic; for a few papers, the `found` fields with evidence page and a script-verified quote
-- [ ] Check with one logged run whether Ollama truncates extraction prompts; if it does, set the context length explicitly for all runs, including the baseline
-- [ ] Eval harness; measure the baseline: the Phase 1 system with the v1 models. Extraction is scored by field status and retrieval recall only; the baseline extraction outputs are saved for the Phase 2b faithfulness judge. Baseline screening runs twice, and the number of flipped decisions is recorded as the run-to-run noise
-- [ ] Error analysis on the baseline: inspect wrong outputs per agent (search, screening, retrieval, extraction), group them by cause, and record the groups with examples
-- [ ] Report baseline search precision@10, scored from the gold labels of each topic's frozen baseline top-10 (no judge)
-- [ ] Set the per-run latency budget (section 11) from the measured baseline
+- [x] Gold dataset v0 for three test topics: screening decisions for every topic; for a few papers, the `found` fields with evidence page and a script-verified quote
+- [x] Check with one logged run whether Ollama truncates extraction prompts; if it does, set the context length explicitly for all runs, including the baseline
+- [x] Eval harness; measure the baseline: the Phase 1 system with the v1 models. Extraction is scored by field status and retrieval recall only; the baseline extraction outputs are saved for the Phase 2b faithfulness judge. Baseline screening runs twice, and the number of flipped decisions is recorded as the run-to-run noise
+- [x] Error analysis on the baseline: inspect wrong outputs per agent (search, screening, retrieval, extraction), group them by cause, and record the groups with examples
+- [x] Report baseline search precision@10, scored from the gold labels of each topic's frozen baseline top-10 (no judge)
+- [x] Set the per-run latency budget (section 11) from the measured baseline
 
 **Exit:** baseline results file committed (screening with the flip count, search precision@10, retrieval recall, extraction field status); baseline extraction outputs saved; error analysis recorded; latency budget recorded.
 
@@ -291,6 +291,7 @@ Shoulds, after the exit, in this order:
 - **Hardware:** MacBook Air M4 (fanless; throttles on long runs), 16 GB RAM.
 - **Budget:** free only — local Ollama plus free API tiers. Check free-tier limits when choosing the judge (Phase 2b).
 - **Latency budget:** one `new_topic` run with `target_included` = 10 on the target hardware finishes within a budget set in Phase 2a from the measured baseline. Phase 2b must stay within it.
+  - **Set in Phase 2a (2026-11-27): 1,640.5 s (27.3 min)**, built from the baseline run `20261127T095143-phase1-4fc1921` as 27.9 s search + 25 × 23.7 s screening + 10 × 102.1 s retrieval and extraction (`docs/designs/eval.md`, "Latency budget"). It leaves out PDF download, Postgres and graph overhead. One end-to-end smoke run (topic 1, 17 papers screened, 13 extracted) took 3,093 s; it is reported in `eval/reports/2a_baseline.md` and does not define the budget.
 
 ## 12. Risks
 
@@ -315,7 +316,7 @@ Shoulds, after the exit, in this order:
 
 ## 14. Open questions
 
-- What is the per-run latency budget? Set in Phase 2a from the measured baseline.
+- ~~What is the per-run latency budget?~~ Answered in Phase 2a: 1,640.5 s (section 11).
 - Is the v1 GPU cluster still available as a fallback if laptop inference misses the budget?
 - Evaluation design: the brainstorm questions in `docs/eval_notes.md` are answered (2026-11-23); the remaining details are settled in `docs/designs/eval.md`. The baseline is the Phase 1 system with the v1 models; the model benchmark and any embedding change are Phase 2b tasks.
 
