@@ -100,6 +100,7 @@ eval/
   topics/       one config per test topic: question, min year, yes/no checks (feed labeler and screener)
   gold/v0/      frozen search, candidate pools, gold labels, labeling prompts, provenance (committed)
   results/      one results file per eval run (committed)
+  reports/      one written report per eval phase (2a_baseline.md: baseline numbers and error analysis)
   harness/      records, scoring, gold validation, run/score/sync commands; adapters/ wraps a pipeline version
   gold_build/   the gold-set build commands (`python -m eval.gold_build <step>`)
   snapshots/v1/ frozen v1 search results, kept for history; not used by gold set v0
