@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Every pushed commit that changes src/ or eval/ updates docs/STATUS.md
+      - name: Every pushed commit updates docs/STATUS.md
         env:
           BEFORE: ${{ github.event.before }}
           SHA: ${{ github.sha }}

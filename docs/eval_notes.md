@@ -1,7 +1,7 @@
 # Evaluation harness — brainstorm notes
 
 > **Status: superseded by `docs/designs/eval.md`, which is the source of truth for the evaluation. This file is kept as the brainstorm record.**
-> EGM brainstorm paused 2026-11-11, resumed 2026-11-22. Goldfish review on 2026-11-22 (summary in `concepts_brief.md`); the author's answers are in "Decisions after the Goldfish review".
+> EGM brainstorm paused 2026-11-11, resumed 2026-11-22. Goldfish review on 2026-11-22 (summary in `docs/reviews/2a_concepts_brief.md`); the author's answers are in "Decisions after the Goldfish review".
 > Decisions are marked with their date in each section; earlier positions that were superseded are marked as such. The design doc, not this file, becomes the source of truth once written.
 
 ## Scope
@@ -338,7 +338,7 @@ v0 is the simplest eval that gives baseline numbers the author can trust. Refine
 
 ## Decisions after the Goldfish review (author, 2026-11-23)
 
-The review's full findings and its list of points still to settle are in `concepts_brief.md`.
+The review's full findings and its list of points still to settle are in `docs/reviews/2a_concepts_brief.md`.
 
 1. **One config per topic** generates both the screener's criteria and the labeling prompt, so labeler and screener read the same checks. The screening prompt (`src/llm/prompts/screening.py`, `v1`) stays as is for the baseline.
 2. **Prompt truncation:** one logged run checks whether Ollama cuts extraction prompts short. If it does, the context length is set explicitly for all runs, including the baseline, and the truncation goes into `docs/backlog.md` as a v1 finding.

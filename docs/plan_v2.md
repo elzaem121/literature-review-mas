@@ -226,7 +226,7 @@ Each phase ends with a working system and a git tag. From Phase 2a on, each phas
 **Exit:** automated tests show that running the pipeline twice with the same question and criteria leaves one `papers` row and one set of `chunks` per paper, and that after restarting the API and Postgres every completed run's results and all library rows are still present. The existing screening tests pass under the new layout. CI is green.
 
 ### Phase 2a — Eval baseline · `v0.3`
-Input: `docs/eval_notes.md` (brainstorm record) and `concepts_brief.md`. Phase 2a is kept minimal: gold set, harness, baseline, error analysis. The model benchmark is a Phase 2b experiment.
+Input: `docs/eval_notes.md` (brainstorm record) and `docs/reviews/2a_concepts_brief.md`. Phase 2a is kept minimal: gold set, harness, baseline, error analysis. The model benchmark is a Phase 2b experiment.
 - [x] Write `docs/designs/eval.md` from the brainstorm decisions, including the paired model-selection rule used in Phase 2b
 - [x] Gold dataset v0 for three test topics: screening decisions for every topic; for a few papers, the `found` fields with evidence page and a script-verified quote
 - [x] Check with one logged run whether Ollama truncates extraction prompts; if it does, set the context length explicitly for all runs, including the baseline
@@ -254,8 +254,7 @@ Process (the default; a block may adjust it): one EGM cycle per block. Its brain
 - [ ] Pipeline context length (`num_ctx`) (backlog #38)
 - [ ] Paired model-selection rule also counts gold excludes (backlog #41)
 - [ ] Faithfulness judge under `eval/`, calibrated against owner labels (about 20–30 values)
-- [ ] Search judge for precision@10 under `eval/`, calibrated against the Phase 2a gold labels
-- [ ] Score the saved baseline outputs with both judges
+- [ ] Score the saved baseline extraction outputs with the faithfulness judge (faithfulness, and correctness reported without calibration)
 - [ ] Drift check and explanation notes
 
 #### Block B — Paper selection
@@ -264,6 +263,7 @@ Process (the default; a block may adjust it): one EGM cycle per block. Its brain
 - [ ] Screening: output per criterion; prompt v2; `uncertain` papers downstream (backlog #37)
 - [ ] `screenings` table: decision, reason, `model` and `prompt_version` per (review, paper), written by a store node
 - [ ] Search: query construction; duplicates; filter by OpenAlex subfield (`primary_topic.subfield`), taken from the review's criteria when set (backlog #7)
+- [ ] Search judge for precision@10 under `eval/`: the Phase 2a gold labeler, run on new papers only, cached, with its token cost reported per run (moved from Block A, decision 2026-11-28)
 - [ ] Ingestion: PDF fallback via other OpenAlex locations (backlog #40); paper without `openalex_id` (backlog #34); upsert duplicate (backlog #35)
 - [ ] Loop 1 with counter, counting included papers with a retrievable PDF against `target_included`; cap OpenAlex retries
 - [ ] Drift check and explanation notes

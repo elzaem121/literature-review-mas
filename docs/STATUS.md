@@ -1,7 +1,7 @@
 # Status
 
-> Where the project is now. Update it in the same commit as every task (`AGENTS.md`, "Definition of Done").
-> Last updated: 2026-11-28 · state as of commit `75b104c` (a commit cannot name its own hash)
+> Where the project is now. Every commit updates it, unless its message contains `[no-status]` (`AGENTS.md`, "Definition of Done").
+> Last updated: 2026-11-28 · state as of commit `870856d` (a commit cannot name its own hash)
 
 ## Phase and block
 
@@ -11,21 +11,26 @@
 
 ## Last finished step
 
-- Phase 2b plan split into four blocks, A to D (`75b104c`).
-- Doc system for all agents: `AGENTS.md`, this file, `docs/decisions.md`, `docs/experiments_2b.md`, the status check.
+- Block A brainstorm (agent review with seven Goldfish lenses) and the owner's decisions on it:
+  `docs/reviews/2b_block_a_concepts_brief.md`; decisions in `docs/decisions.md` (2026-11-28 rows). The search judge
+  moved to Block B.
+- EGM outputs now go to `docs/reviews/`; the Phase 2a brief moved to `docs/reviews/2a_concepts_brief.md`.
+- The status check now applies to every commit, not only commits that change `src/` or `eval/`.
 
 ## Next step
 
-- Block A brainstorm (agent review): read the Block A code against `eval/reports/2a_baseline.md`, confirm the causes,
-  compare the options, choose and order the candidates. Then write the Block A section of `docs/designs/phase2b.md`
-  (the file does not exist yet).
+- Write the Block A section of `docs/designs/phase2b.md` (the file does not exist yet) from the brief:
+  `/egm:egm-draft docs/reviews/2b_block_a_concepts_brief.md`. It holds the shared decision-rule table for all blocks.
 
 ## Open decisions
 
-- Latency margin on top of the 145.4 s budget (plan section 11): set in the Block A brainstorm.
-- Amendment of the paired model-selection rule to count gold excludes (backlog #41).
-- Judge model for faithfulness and search (provisional: Groq `llama-3.3-70b`); check free-tier limits.
+- The other config for the normal calibration run of the faithfulness judge.
+- Which two non-qwen models to try as the cluster judge, and what happens if neither they nor Groq pass calibration.
+- Whether the judge-family rule widens to "not the same family as any candidate model".
+- Where the `num_ctx` startup check sits (run start plus eval precheck is the reviewers' majority), and whether a
+  per-call truncation guard is added.
 
 ## Blockers
 
-- None. The faithfulness judge needs owner calibration labels (about 20–30 values) before its scores are trusted.
+- None. The faithfulness judge needs about 30 owner calibration labels (at least 8 unfaithful) before its scores are
+  trusted.

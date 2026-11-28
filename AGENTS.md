@@ -33,10 +33,21 @@ current phase and step are in `docs/STATUS.md`.
 | `docs/experiments_2b.md` | One row per Phase 2b experiment: change, metric, before/after, decision |
 | `docs/backlog.md` | Ideas and issues for later, each with a status and an owning phase |
 | `docs/notes/` | Explanations of what was built in each phase, for the owner |
-| `docs/reviews/` | Review and drift reports (EGM Goldfish reviews, drift checks) |
+| `docs/reviews/` | EGM outputs: brainstorm notes, concepts briefs, Goldfish reviews, drift checks |
 | `docs/archive/` | v1 leftovers kept for history; not current |
 | `eval/README.md` | Eval setup, the gold-build steps, the cluster eval setup |
 | `eval/reports/` | One written report per eval phase |
+
+## EGM outputs
+
+EGM artifact directory: docs/reviews/
+
+- EGM outputs (brainstorm notes, concepts briefs, Goldfish reports, drift checks) go to `docs/reviews/`, with the phase
+  and block in the file name, for example `docs/reviews/2b_block_a_concepts_brief.md`.
+- Designs go to `docs/designs/`.
+- Never overwrite an existing doc. Write a new file, or edit the existing one on purpose.
+- EGM tools may write to the repository root (for example `concepts_brief.md`). Move such outputs to their place
+  before committing.
 
 ## Git
 
@@ -44,11 +55,13 @@ current phase and step are in `docs/STATUS.md`.
 - Agents never push and never touch the remote `origin` (no fetch, pull, push or remote changes). The owner pushes to
   the `github` remote.
 - No AI co-author trailers (`Co-Authored-By` or similar) in commit messages.
-- One-time setup: `make hooks` installs the commit-msg hook (`scripts/check_status_updated.sh`). A commit that changes
-  `src/` or `eval/` must also change `docs/STATUS.md`, unless its message contains `[no-status]`. CI runs the same
-  check on every commit in a push.
+- One-time setup: `make hooks` installs the commit-msg hook (`scripts/check_status_updated.sh`). Every commit must change
+  `docs/STATUS.md`, unless its message contains `[no-status]`. CI runs the same check on every commit in a push.
 
 ## Definition of Done
+
+Every commit updates `docs/STATUS.md`, unless its message contains `[no-status]` (checked by the commit-msg hook and
+CI; see "Git"). Use `[no-status]` only for commits that do not change where the project is, such as a typo fix.
 
 A task is done when, in the same commit:
 

@@ -39,7 +39,7 @@ The three test topics are test cases only; the system stays domain-agnostic:
 3.  Mobile money and household welfare in Sub-Saharan Africa (economics).
 
 How these choices were reached is recorded in `docs/eval_notes.md` (brainstorm
-record) and `concepts_brief.md` (Goldfish review). This document is the source
+record) and `docs/reviews/2a_concepts_brief.md` (Goldfish review). This document is the source
 of truth for the evaluation from now on.
 
 ## The Problem
@@ -656,7 +656,7 @@ If no candidate qualifies, the v1 model stays, and the decision record says why.
 
 ## Alternatives Considered
 
-Alternatives from the brainstorm (`concepts_brief.md`, "Alternatives Weighed",
+Alternatives from the brainstorm (`docs/reviews/2a_concepts_brief.md`, "Alternatives Weighed",
 and `docs/eval_notes.md`) and from drafting this document.
 
 ### Topics and labels
@@ -877,7 +877,7 @@ monitoring, and recycled aggregate.
 *   `docs/plan_v2.md`: sections 8, 10 (Phase 2a and 2b) and 11.
 *   `docs/eval_notes.md`: the brainstorm record with every decision and its
     reason.
-*   `concepts_brief.md`: the Goldfish review of the brainstorm.
+*   `docs/reviews/2a_concepts_brief.md`: the Goldfish review of the brainstorm.
 *   `docs/backlog.md`: items #33, #37 and the triaged items #10, #16, #24, #27
     and #29.
 
