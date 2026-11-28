@@ -1,0 +1,112 @@
+# Architecture
+
+How the current (Phase 1) system is built: layout, pipeline shape, the data contract of each stage, LLM access and
+configuration. The target architecture is `docs/plan_v2.md` section 5; this file describes the code as it is.
+
+## Layout
+
+```text
+src/
+  api/        FastAPI app: POST /start_pipeline, GET /status/{job_id}, GET /health
+  graph/      LangGraph graph (graph.py), shared PipelineState (state.py), nodes (nodes.py)
+  pipeline/
+    search/     OpenAlex query expansion + retrieval
+    screening/  per-paper include/exclude/uncertain classification
+    ingestion/  PDF download (pdf.py), chunking, retrieval, and the graph node (node.py)
+    extraction/ RAG-based structured extraction (node.py, schemas.py)
+  db/         SQLAlchemy models, session, repository (all SQL), Alembic migrations
+  llm/        settings.py, client.py (get_llm / get_embedder), tracing.py, fake.py, prompts/
+  ui/         Streamlit frontend (app.py)
+tests/        unit/ (unit/eval/ for the harness), e2e/, fixtures/ (golden_run.json, OpenAlex works, PDFs, review config)
+eval/
+  topics/       one config per test topic: question, min year, yes/no checks (feed labeler and screener)
+  gold/v0/      frozen search, candidate pools, gold labels, labeling prompts, provenance (committed)
+  results/      one results file per eval run (committed)
+  reports/      one written report per eval phase (2a_baseline.md: baseline numbers and error analysis)
+  harness/      records, scoring, gold validation, run/score/sync commands; adapters/ wraps a pipeline version
+  gold_build/   the gold-set build commands (`python -m eval.gold_build <step>`)
+  snapshots/v1/ frozen v1 search results, kept for history; not used by gold set v0
+```
+
+Imports are `from src.pipeline.search import ...`. Layering: api -> graph/pipeline -> llm/db; `src/llm`
+imports nothing from `src/pipeline` (the fake LLM is a registry that tests fill in `tests/fakes.py`).
+`eval/` sits beside `src/` and imports it; nothing in `src/` imports `eval/`. Pipeline code reaches the harness only
+through `eval/harness/adapters/`, and scoring and gold validation import nothing from `src/`, so they stay the same
+across pipeline versions. Other `eval/` modules import only settings (`src/llm/settings.py`); `eval/gold_build/` also
+reuses the OpenAlex client, `format_openalex_work` and the PDF helpers, so labeled text is the text the pipeline sees.
+
+## Pipeline shape
+
+`src/graph/graph.py` wires a LangGraph `StateGraph` over a single shared `PipelineState` TypedDict
+(`src/graph/state.py`). Each real stage is preceded by a cheap "pre_*" node (`src/graph/nodes.py`) that
+only sets `current_step`/`status_message` for UI polling, before the actual worker node runs:
+
+```
+pre_search → search_agent → pre_screening → screening_agent
+  → pre_document_processing → document_processing_node
+  → pre_extraction → extraction_node → END
+```
+
+`src/api/main.py` compiles this graph once and, per request, runs it with `workflow_app.astream(...)`
+inside a FastAPI `BackgroundTasks` job, writing each node's state to the run's row in Postgres
+(`runs`, keyed by `job_id`; `result` holds exactly the `GET /status` payload, starting with a provenance
+envelope of models and prompt versions). `POST /start_pipeline` inserts the `reviews` and `runs` rows;
+on process start the lifespan marks unfinished runs `interrupted`. `src/ui/app.py` polls
+`GET /status/{job_id}` and stops on 404 and on `completed`/`error`/`interrupted`.
+
+## The four stages and their data contracts
+
+1. **Search** (`src/pipeline/search/`) — `agent.py`'s `UniversalAcademicSearchAgent` uses the LLM
+   (`get_llm("search")`, Pydantic schema `AcademicQueryExpansionSchema`) to turn the research question into
+   a dense "synthetic abstract" optimized for OpenAlex's semantic search, then `api_client.py`'s
+   `OpenAlexClient` queries the OpenAlex Works API (blocking `requests`, called via `asyncio.to_thread`) and
+   locally filters by year/citations/PDF availability. A programmatic keyword "gatekeeping firewall"
+   (`_apply_programmatic_gatekeeping_firewall`) exists but is currently **bypassed** in
+   `run_precise_retrieval_cycle`. Output shape: `{"papers": [...], "synthetic_abstract": str, "fallback_used": bool}`
+   (`ResearchPaper` in `src/pipeline/screening/screening_schemas.py`; the node reads only `papers`, the eval harness
+   reads the other two). `format_openalex_work` is the one place that turns an OpenAlex work into a paper dict.
+   `new_main.py::main()` is the entry point wired into `src/graph/nodes.py::search_node`.
+
+2. **Screening** (`src/pipeline/screening/`) — `AcademicScreeningAgent` first applies a local
+   publication-year prefilter (no LLM call), then classifies each remaining paper independently via
+   `get_llm("screening")` into include/exclude/uncertain using only title/abstract/year/authors/DOI/URL
+   (explicitly instructed not to invent evidence), bounded by an `asyncio.Semaphore`. Retries come only from
+   the client policy (SDK `max_retries=3`, Instructor `max_retries=2`). Output is `ScreeningOutput` with
+   four buckets: `included_papers` / `excluded_papers` / `uncertain_papers` / `failed_papers`.
+
+3. **Document processing** (`src/pipeline/ingestion/`) — `node.py` mutates
+   `screening_results["included_papers"]` in place. Per paper: upserts it into `papers` (merged by OpenAlex
+   id or normalized DOI), downloads its PDF to `settings.pdf_dir/{paper_id}.pdf` (`pdf.py`: cached file with
+   `%PDF` header, else the stored search-time `pdf_url`, else the OpenAlex DOI lookup), extracts text per page
+   with PyMuPDF, chunks it page-aware without overlap (`chunking.py`), embeds the chunks with `get_embedder()`
+   and stores them in `chunks`. A paper already `chunked` with the current `embedding_model` and
+   `CHUNKER_VERSION` is not downloaded or chunked again. Then pgvector cosine search per field query
+   (`FIELD_QUERIES`: method/dataset/task/findings/limitations, in `retrieval.py`) builds
+   `retrieved_chunks_by_field`. Papers without a retrievable PDF are flagged via `pdf_status` rather than
+   dropped, so downstream counts stay consistent.
+
+4. **Extraction** (`src/pipeline/extraction/`) — for each included paper with retrieved chunks, calls
+   `get_llm("extraction")` once per paper with the field-specific chunk context and a heavily
+   anti-hallucination-constrained prompt (must classify `paper_type` first, must write "not specified"
+   rather than invent method/dataset/limitations, self-verification step) to produce `ExtractedPaperInfo`
+   (`schemas.py`). Final state field: `extracted_papers`, a list of `{"paper": {...}, "rag_extraction": {...}}`.
+
+## LLM access pattern
+
+`src/llm/client.py` is the only place that builds LLM and embedding clients: `get_llm(role)` for roles
+`search`, `screening`, `extraction` (other roles raise) returns an Instructor-patched `AsyncOpenAI` pointed
+at Ollama, wrapped for LangSmith tracing (`src/llm/tracing.py`); `get_embedder()` returns the embedder.
+Every call passes `response_model=<a Pydantic schema>` to force structured JSON output. Prompts live in
+`src/llm/prompts/<role>.py`, each with a `PROMPT_VERSION`. With `PROFILE=test`, both seams return fakes.
+
+## Configuration
+
+All configuration is `src/llm/settings.py` (pydantic-settings, validated at startup, read from the
+environment and `.env`): `PROFILE`, `OLLAMA_BASE_URL`, `SEARCH_MODEL` / `SCREENING_MODEL` /
+`EXTRACTION_MODEL` (default `qwen2.5-coder:7b`), `EMBEDDING_MODEL` (default
+`sentence-transformers/all-MiniLM-L6-v2`), `REPOSITORY_BACKEND` (`postgres` default, or `memory` for tests),
+`DATABASE_URL` (required with the postgres backend), `OPENALEX_EMAIL`
+(required), `OPENALEX_API_KEY` (optional), `LANGSMITH_TRACING`, `PDF_DIR`, `EVAL_DATA_DIR` (optional; only eval
+commands need it). `.env.example` documents each
+one. The frontend also reads `BACKEND_URL` directly, and `src/llm/tracing.py` reads `LANGSMITH_PROJECT`
+directly. New configuration goes through settings.

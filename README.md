@@ -226,8 +226,12 @@ ruff check src tests
 ruff format --check src tests
 ```
 
-Run everything from the repo root. The reference plan is [`docs/plan_v2.md`](docs/plan_v2.md); the
-design for the current phase is [`docs/designs/phase1_foundation.md`](docs/designs/phase1_foundation.md).
+Run everything from the repo root.
+
+### Project docs
+
+Where the project is now: [`docs/STATUS.md`](docs/STATUS.md). The roadmap: [`docs/plan_v2.md`](docs/plan_v2.md).
+Instructions for coding agents, with a map of all docs: [`AGENTS.md`](AGENTS.md).
 
 ---
 

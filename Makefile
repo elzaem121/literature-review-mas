@@ -1,4 +1,4 @@
-.PHONY: up migrate test integration eval-run eval-score eval-sync
+.PHONY: up migrate test integration eval-run eval-score eval-sync hooks
 
 ADAPTER ?= phase1
 
@@ -22,3 +22,6 @@ eval-score:
 
 eval-sync:
 	python -m eval.harness.sync
+
+hooks:
+	ln -sf "$(CURDIR)/scripts/check_status_updated.sh" "$$(git rev-parse --git-path hooks)/commit-msg"

@@ -191,7 +191,7 @@ excerpts. The groups state what was observed; causes marked "hypothesis" were no
 Other observations:
 
 *   The failed checks are mostly about study type, data level and outcome. These are conditions that a semantic query
-    built from a "synthetic abstract" cannot enforce, and the keyword filter is bypassed (`CLAUDE.md`, search stage).
+    built from a "synthetic abstract" cannot enforce, and the keyword filter is bypassed (`docs/architecture.md`, search stage).
     Hypothesis: that is why precision is lowest for t3, whose criteria are mostly such conditions.
 *   29 of the 30 top-10 papers come from preprint or repository servers (arXiv, Research Square, PsyArXiv, Qeios,
     medRxiv, Preprints.org, HAL, RePEc); one has no venue. The search keeps only works with a PDF link, which is
