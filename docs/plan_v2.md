@@ -42,7 +42,7 @@ A chat-based research assistant that builds a growing library of scientific pape
 
 ## 4. Non-goals (until v1.0)
 
-- Fine-tuning — no budget, and the hardware is a laptop.
+- Fine-tuning — no budget and no hardware for training.
 - PDF uploads and paper sources other than OpenAlex.
 - Custom extraction fields per review — would need `review_id` on `extractions`.
 - React frontend — Streamlit is enough for one user.
@@ -238,25 +238,62 @@ Input: `docs/eval_notes.md` (brainstorm record) and `concepts_brief.md`. Phase 2
 **Exit:** baseline results file committed (screening with the flip count, search precision@10, retrieval recall, extraction field status); baseline extraction outputs saved; error analysis recorded; latency budget recorded.
 
 ### Phase 2b — Pipeline · `v0.4`
-- [ ] Agent review in the EGM brainstorm: read the agents' code together with the Phase 2a numbers and error analysis, and propose improvements, each with how it is measured; the project owner decides which are adopted, and the tasks below are adjusted to match
-- [ ] Pipeline as subgraph, called by the existing job endpoint, which creates a `reviews` row
-- [ ] Screening stores decision + reason per (review, paper); a store node writes screenings and extractions with `model` and `prompt_version`
-- [ ] Search filter by OpenAlex subfield (`primary_topic.subfield`), taken from the review's criteria when set
-- [ ] Search judge for precision@10 on new search results, calibrated against human-labeled top-10 papers from the Phase 2a gold set
-- [ ] Faithfulness judge (required): calibrate it against human labels, then score the saved Phase 2a baseline extraction outputs and the Phase 2b outputs, for a before/after faithfulness number
-- [ ] Experiment: benchmark candidate local models for screening, extraction and embedding on the target hardware (section 11) with the Phase 2a harness, under the paired model-selection rule in `docs/designs/eval.md`. Compare models on one pipeline version, separately from logic changes, so each delta has one cause. Search models are not benchmarked: search problems are logic problems for the agent review. Router models are benchmarked in Phase 3.
-- [ ] Decision record for the model per role; switch the defaults. If the embedding model changes: migrate the vector column, re-embed stored chunks, check that all `chunks` share one `embedding_model`. Update model references in READMEs (backlog #6).
-- [ ] Loop 1 with counter, counting included papers with a retrievable PDF against `target_included`; cap OpenAlex retries
-- [ ] Extraction with the fixed field set, field status and evidence (chunk, page)
-- [ ] Parallel extraction
-- [ ] Experiment: full-paper context vs. chunk retrieval for extraction (latency, faithfulness)
-- [ ] Chunk overlap, if Phase 1 left it out. Then try keyword plus vector search and a reranker, separately; adopt each only if retrieval recall@k or extraction faithfulness improves
-- [ ] Loop 2 for `missing` fields, only if the baseline and the experiment show it is needed
+Owner decisions 2026-11-27. Phase 2b runs in four blocks, A to D, in this order.
 
-**Exit:** model decision record committed: the chosen models show a delta over the baseline under the model-selection rule, or the record says why the v1 models are kept; the eval shows fewer gold-`found` fields reported as `missing` or `not_reported` than the baseline; faithfulness of the baseline and of Phase 2b is reported with human–judge agreement; fake-LLM tests show each loop stops at its limit and OpenAlex retries are capped; every `found` extraction has an evidence chunk; one run stays within the latency budget.
+Rules:
+- One change per experiment, measured on the cluster against the cluster baseline (`eval/results/20261127T160606-phase1-e7f7169.json`). A change is kept only if its metric improves and no other metric gets worse. Each experiment gets one row in `docs/experiments_2b.md`.
+- New code comes with tests; CI is green.
+- The project owner makes the judge calibration labels by hand.
+- Each block has a goal with metrics. A block is done when its goal is met, or when the design records why it is not.
+
+Process (the default; a block may adjust it): one EGM cycle per block. Its brainstorm is the agent review: read the block's code against the error analysis in `eval/reports/2a_baseline.md`, confirm the causes, and compare the options. The brainstorm runs just before the block. Design sections go in `docs/designs/phase2b.md`. Each block ends with a drift check and explanation notes. Each block lists candidates, not decisions; the block's brainstorm chooses and orders them.
+
+#### Block A — Setup and judges
+**Goal:** the full baseline is measured.
+- [ ] Brainstorm (agent review) and design section
+- [ ] Pipeline context length (`num_ctx`) (backlog #38)
+- [ ] Paired model-selection rule also counts gold excludes (backlog #41)
+- [ ] Faithfulness judge under `eval/`, calibrated against owner labels (about 20–30 values)
+- [ ] Search judge for precision@10 under `eval/`, calibrated against the Phase 2a gold labels
+- [ ] Score the saved baseline outputs with both judges
+- [ ] Drift check and explanation notes
+
+#### Block B — Paper selection
+**Goal:** exclude recall above 8/36 with include recall kept; search precision@10 above 12/30; retrievable PDFs above 15/22 gold includes.
+- [ ] Brainstorm (agent review) and design section
+- [ ] Screening: output per criterion; prompt v2; `uncertain` papers downstream (backlog #37)
+- [ ] `screenings` table: decision, reason, `model` and `prompt_version` per (review, paper), written by a store node
+- [ ] Search: query construction; duplicates; filter by OpenAlex subfield (`primary_topic.subfield`), taken from the review's criteria when set (backlog #7)
+- [ ] Ingestion: PDF fallback via other OpenAlex locations (backlog #40); paper without `openalex_id` (backlog #34); upsert duplicate (backlog #35)
+- [ ] Loop 1 with counter, counting included papers with a retrievable PDF against `target_included`; cap OpenAlex retries
+- [ ] Drift check and explanation notes
+
+#### Block C — Paper reading
+**Goal:** retrieval recall@5 above 6/29; faithfulness above the baseline; every `found` field with evidence; one cluster run within the latency budget (section 11).
+- [ ] Brainstorm (agent review) and design section
+- [ ] Chunking: chunk size in tokens below the embedder's limit (backlog #33); overlap (backlog #32)
+- [ ] Retrieval: pages 1–2 in the context; field queries phrased as questions; keyword plus vector search; reranker
+- [ ] Extraction with the fixed field set, field status and evidence (chunk, page); `extractions` table with `model` and `prompt_version`, written by the store node
+- [ ] Experiment: full-paper context vs. chunk retrieval for extraction (latency, faithfulness) (backlog #28)
+- [ ] Loop 2 for `missing` fields, if needed
+- [ ] Parallel extraction
+- [ ] Drift check and explanation notes
+
+#### Block D — Models and close
+**Goal:** the model for each role is justified by numbers.
+- [ ] Brainstorm (agent review) and design section
+- [ ] Experiment: benchmark candidate local models for screening, extraction and embedding under the paired model-selection rule in `docs/designs/eval.md`. Models are compared on one pipeline version, separately from logic changes, so each delta has one cause. Search models are not benchmarked; router models are benchmarked in Phase 3.
+- [ ] Decision record for the model per role; switch the defaults; update model references in READMEs (backlog #6). If the embedding model changes: migrate the vector column, re-embed the stored chunks, check that all `chunks` share one `embedding_model`.
+- [ ] End-to-end run
+- [ ] Small held-out topic, measured and reported
+- [ ] Full drift report; update `docs/findings.md`
+- [ ] Tag `v0.4`
+
+**Exit:** model decision record committed: the chosen models show a delta over the baseline under the model-selection rule, or the record says why the v1 models are kept; the eval shows fewer gold-`found` fields reported as `missing` or `not_reported` than the baseline; faithfulness of the baseline and of Phase 2b is reported with human–judge agreement; fake-LLM tests show each loop stops at its limit and OpenAlex retries are capped; every `found` extraction has an evidence chunk; one run stays within the latency budget; the held-out topic is reported; every experiment is logged in `docs/experiments_2b.md`.
 
 ### Phase 3 — Chat · `v0.5`
 Musts:
+- [ ] Pipeline as subgraph, called by the existing job endpoint, which creates a `reviews` row (moved from Phase 2b on 2026-11-27)
 - [ ] Async Postgres checkpointer with `thread_id`; `conversations` table
 - [ ] Router (LLM + rule) with `rewritten_query` and the route table in 5.2: `new_topic` drafts a review and starts the pipeline subgraph; `clarify` asks a follow-up
 - [ ] Context route and library QA with citations
@@ -288,16 +325,19 @@ Shoulds, after the exit, in this order:
 
 ## 11. Constraints
 
-- **Hardware:** MacBook Air M4 (fanless; throttles on long runs), 16 GB RAM.
+- **Hardware:** the target hardware is the university GPU cluster's Ollama (namespace `mas-project`, one NVIDIA A100, used by v1); decision 2026-11-28. All Phase 2b runs, including the latency check, run there; Phase 2b has no laptop runs. Development machine: MacBook Air M4 (fanless; throttles on long runs), 16 GB RAM.
 - **Budget:** free only — local Ollama plus free API tiers. Check free-tier limits when choosing the judge (Phase 2b).
-- **Latency budget:** one `new_topic` run with `target_included` = 10 on the target hardware finishes within a budget set in Phase 2a from the measured baseline. Phase 2b must stay within it.
-  - **Set in Phase 2a (2026-11-27): 1,640.5 s (27.3 min)**, built from the baseline run `20261127T095143-phase1-4fc1921` as 27.9 s search + 25 × 23.7 s screening + 10 × 102.1 s retrieval and extraction (`docs/designs/eval.md`, "Latency budget"). It leaves out PDF download, Postgres and graph overhead. One end-to-end smoke run (topic 1, 17 papers screened, 13 extracted) took 3,093 s; it is reported in `eval/reports/2a_baseline.md` and does not define the budget.
+- **Latency budget:** one `new_topic` run with `target_included` = 10 on the target hardware finishes within a budget built from the measured baseline. Phase 2b must stay within it; this is checked with one cluster run in Phase 2b Block C.
+  - **Recomputed 2026-11-28 from the cluster baseline run `20261127T160606-phase1-e7f7169`, with the same formula: 145.4 s (2.4 min)**, as 27.9 s search + 25 × 1.7 s screening + 10 × 7.4 s retrieval and extraction (`eval/reports/2a_baseline.md`, "Cluster run"). The cluster GPU is shared, so timings vary; the margin on top of this figure is set in the Phase 2b Block A brainstorm.
+  - History, not used in Phase 2b: the Phase 2a laptop budget, 1,640.5 s (27.3 min), built from the baseline run `20261127T095143-phase1-4fc1921` as 27.9 s search + 25 × 23.7 s screening + 10 × 102.1 s retrieval and extraction (`docs/designs/eval.md`, "Latency budget"). It leaves out PDF download, Postgres and graph overhead. One end-to-end smoke run (topic 1, 17 papers screened, 13 extracted) took 3,093 s; it is reported in `eval/reports/2a_baseline.md` and does not define the budget.
 
 ## 12. Risks
 
 | Risk | Mitigation |
 | --- | --- |
-| Laptop inference too slow for a 10-paper run | Latency budget; parallel extraction; fewer papers; a GPU host if one is available |
+| Cluster models lost on pod restart: the Ollama deployment has no persistent volume | Pull the base model and create the 16k model again, following `eval/README.md` ("Run on the university cluster's Ollama") |
+| Shared cluster GPU: timings vary between runs | Steps in `eval/README.md`; the latency margin is set in Phase 2b Block A (section 11) |
+| Cluster kubeconfig expires | Download a new kubeconfig, following `deploy/NOTES.md` ("Get a kubeconfig"), linked from `eval/README.md` |
 | Small (7–8B) local models return invalid structured output | Instructor validation and retries; model per role swappable |
 | Free API limits change | Groq is used only by the eval judge; check limits when choosing it |
 | No deadline → scope creep | Exit criteria per phase; `docs/backlog.md` for new ideas |
@@ -308,7 +348,7 @@ Shoulds, after the exit, in this order:
 
 1. No big rewrite: the system runs after every task (section 10, Phase 1 end state).
 2. One phase at a time; finish with a git tag.
-3. One EGM cycle per phase or per design subject that spans phases: brainstorm → draft → review → implement → drift report (section 15).
+3. One EGM cycle per phase or per design subject that spans phases: brainstorm → draft → review → implement → drift report (section 15). In Phase 2b, one EGM cycle per block (section 10).
 4. One agent session per task; each session reads this plan, the relevant design doc, the `docs/backlog.md` items assigned to the current phase, any inputs the design doc names, and the relevant code.
 5. Commit after each task with passing tests.
 6. A claimed improvement needs a delta beyond run-to-run noise (section 8). Changes that keep behaviour, such as Phase 1, need passing tests instead.
@@ -316,8 +356,8 @@ Shoulds, after the exit, in this order:
 
 ## 14. Open questions
 
-- ~~What is the per-run latency budget?~~ Answered in Phase 2a: 1,640.5 s (section 11).
-- Is the v1 GPU cluster still available as a fallback if laptop inference misses the budget?
+- ~~What is the per-run latency budget?~~ Answered in Phase 2a: 1,640.5 s on the laptop; recomputed for the cluster on 2026-11-28: 145.4 s (section 11).
+- ~~Is the v1 GPU cluster still available as a fallback if laptop inference misses the budget?~~ Answered 2026-11-27: yes. It is the same cluster (namespace `mas-project`); its Ollama (one A100) runs the evals and reproduces the laptop baseline scores (`eval/reports/2a_baseline.md`, "Cluster run"). It is the target hardware, and all Phase 2b runs are on it (section 11).
 - Evaluation design: the brainstorm questions in `docs/eval_notes.md` are answered (2026-11-23); the remaining details are settled in `docs/designs/eval.md`. The baseline is the Phase 1 system with the v1 models; the model benchmark and any embedding change are Phase 2b tasks.
 
 ## 15. Glossary
